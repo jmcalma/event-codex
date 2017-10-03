@@ -1,4 +1,6 @@
 # event-codex
+## Youtube Video Running Tutorial
+https://youtu.be/YWQrjDPSN0c
 ## Run
 [Node.js](http://nodejs.org/) is required.
 
