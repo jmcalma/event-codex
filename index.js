@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 
 app.get("/", (req, res) => {
-  res.send("hello world");
+  res.send("server port 5000 : hello world");
 });
 
 require("./routes/authRoutes")(app);
