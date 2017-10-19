@@ -47,10 +47,19 @@ body {
 	color: #a8a8a8;
 }
 
-#input_event_startdate{
+#input_event_startdate, #input_event_enddate {
 	width: 20%;
 }
 
-#input_event_starttime {
+#input_event_starttime, #input_event_endtime {
 	width: 10%;
+}
+
+#start {
+	float: left;
+	width: 100%;
+}
+
+#end {
+	
 }
