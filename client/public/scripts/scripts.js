@@ -26,6 +26,8 @@ function addEvent() {
     var eventLocation = $('#input_event_location').val();
     var eventStartDate = $('#input_event_startdate').val();
     var eventStartTime = $('#input_event_starttime').val();
+    var eventEndDate = $('#input_event_enddate').val();
+    var eventEndTime = $('#input_event_endtime').val();
     var eventCategory = $('#select_event_category').val();
     var website = $('#input_website').val();
     var eventDescription = $('#input_event_description').val();
@@ -44,6 +46,8 @@ function addEvent() {
                         "location" : eventLocation,
                         "start date" : eventStartDate,
                         "start time" : eventStartTime,
+                        "end date" : eventEndDate,
+                        "end time" : eventEndTime,
                         "category" : eventCategory,
                         "website" : website,
                         "description" : eventDescription,
@@ -56,7 +60,7 @@ function addEvent() {
     }
 }
 
-function submit1() {
+function eventSubmit() {
     if (validateForm() == true) {
         addEvent();
     } else {
@@ -97,4 +101,11 @@ function validateForm() {
         return false;
     }
     return true;
+}
+
+function putEndDate() {
+    if ($('#input_event_enddate').val() == "") {
+        var eventStartDate = $('#input_event_startdate').val();
+        document.getElementById('input_event_enddate').value = eventStartDate;
+    }
 }
