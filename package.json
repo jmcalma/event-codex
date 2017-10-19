@@ -9,6 +9,9 @@
     "client": "npm run start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
+  "scripts": {
+      "test": "mocha"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/480Random5/event-codex.git"
@@ -22,6 +25,7 @@
   "dependencies": {
     "concurrently": "^3.5.0",
     "express": "^4.16.1",
+    "mocha": "^4.0.1",
     "nodemon": "^1.12.1"
   }
 }
