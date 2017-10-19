@@ -19,7 +19,7 @@
        <h1>Create Event</h1>
     </div>
 
-    <form id="event_form">
+    <form id="event_form" method="post">
       <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
         <input class="mdl-textfield__input" type="text" id="input_email">
         <label class="mdl-textfield__label">Contact email</label>
@@ -40,14 +40,28 @@
       </div>
       
       <div>
-        <div>
-           <label>Start Date</label>
-           <input type="text" class="datepicker" id="input_event_startdate">
+        <div id="start">
+          <div>
+             <label>Start Date</label>
+             <input type="text" class="datepicker" id="input_event_startdate" onchange="putEndDate()">
+          </div>
+
+          <div>
+             <label>Start Time</label>
+             <input type="text" class="timepicker" id="input_event_starttime">
+          </div>
         </div>
 
-        <div>
-           <label >Start Time</label>
-           <input type="text" class="timepicker" id="input_event_starttime">
+        <div id="end">
+          <div>
+             <label>End Date</label>
+             <input type="text" class="datepicker" id="input_event_enddate">
+          </div>
+
+          <div>
+             <label>End Time</label>
+             <input type="text" class="timepicker" id="input_event_endtime">
+          </div>
         </div>
       </div>
 
@@ -84,7 +98,8 @@
       </div>
       <div></div>
 
-      <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="submit1()">Submit</button>
+      <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" 
+      onclick="eventSubmit()">Submit</button>
     </form>
 
 
