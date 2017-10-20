@@ -34,6 +34,7 @@ function addEvent() {
     var eventTags = $('#input_event_tags').val();
 
     var eventTitleUrl = formatTitleToUrl(eventTitle);
+    alert(eventTitleUrl);
 
     if (eventTitleUrl) {
         $.ajax(
@@ -76,7 +77,7 @@ function eventSubmit() {
 
 function formatTitleToUrl(title) {
     var str = title.toLowerCase();
-    str = str.replace(/ /g,"_");
+    str = str.replace(/ /g,"-");
     return str;
 }
 
