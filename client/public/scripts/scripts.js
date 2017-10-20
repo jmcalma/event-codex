@@ -34,7 +34,6 @@ function addEvent() {
     var eventTags = $('#input_event_tags').val();
 
     var eventTitleUrl = formatTitleToUrl(eventTitle);
-    alert(eventTitleUrl);
 
     if (eventTitleUrl) {
         $.ajax(
