@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/480Random5/event-codex/issues"
   },
-  "homepage": "https://github.com/480Random5/event-codex#readme"
+  "homepage": "https://github.com/480Random5/event-codex#readme",
+  "dependencies": {
+    "nodeunit": "^0.11.1"
+  }
 }
