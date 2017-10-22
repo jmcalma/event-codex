@@ -20,7 +20,7 @@ function getEvent() {
 						document.getElementById('id').value = result[0].id;
 						document.getElementById('name').value = result[0].name;
 						document.getElementById('utc').value = result[0].utc_offset;
-						document.getElementById('state').value = result[0].state;
+						document.getElementById('state').value = result[0].venue.state;
 						document.getElementById('rsvp').value = result[0].yes_rsvp_count;
 
 						document.getElementById('full').value = "result[1].name: "+ result[1].name;
