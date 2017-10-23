@@ -11,7 +11,7 @@ module.exports = app => {
       res.send(events);
     });
 
-		app.post("/api/event", (req, res) => {
+	app.post("/api/event", (req, res) => {
 
-		});
+	});
 };
