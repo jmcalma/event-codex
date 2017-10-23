@@ -39,7 +39,7 @@ function addEvent() {
         $.ajax(
                 {
                     type : "POST",
-                    url  : "/events/" + eventTitleUrl, 
+                    url  : "/api/event"+ eventTitleUrl, 
                     data : {
                         "email" : contactEmail,
                         "title" : eventTitle,
@@ -90,7 +90,7 @@ function validateForm() {
     var eventDescription = $('#input_event_description').val();
     var eventTags = $('#input_event_tags').val();
 
-    if (contactEmail == "" || eventTitle == "" || eventLocation == "" || eventStartDate == "" 
+    if (contactEmail == "" || eventTitle == "" || eventLocation == "" || eventStartDate == ""
         || eventStartTime == "" || eventDescription == "" || eventTags == "") {
 
         return false;
