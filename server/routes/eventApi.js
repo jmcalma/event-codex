@@ -8,23 +8,7 @@ module.exports = app => {
 	});
 
     app.get("/api/event", (req, res) => {
-      var output = "";
-      var date;
-	  var hours;
-      var minutes;
-      for(i = 0; i <= 2; i++) {
-      	date = new Date(JSON.stringify(events[i].time));
-      	hours = date.getHours();
-      	minutes = date.getMinutes();
-      	output = output + "event name: " + JSON.stringify(events[i].name) + "<br>"
-      		+ "time: " + JSON.stringify(events[i].time) + "<br>"
-      		+ "address: " + JSON.stringify(events[i].venue.address_1) + " "
-      		+ JSON.stringify(events[i].venue.city) + ", " + JSON.stringify(events[i].venue.state) + "<br>"
-      		+ "description: " + JSON.stringify(events[i].description)
-      		+ "link: " + JSON.stringify(events[i].link) + "<br><br>";
-      }
-      res.send(output);
-
+      res.send(events);
     });
 
 		app.post("/api/event", (req, res) => {
