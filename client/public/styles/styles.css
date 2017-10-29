@@ -63,3 +63,15 @@ body {
 #end {
 	
 }
+
+.FormModal {
+	left: 40px;
+	right: 40px;
+}
+
+.FormOverlay {
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
