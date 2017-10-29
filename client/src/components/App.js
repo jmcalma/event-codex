@@ -14,8 +14,6 @@ const App = () => {
           <Route exact path="/" component={Landing} />
         </div>
       </BrowserRouter>
-      <Form>
-      </Form>
     </div>
   )
 }
