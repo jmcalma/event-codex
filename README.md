@@ -15,3 +15,7 @@ $ npm run dev
 
 You can access <http://localhost:3000> on your web browser to client.
 You can access <http://localhost:5000> on your web browser to server.
+
+## Public Address
+http://cloudzhongyi.com </br>
+http://ec2-54-215-238-243.us-west-1.compute.amazonaws.com/
