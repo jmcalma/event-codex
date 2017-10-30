@@ -4,11 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
     "server": "nodemon index.js",
     "client": "npm run start --prefix ./../client",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "test": "mocha"
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "repository": {
     "type": "git",
