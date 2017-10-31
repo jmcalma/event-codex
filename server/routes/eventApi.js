@@ -13,15 +13,22 @@ module.exports = app => {
 
 	app.post("/api/event", async (req, res) => {
 		const { email, title, location, start_date, start_time, end_date, end_time, website, description, tags } = req.body;
-		console.log("email: " + email);
-		console.log("title: " + title);
-		console.log("location: " + location);
-		console.log("start date: " + start_date);
-		console.log("start time: " + start_time);
-		console.log("end date: " + end_date);
-		console.log("end time: " + end_time);
-		console.log("website: " + website);
-		console.log("description: " + description);
-		console.log("tags: " + tags);
+		var newEvent = {
+          "host_email" : email,
+          "event_name": title,
+          "location" : location,
+          "start_date" : start_date,
+          "start_time": start_time,
+          "end_date" : end_date,
+          "end_time": end_time,
+          "event_category" : website,
+          "event_description": description,
+          "tags" : tags
+		}
+		console.log("new event: " + newEvent.host_email);
+		console.log("new event: " + newEvent.event_name);
+		console.log("new event: " + newEvent.location);
+		console.log("new event: " + newEvent.start_date);
+		console.log("new event: " + newEvent.start_time);
 	});
 };
