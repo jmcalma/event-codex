@@ -48,7 +48,7 @@ class Header extends Component {
     // $.ajax(
     //         {
     //             type : "POST",
-    //             url  : "/api/event"+ eventTitleUrl, 
+    //             url  : "/api/event"+ eventTitleUrl,
     //             data : {
     //                 "email" : contactEmail,
     //                 "title" : eventTitle,
@@ -81,12 +81,15 @@ class Header extends Component {
                     website : website,
                     description : eventDescription,
                     tags : eventTags,
-        })
+        }),
+        headers: {"Content-Type": "application/json"}
+      })
+      .then(function(response) {
+        return response.json()
       })
      }
 
-
-
+     
   render() {
     const actions = [
       <FlatButton
