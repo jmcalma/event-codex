@@ -11,7 +11,8 @@ module.exports = app => {
       res.send(events);
     });
 
-	app.post("/api/event", (req, res) => {
-
+	app.post("/api/event", async (req, res) => {
+		console.log('====================== body ===============================');
+		console.log(req.body);
 	});
 };
