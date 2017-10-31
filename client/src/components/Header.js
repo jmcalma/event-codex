@@ -9,9 +9,14 @@ import TimePicker from 'material-ui/TimePicker';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import 'whatwg-fetch';
+import {blue500} from 'material-ui/styles/colors';
 
 const customContentStyle = {
 
+};
+
+const menuStyle = {
+  color: blue500,
 };
 
 class Header extends Component {
@@ -100,7 +105,6 @@ class Header extends Component {
       <FlatButton
         label="Submit"
         primary={true}
-        keyboardFocused={true}
         onClick={this.addEvent}
       />,
     ];
@@ -162,21 +166,19 @@ class Header extends Component {
                   </div>
 
                   <div id="end">
+                    <div>
+                       <DatePicker hintText="End Date" container="inline" mode="landscape" id="input_event_enddate"/>
+                    </div>
 
-                   <div>
-                    <DatePicker hintText="End Date" container="inline" mode="landscape" id="input_event_enddate"/>
-                   </div>
-
-                  <div>
-                    <TimePicker
-                      format="ampm"
-                      hintText="End Time"
-                      id="input_event_endtime"
-                      value={this.state.value12}
-                      onChange={this.handleChangeTimePicker12}
-                    />
-                  </div>
-
+                    <div>
+                      <TimePicker
+                        format="ampm"
+                        hintText="End Time"
+                        id="input_event_endtime"
+                        value={this.state.value12}
+                        onChange={this.handleChangeTimePicker12}
+                      />
+                    </div>
                   </div>
 
                    <div>
@@ -185,6 +187,7 @@ class Header extends Component {
                       value={this.state.value}
                       id="select_event_category"
                       onChange={this.handleChange}
+                      selectedMenuItemStyle={{ color: '#00B8D4' }}
                     >
                       <MenuItem value={1} primaryText="option1" />
                       <MenuItem value={2} primaryText="option2" />
