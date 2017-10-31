@@ -15,10 +15,6 @@ const customContentStyle = {
 
 };
 
-const menuStyle = {
-  color: blue500,
-};
-
 class Header extends Component {
   state = {
     open: false,
@@ -35,9 +31,8 @@ class Header extends Component {
 
   handleChange = (event, index, value) => this.setState({value});
 
-
-
-  addEvent() {
+  addEvent = () => {
+    this.setState({open: false}); //disable if debugging
     var contactEmail = document.getElementById('input_email').value;
     var eventTitle = document.getElementById('input_event_title').value;
     var eventLocation = document.getElementById('input_event_location').value;
