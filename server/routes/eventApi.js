@@ -12,7 +12,16 @@ module.exports = app => {
     });
 
 	app.post("/api/event", async (req, res) => {
-		console.log('====================== body ===============================');
-		console.log(req.body);
+		const { email, title, location, start_date, start_time, end_date, end_time, website, description, tags } = req.body;
+		console.log("email: " + email);
+		console.log("title: " + title);
+		console.log("location: " + location);
+		console.log("start date: " + start_date);
+		console.log("start time: " + start_time);
+		console.log("end date: " + end_date);
+		console.log("end time: " + end_time);
+		console.log("website: " + website);
+		console.log("description: " + description);
+		console.log("tags: " + tags);
 	});
 };
