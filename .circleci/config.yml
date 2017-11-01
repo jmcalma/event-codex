@@ -7,4 +7,5 @@ jobs:
        - checkout
        - run: echo "hello world"
        - run: cd server
+       - run: npm install
        - run: npm test
