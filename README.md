@@ -17,5 +17,6 @@ You can access <http://localhost:3000> on your web browser to client.
 You can access <http://localhost:5000> on your web browser to server.
 
 ## Public Address
-http://cloudzhongyi.com </br>
-http://ec2-54-215-238-243.us-west-1.compute.amazonaws.com/
+Doamin name: http://cloudzhongyi.com </br>
+DNS of EC2: http://ec2-54-215-238-243.us-west-1.compute.amazonaws.com/ </br>
+Circle CI url : https://circleci.com/gh/480Random5

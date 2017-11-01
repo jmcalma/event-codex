@@ -14,7 +14,7 @@ var add = function(a, b) {
 
 describe('add(a, b)', function() {
   it ('should be 9', function() {
-    assert.equal(8, add(4, 5));
+    assert.equal(9, add(4, 5));
   })
   it ('should be 7', function() {
     assert.equal(7, add(4, 3));
