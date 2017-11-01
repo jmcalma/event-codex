@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const {Schema} = mongoose;
 
 const eventSchema = new Schema({
-  host_title: String,
+  host_email: String,
   event_name: String,
   location: String,
   start_date: String,
