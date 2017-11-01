@@ -7,7 +7,7 @@
     "test": "mocha",
     "server": "nodemon index.js",
     "client": "npm run start --prefix ./../client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm test\" \"npm run server\" \"npm run client\""
   },
   "repository": {
     "type": "git",
