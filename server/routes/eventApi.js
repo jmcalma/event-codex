@@ -1,4 +1,6 @@
 var events = require('./../dataBase/events');
+const mongoose = require('mongoose');
+const Event = mongoose.model("events");
 
 module.exports = app => {
 	app.use(function(req, res, next) {
