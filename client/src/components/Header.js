@@ -11,7 +11,7 @@ import MenuItem from 'material-ui/MenuItem';
 import 'whatwg-fetch';
 
 const customContentStyle = {
-
+  padding: '30px',
 };
 
 class Header extends Component {
@@ -116,7 +116,7 @@ class Header extends Component {
                   title="Event Form"
                   actions={actions}
                   modal={false}
-                  contentStyle={customContentStyle}
+                  //contentStyle={customContentStyle}
                   autoScrollBodyContent={true}
                   open={this.state.open}
                   onRequestClose={this.handleClose}
@@ -126,6 +126,8 @@ class Header extends Component {
                     <TextField
                       floatingLabelText="Contact email"
                       id="input_email"
+                      multiLine={true}
+                      rows={1}
                     /><br />
                   </div>
 
@@ -133,6 +135,8 @@ class Header extends Component {
                     <TextField
                       floatingLabelText="Event Title"
                       id="input_event_title"
+                      multiLine={true}
+                      rows={1}
                     /><br />
                   </div>
 
@@ -140,6 +144,8 @@ class Header extends Component {
                     <TextField
                       floatingLabelText="Location"
                       id="input_event_location"
+                      multiLine={true}
+                      rows={1}
                     /><br />
                   </div>
 
@@ -195,12 +201,13 @@ class Header extends Component {
                     <TextField
                       floatingLabelText="Website (optional)"
                       id="input_website"
+                      multiLine={true}
+                      rows={1}
                     /><br />
                   </div>
 
                   <div>
                    <TextField
-                      hintText="Message Field"
                       floatingLabelText="Event Description"
                       id="input_event_description"
                       multiLine={true}
@@ -210,7 +217,6 @@ class Header extends Component {
 
                  <div>
                    <TextField
-                      hintText="Message Field"
                       id="input_event_tags"
                       floatingLabelText="Tags"
                       multiLine={true}
