@@ -9,7 +9,6 @@ import TimePicker from 'material-ui/TimePicker';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import 'whatwg-fetch';
-import {blue500} from 'material-ui/styles/colors';
 
 const customContentStyle = {
 
