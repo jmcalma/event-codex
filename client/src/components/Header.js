@@ -17,6 +17,7 @@ const customContentStyle = {
 class Header extends Component {
   state = {
     open: false,
+    openEvents: false,
     value: 1,
   };
 
@@ -28,7 +29,33 @@ class Header extends Component {
     this.setState({open: false});
   };
 
+  handleOpenGetEvents = () => {
+    this.setState({openEvents: true});
+    this.fetchTest();
+  };
+
+  handleCloseGetEvents = () => {
+    this.setState({openEvents: false});
+  };
+
   handleChange = (event, index, value) => this.setState({value});
+  
+
+  fetchTest = () => {
+      fetch('http://localhost:3000/api/event')
+      .then((resp) => resp.json())
+      .then(function(response) {
+        
+        var count = Object.keys(response).length
+        for (var i = 0; i < count; i++) {
+          document.getElementById('getEventsBox').value += response[i].host_email + "\n";
+        }
+      })
+      .catch(function(error) {
+         console.log(error);
+      });
+
+  };
 
   addEvent = () => {
     this.setState({open: false}); //disable if debugging
@@ -103,6 +130,14 @@ class Header extends Component {
       />,
     ];
 
+    const actions2 = [
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        onClick={this.handleCloseGetEvents}
+      />,
+    ];
+
     return (
       <nav className="blue darken-2">
         <div className="nav-wrapper">
@@ -111,6 +146,23 @@ class Header extends Component {
             <MuiThemeProvider>
                <div>
                 <RaisedButton label="Add Event" onClick={this.handleOpen} />
+                <RaisedButton label="Get Events" onClick={this.handleOpenGetEvents} />
+
+                 <Dialog
+                  title="Test GET with fetch"
+                  actions={actions2}
+                  modal={false}
+                  open={this.state.openEvents}
+                  onRequestClose={this.handleCloseGetEvents}
+                >
+                    <TextField
+                      id="getEventsBox"
+                      multiLine={true}
+                      rows={4}
+                      disabled={true}
+                    /><br />
+
+                </Dialog>
 
                 <Dialog
                   title="Event Form"
