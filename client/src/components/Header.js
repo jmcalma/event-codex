@@ -42,7 +42,7 @@ class Header extends Component {
   
 
   fetchTest = () => {
-      fetch('http://localhost:3000/api/event')
+      fetch('/api/event')
       .then((resp) => resp.json())
       .then(function(response) {
         
