@@ -49,6 +49,11 @@ class Header extends Component {
         var count = Object.keys(response).length
         for (var i = 0; i < count; i++) {
           document.getElementById('getEventsBox').value += response[i].host_email + "\n";
+          var date = new Date(response[i].start_date);
+          var d = date.getDate() + 1;
+          var m = date.getMonth() + 1;
+          var y = date.getYear() + 1900;
+          document.getElementById('getEventsBox').value += y + " " + m + " " + d + "\n";
         }
       })
       .catch(function(error) {
