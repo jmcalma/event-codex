@@ -23,7 +23,7 @@ class Calendar extends Component {
       .then((resp) => resp.json())
       .then(function(response) {
         console.log("JSON " + response);
-        this.setState({ event: response });
+        this.setState({ events: response });
       })
       .catch(function(error) {
          console.log(error);
@@ -34,14 +34,17 @@ class Calendar extends Component {
     return (
       <div id="calendar">
         <BigCalendar
+          selectable
+          popup
           {...this.props}
           views={{ month: true, week: false}}
           events={events}
+          // titleAccessor='event_name'
           // startAccessor='start_date'
           // endAccessor='end_date'
           views={allViews}
           step={60}
-          height={100}
+          onSelectEvent={event => alert(event.title)}
           defaultDate={new Date(2015, 3, 1)}
         />
       </div>
