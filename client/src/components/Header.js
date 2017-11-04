@@ -96,16 +96,16 @@ class Header extends Component {
       fetch('/api/event', {
         method: 'POST',
         body: JSON.stringify({
-                    email : contactEmail,
-                    title : eventTitle,
+                    host_email : contactEmail,
+                    event_name : eventTitle,
                     location : eventLocation,
                     start_date : eventStartDate,
                     start_time : eventStartTime,
                     end_date : eventEndDate,
                     end_time : eventEndTime,
-                    category : eventCategory,
-                    website : website,
-                    description : eventDescription,
+                    event_category : eventCategory,
+                    event_description : eventDescription,
+                    website_link : website,
                     tags : eventTags,
         }),
         headers: {"Content-Type": "application/json"}
