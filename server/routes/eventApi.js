@@ -9,8 +9,14 @@ module.exports = app => {
 	  next();
 	});
 
-    app.get("/api/event", (req, res) => {
-      res.send(events);
+    app.get("/api/event", async (req, res) => {
+      // res.send(events);
+			const events = await Event.find(function (err, events) {
+				if (err) {
+					return console.error(err);
+				}
+				res.send(events);
+			})
     });
 
 	app.post("/api/event", async (req, res) => {
