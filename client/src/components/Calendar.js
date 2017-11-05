@@ -11,19 +11,24 @@ class Calendar extends Component {
     BigCalendar.setLocalizer(
       BigCalendar.momentLocalizer(moment)
     );
+    var resp = [];
     this.fetchEvents();
+
   }
 
   state = {
     event: []
   };
 
+
   fetchEvents = () => {
       fetch('/api/event')
       .then((resp) => resp.json())
       .then(function(response) {
-        console.log("JSON " + response);
-        this.setState({ events: response });
+        console.log(response);
+        console.log(events);
+        this.resp = response;
+        this.setState({ event: response });
       })
       .catch(function(error) {
          console.log(error);
@@ -31,6 +36,7 @@ class Calendar extends Component {
   };
 
   render() {
+    //console.log(this.state.event);
     return (
       <div id="calendar">
         <BigCalendar
@@ -39,9 +45,9 @@ class Calendar extends Component {
           {...this.props}
           views={{ month: true, week: false}}
           events={events}
-          // titleAccessor='event_name'
-          // startAccessor='start_date'
-          // endAccessor='end_date'
+          titleAccessor='location'
+          startAccessor='start_date'
+          endAccessor='end_date'
           views={allViews}
           step={60}
           onSelectEvent={event => alert(event.title)}
