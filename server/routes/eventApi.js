@@ -1,4 +1,3 @@
-var events = require('./../dataBase/events');
 const mongoose = require('mongoose');
 const Event = mongoose.model("events");
 
@@ -10,7 +9,6 @@ module.exports = app => {
 	});
 
     app.get("/api/event", async (req, res) => {
-      // res.send(events);
 			const events = await Event.find(function (err, events) {
 				if (err) {
 					return console.error(err);
@@ -47,7 +45,6 @@ function toDate(date, time) {
 	var year = dateArray[0];
 	var month = dateArray[1];
 	var day = dateArray[2];
-
 	var timeArray = time.split(":");
 	var hour = parseInt(timeArray[0]);
 	var minute = timeArray[1].substring(0, 2);
