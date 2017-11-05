@@ -18,24 +18,25 @@ module.exports = app => {
     });
 
 	app.post("/api/event", async (req, res) => {
-		const { email, title, location, start_date, start_time, end_date, end_time, website, description, tags } = req.body;
+		const { host_email, event_name, location, start_date, start_time, end_date, end_time, website_link, event_description, tags } = req.body;
 		const event = new Event({
-		  host_email: email,
-		  event_name: title,
-		  location: location,
+		  host_email,
+		  event_name,
+		  location,
 		  start_date: toDate(start_date, start_time),
 		  end_date: toDate(end_date, end_time),
-		  event_category: "test",
-		  event_description: description,
-		  tags: tags,
-		  website_link: website,
+		  event_category: "tech",
+		  event_description,
+		  tags,
+		  website_link,
 		  subject: "test"
 		});
     try {
       await event.save();
 			console.log('saved new event :)');
     } catch (err) {
-			console.log('save new event fail!');
+			console.log('=========  save new event fail! =========');
+			console.log(err);
     }
 	});
 };
