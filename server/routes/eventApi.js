@@ -19,6 +19,13 @@ module.exports = app => {
 			})
     });
 
+    app.get("/api/eventdata", function(req, res) {
+    	var ID = req.query["ID"];
+    	Event.findById(ID).exec(function(event) {
+    		res.send(event);
+    	})
+    });
+
 	app.post("/api/event", async (req, res) => {
 		const { email, title, location, start_date, start_time, end_date, end_time, website, description, tags } = req.body;
 		const event = new Event({
