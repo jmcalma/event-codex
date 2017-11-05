@@ -21,27 +21,12 @@ module.exports = app => {
 
 	app.post("/api/event", async (req, res) => {
 		const { email, title, location, start_date, start_time, end_date, end_time, website, description, tags } = req.body;
-		// var startDate = start_date.split("-");
-		// var year = startDate[0];
-		// var month = startDate[1];
-		// var day = startDate[2];
-		//
-		// console.log(year + ":" + month + ":" + day);
-		// var startTime = start_time.split(":");
-		// var hour = parseInt(startTime[0]);
-		// var second = startTime[1].substring(0, 2);
-		// var period = start_time.split(" ")[1];
-		// if (period == "pm") {
-		// 	hour += 12;
-		// }
-		var startDate = toDate(start_date, start_time);
-		console.log(startDate);
 		const event = new Event({
 		  host_email: email,
 		  event_name: title,
 		  location: location,
-		  start_date: Date.now(),
-		  end_date: Date.now(),
+		  start_date: toDate(start_date, start_time),
+		  end_date: toDate(end_date, end_time),
 		  event_category: "test",
 		  event_description: description,
 		  tags: tags,
@@ -69,6 +54,5 @@ function toDate(date, time) {
 	if (time.split(" ")[1] == "pm") {
 		hour += 12;
 	}
-	console.log(year+ month + ":" + day + ":" + hour + ":" + minute);
 	return new Date(year + "-" + month + "-" + day +"T" + hour + ":" + minute + ":00Z");
 }
