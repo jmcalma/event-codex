@@ -59,5 +59,6 @@ function toDate(date, time) {
 	if (time.split(" ")[1] == "pm") {
 		hour += 12;
 	}
+  console.log("test: " + year + "-" + month + "-" + day +"T" + hour + ":" + minute + ":00Z");
 	return new Date(year + "-" + month + "-" + day +"T" + hour + ":" + minute + ":00Z");
 }
