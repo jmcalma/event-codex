@@ -35,8 +35,7 @@ module.exports = app => {
 		  event_category: "tech",
 		  event_description,
 		  tags,
-		  website_link,
-		  subject: "test"
+		  website_link
 		});
     try {
       await event.save();
