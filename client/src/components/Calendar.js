@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
-import events from '../events';
+import event from '../events';
 
 let allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k])
 
@@ -14,7 +14,7 @@ class Calendar extends Component {
     );
 
     this.state = {
-      event: []
+      events: []
     };
   };
 
@@ -23,7 +23,7 @@ class Calendar extends Component {
           .then((response) => {
               return response.json() })   
                   .then((json) => {
-                      this.setState({ event: json });
+                      this.setState({ events: json });
                   });
   };
 
@@ -36,7 +36,7 @@ class Calendar extends Component {
           popup
           {...this.props}
           views={{ month: true, week: false}}
-          events={this.state.event}
+          events={this.state.events}
           titleAccessor='location'
           startAccessor='start_date'
           endAccessor='end_date'
