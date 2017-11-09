@@ -10,16 +10,15 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import 'whatwg-fetch';
 
-const customContentStyle = {
-  padding: '30px',
-};
-
 class Header extends Component {
-  state = {
-    open: false,
-    openEvents: false,
-    value: 1,
-  };
+  constructor() {
+    super();
+    this.state = {
+      open: false,
+      openEvents: false,
+      value: 1,
+    };
+  }
 
   handleOpen = () => {
     this.setState({open: true});
@@ -59,7 +58,6 @@ class Header extends Component {
       .catch(function(error) {
          console.log(error);
       });
-
   };
 
   addEvent = () => {
@@ -76,29 +74,7 @@ class Header extends Component {
     var eventDescription = document.getElementById('input_event_description').value;
     var eventTags = document.getElementById('input_event_tags').value;
 
-    // $.ajax(
-    //         {
-    //             type : "POST",
-    //             url  : "/api/event"+ eventTitleUrl,
-    //             data : {
-    //                 "email" : contactEmail,
-    //                 "title" : eventTitle,
-    //                 "location" : eventLocation,
-    //                 "start date" : eventStartDate,
-    //                 "start time" : eventStartTime,
-    //                 "end date" : eventEndDate,
-    //                 "end time" : eventEndTime,
-    //                 "category" : eventCategory,
-    //                 "website" : website,
-    //                 "description" : eventDescription,
-    //                 "tags" : eventTags,
-    //                 "url" : eventTitleUrl
-    //             },
-    //         });
-
-      //var form = document.querySelector('form')
-
-      fetch('/api/event', {
+    fetch('/api/event', {
         method: 'POST',
         body: JSON.stringify({
                     host_email : contactEmail,

@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 
-let allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k])
-
 class Calendar extends Component {
   constructor() {
     super(); 
