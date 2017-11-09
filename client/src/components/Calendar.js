@@ -1,42 +1,33 @@
 import React, { Component } from "react";
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
-import events from '../events';
+import event from '../events';
 
 let allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k])
 
 class Calendar extends Component {
   constructor() {
     super(); 
+
     BigCalendar.setLocalizer(
       BigCalendar.momentLocalizer(moment)
     );
-    var resp = [];
-    this.fetchEvents();
 
-  }
-
-  state = {
-    event: []
+    this.state = {
+      events: []
+    };
   };
 
-
-  fetchEvents = () => {
-      fetch('/api/event')
-      .then((resp) => resp.json())
-      .then(function(response) {
-        console.log(response);
-        console.log(events);
-        this.resp = response;
-        this.setState({ event: response });
-      })
-      .catch(function(error) {
-         console.log(error);
-      });
+   componentDidMount() {
+      fetch("/api/event")
+          .then((response) => {
+              return response.json() })   
+                  .then((json) => {
+                      this.setState({ events: json });
+                  });
   };
 
   render() {
-    //console.log(this.state.event);
     return (
       <div id="calendar">
         <BigCalendar
@@ -44,14 +35,14 @@ class Calendar extends Component {
           popup
           {...this.props}
           views={{ month: true, week: false}}
-          events={events}
+          events={this.state.events}
           titleAccessor='location'
           startAccessor='start_date'
           endAccessor='end_date'
           views={allViews}
           step={60}
-          onSelectEvent={event => alert(event.title)}
-          defaultDate={new Date(2015, 3, 1)}
+          onSelectEvent={event => alert(event.event_name)}
+          defaultDate={new Date()}
         />
       </div>
     )
