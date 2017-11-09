@@ -8,13 +8,14 @@ let allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k])
 class Calendar extends Component {
   constructor() {
     super(); 
+
     BigCalendar.setLocalizer(
       BigCalendar.momentLocalizer(moment)
     );
+
     this.state = {
       event: []
     };
-    //this.fetchEvents();
   };
 
    componentDidMount() {
@@ -27,22 +28,7 @@ class Calendar extends Component {
   };
 
 
-  fetchEvents = () => {
-      fetch('/api/event')
-      .then((resp) => resp.json())
-      .then(function(response) {
-        //console.log(response);
-        //console.log(events);
-        this.resp = response;
-        this.setState({ event: response });
-      })
-      .catch(function(error) {
-         console.log(error);
-      });
-  };
-
   render() {
-    console.log(this.state.event);
     return (
       <div id="calendar">
         <BigCalendar
