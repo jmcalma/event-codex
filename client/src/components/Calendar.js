@@ -37,12 +37,12 @@ class Calendar extends Component {
           {...this.props}
           views={{ month: true, week: false}}
           events={this.state.events}
-          titleAccessor='location'
+          titleAccessor='event_name'
           startAccessor='start_date'
           endAccessor='end_date'
           views={allViews}
           step={60}
-          onSelectEvent={event => alert(event.event_name)}
+          onSelectEvent={event => alert(event.location)}
           defaultDate={new Date()}
         />
       </div>
