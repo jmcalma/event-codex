@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
-import event from '../events';
 
 let allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k])
 
@@ -35,12 +34,12 @@ class Calendar extends Component {
           selectable
           popup
           {...this.props}
-          views={{ month: true, week: false}}
+          views={['month']}
+          defaultView='month'
           events={this.state.events}
           titleAccessor='event_name'
           startAccessor='start_date'
           endAccessor='end_date'
-          views={allViews}
           step={60}
           onSelectEvent={event => alert(event.location)}
           defaultDate={new Date()}
