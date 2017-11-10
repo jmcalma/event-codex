@@ -15,7 +15,7 @@ class Calendar extends Component {
     };
   };
 
-   componentDidMount() {
+  componentDidMount() {
       fetch("/api/event")
           .then((response) => {
               return response.json() })   
