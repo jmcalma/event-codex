@@ -78,11 +78,4 @@ function getGroups() {
      		console.log(importedJSON);
   		}
 	})
-
-	// $.getJSON(, function(data) {
-	//     	console.log(data);
-	//       	$.each(data, function(num, groupN) {
- //  				groups.push(groupN.name);
-	// 		});
- //   	});
 }
