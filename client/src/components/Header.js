@@ -111,14 +111,6 @@ class Header extends Component {
       />,
     ];
 
-    const actions2 = [
-      <FlatButton
-        label="Cancel"
-        primary={true}
-        onClick={this.handleCloseGetEvents}
-      />,
-    ];
-
     return (
       <nav className="blue darken-2">
         <div className="nav-wrapper">
@@ -130,26 +122,7 @@ class Header extends Component {
                   <div id="btnAddEvent">
                     <RaisedButton label="Add Event" onClick={this.handleOpen} />
                   </div> 
-                  <div id="btnExtra">
-                    <RaisedButton label="Get Events" onClick={this.handleOpenGetEvents} />
-                  </div>
                 </div>
-
-                 <Dialog
-                  title="Test GET with fetch"
-                  actions={actions2}
-                  modal={false}
-                  open={this.state.openEvents}
-                  onRequestClose={this.handleCloseGetEvents}
-                >
-                    <TextField
-                      id="getEventsBox"
-                      multiLine={true}
-                      rows={4}
-                      disabled={true}
-                    /><br />
-
-                </Dialog>
 
                 <Dialog
                   title="Event Form"
