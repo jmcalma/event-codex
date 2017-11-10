@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 const Event = mongoose.model("events");
 var request = require("request")
-var groups = [{name: 'hello'}];
+var groups = [{urlname: 'scwa-oc'}];
+var meetupEvents = [];
 
 module.exports = app => {
 	app.use(function(req, res, next) {
@@ -18,12 +19,12 @@ module.exports = app => {
 				res.send(events);
 			})
     });
-//////
+
     app.get("/api/groups", async (req, res) => {
 			getGroups();
 			res.send(groups);
     });
-///////
+
     app.get("/api/eventdata", function(req, res) {
     	var ID = req.query["ID"];
     	Event.findById(ID).exec(function(event) {
@@ -70,7 +71,7 @@ function toDate(date, time) {
 }
 
 function getGroups() {
-	var link = "https://api.meetup.com/find/groups?photo-host=public&page=15&sig_id=240469031&category=34&only=name&sig=3c8c76c22847471d4b9ca0f127ba084818e0038b";
+	var link = "https://api.meetup.com/find/groups?photo-host=public&page=50&sig_id=240469031&category=34&only=urlname&sig=02bf65fd813cc9b9600a80d07aee3a43da37de51";
 	request(link, function (error, response, body) {
   		if (!error && response.statusCode == 200) {
      		var importedJSON = JSON.parse(body);
@@ -79,3 +80,14 @@ function getGroups() {
   		}
 	})
 }
+
+// function getEventsFromMeetup() {
+// 	var link = "https://api.meetup.com/HackerNestOC/events?photo-host=public&page=5&sig_id=240469031&only=name%2Cvenue%2Clocal_date%2Clocal_time%2Clink%2Cdescription&sig=d6fcf182f489d043b816b3ed4bfc76ad6ff0e962";
+// 	request(link, function (error, response, body) {
+//   		if (!error && response.statusCode == 200) {
+//      		var importedJSON = JSON.parse(body);
+//      		groups = groups.concat(importedJSON);
+//      		console.log(importedJSON);
+//   		}
+// 	})
+// }
