@@ -14,6 +14,7 @@ app.get("/", (req, res) => {
 require("./routes/authRoutes")(app);
 require("./routes/eventApi")(app);
 require("./routes/icsfile")(app);
+require("./routes/meetupEventApi")(app);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
