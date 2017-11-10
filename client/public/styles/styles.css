@@ -24,3 +24,13 @@ body {
 #space {
 	padding-top: 20px;
 }
+
+#btnDownloadIcs {
+	margin: auto;
+	padding-top: 20px;
+}
+
+#eventDetails {
+	padding: 10px;
+	padding-bottom: 30px;
+}
