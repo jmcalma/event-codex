@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const Event = mongoose.model("events");
+var request = require("request")
+var groups = [{name: 'hello'}];
 
 module.exports = app => {
 	app.use(function(req, res, next) {
@@ -16,7 +18,12 @@ module.exports = app => {
 				res.send(events);
 			})
     });
-
+//////
+    app.get("/api/groups", async (req, res) => {
+			getGroups();
+			res.send(groups);
+    });
+///////
     app.get("/api/eventdata", function(req, res) {
     	var ID = req.query["ID"];
     	Event.findById(ID).exec(function(event) {
@@ -60,4 +67,22 @@ function toDate(date, time) {
 	}
   console.log("test: " + year + "-" + month + "-" + day +"T" + hour + ":" + minute + ":00Z");
 	return new Date(year + "-" + month + "-" + day +"T" + hour + ":" + minute + ":00Z");
+}
+
+function getGroups() {
+	var link = "https://api.meetup.com/find/groups?photo-host=public&page=15&sig_id=240469031&category=34&only=name&sig=3c8c76c22847471d4b9ca0f127ba084818e0038b";
+	request(link, function (error, response, body) {
+  		if (!error && response.statusCode == 200) {
+     		var importedJSON = JSON.parse(body);
+     		groups = groups.concat(importedJSON);
+     		console.log(importedJSON);
+  		}
+	})
+
+	// $.getJSON(, function(data) {
+	//     	console.log(data);
+	//       	$.each(data, function(num, groupN) {
+ //  				groups.push(groupN.name);
+	// 		});
+ //   	});
 }
