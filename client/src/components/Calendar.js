@@ -41,7 +41,7 @@ class Calendar extends Component {
   };
 
   downloadIcs = () => {
-
+      console.log("download event");
   };
 
   convert24HourTo12Hour = (hours, minutes) => {
@@ -120,11 +120,24 @@ class Calendar extends Component {
                 onRequestClose={this.handleClose}
               >
                 <div id="eventDetails">
-                  <h6> Contact Email: {this.state.currentEvent.host_email} </h6>
-                  <h6> Location: {this.state.currentEvent.location} </h6>
-                  <h6> Duration: {this.convertDateTime(this.state.currentEvent.start_date, this.state.currentEvent.end_date)} </h6>
-                  <h6> Category: {this.state.currentEvent.event_category} </h6>
-                  <h6> Description: {this.state.currentEvent.event_description} </h6>
+                  <div>
+                    <h6> Contact Email: {this.state.currentEvent.host_email} </h6>
+                  </div>
+                  <div id="miniSpace"> </div>
+                  <div>
+                    <h6> Location: {this.state.currentEvent.location} </h6>
+                  </div>
+                  <div>
+                    <h6> Duration: {this.convertDateTime(this.state.currentEvent.start_date, this.state.currentEvent.end_date)} </h6>
+                  </div>
+                  
+                  <div id="miniSpace"> </div>
+                  <div>
+                    <h6> Category: {this.state.currentEvent.event_category} </h6>
+                  </div>
+                  <div>
+                    <h6> Description: {this.state.currentEvent.event_description} </h6>
+                  </div>
 
                 </div>
 
