@@ -7,6 +7,12 @@ import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 
+
+const titleStyles = {
+    fontSize: '40px',
+    padding: '15px 0px 20px 21px',
+};
+
 class Calendar extends Component {
   constructor() {
     super(); 
@@ -118,6 +124,7 @@ class Calendar extends Component {
                 modal={false}
                 open={this.state.eventDetailsOpen}
                 onRequestClose={this.handleClose}
+                titleStyle={titleStyles}
               >
                 <div id="eventDetails">
                   <div>
