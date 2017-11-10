@@ -3,7 +3,6 @@ import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Dialog from 'material-ui/Dialog';
-import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 
@@ -78,7 +77,7 @@ class Calendar extends Component {
       var endMin = convertedEndDate.getMinutes() + 1;
       var convEndTime = this.convert24HourTo12Hour(endHour, endMin);
 
-      if (startDay != endDay) {
+      if (startDay !== endDay) {
           return days[convertedStartDate.getDay()] + ", " + months[startMonth] + " " + startDay + ", " + startYear + " at " + convStartTime + " to "
            + days[convertedEndDate.getDay()] + ", " + months[endMonth] + " " + endDay + ", " + endYear  + " at " + convEndTime;
        } else {
