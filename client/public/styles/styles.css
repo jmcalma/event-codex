@@ -1,26 +1,17 @@
 body {
-	background-color: #2196F3;
-	width: 80%;
 
 }
 
-#container {
-	width: 40%;
-	height: 90%;
-	background-color: #f7f7f7;
-	margin: auto;
-	box-shadow: 2px 2px;
-	//border-radius: 10px;
+#nav_buttons {
+	padding: 11px;
 }
 
-#space {
-	height: 70px;
+#btnAddEvent {
+	float: left;
+	padding: 5px;
 }
 
-#space2 {
-	height: 20px;
-	background-color: #0069c0;
-	width: 40%;
-	margin: auto;
-	box-shadow: 2px 2px;
+#btnExtra {
+	float: right;
+	padding: 5px;
 }
