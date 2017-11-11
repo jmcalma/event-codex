@@ -40,7 +40,7 @@ class Header extends Component {
   handleChange = (event, index, value) => this.setState({value});
 
   addEvent = () => {
-    this.setState({open: false}); //disable if debugging
+    this.setState({open: false});
     var contactEmail = document.getElementById('input_email').value;
     var eventTitle = document.getElementById('input_event_title').value;
     var eventLocation = document.getElementById('input_event_location').value;
@@ -73,8 +73,70 @@ class Header extends Component {
       .then(function(response) {
         return response.json()
       })
-     }
+  }
 
+  validateForm = () => {
+    if(this.formIsValid()) {
+      this.addEvent();
+    } else {
+      alert("One or more of the fields is incomplete or has errors.");
+    }
+  }
+
+  formIsValid = () => {
+    var contactEmail = document.getElementById('input_email').value;
+    var eventTitle = document.getElementById('input_event_title').value;
+    var eventLocation = document.getElementById('input_event_location').value;
+    var eventStartDate = document.getElementById('input_event_startdate').value;
+    var eventStartTime = document.getElementById('input_event_starttime').value;
+    var eventEndDate = document.getElementById('input_event_enddate').value;
+    var eventEndTime = document.getElementById('input_event_endtime').value;
+    var eventCategory = document.getElementById('select_event_category').value;
+    var website = document.getElementById('input_website').value;
+    var eventDescription = document.getElementById('input_event_description').value;
+    var eventTags = document.getElementById('input_event_tags').value;
+
+    if (contactEmail === "" || eventTitle === "" || eventLocation === "" || eventStartDate === ""
+        || eventStartTime === "" || eventDescription === "" || eventTags === "") {
+        return false;
+    }
+
+    if (!(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(contactEmail))) { 
+       return false;
+    }
+
+    return true;
+  }
+
+  handleOnChangeDatePicker = (event) => {
+    var eventEndDate = document.getElementById('input_event_enddate').value;
+    if(eventEndDate === "") {
+      document.getElementById('input_event_enddate').value = event.getFullYear() + "-" + (event.getMonth() + 1) + "-" + (event.getDate());
+    }
+  }
+
+  handleOnChangeTimePicker = (event) => {
+    var eventEndTime = document.getElementById('input_event_endtime').value;
+    if(eventEndTime === "") {
+      document.getElementById('input_event_endtime').value = this.convert24HourTo12Hour(event.getHours() + 1, event.getMinutes());
+    }
+  }
+
+  convert24HourTo12Hour = (hours, minutes) => {
+    if (hours > 12) {
+      return (hours - 12) + ":" + this.addZeroToMinute(minutes) + " pm";
+    } else {
+      return hours + ":" + this.addZeroToMinute(minutes) + " am";
+    }
+  }
+
+  addZeroToMinute = (minutes) => {
+    if (minutes < 10) {
+      return "0" + minutes;
+    } else {
+      return minutes;
+    }
+  }
 
   render() {
     const actions = [
@@ -86,7 +148,7 @@ class Header extends Component {
       <FlatButton
         label="Submit"
         primary={true}
-        onClick={this.addEvent}
+        onClick={this.validateForm}
       />,
     ];
 
@@ -107,7 +169,6 @@ class Header extends Component {
                   title="Event Form"
                   actions={actions}
                   modal={false}
-                  //contentStyle={customContentStyle}
                   autoScrollBodyContent={true}
                   open={this.state.open}
                   onRequestClose={this.handleClose}
@@ -142,7 +203,7 @@ class Header extends Component {
 
                  <div id="start">
                    <div>
-                    <DatePicker hintText="Start Date" container="inline" mode="landscape" id="input_event_startdate"/>
+                    <DatePicker hintText="Start Date" container="inline" mode="landscape" id="input_event_startdate" firstDayOfWeek={0} onChange={(event, x) => {this.handleOnChangeDatePicker(x)}}/>
                    </div>
 
                     <div>
@@ -150,15 +211,14 @@ class Header extends Component {
                         format="ampm"
                         hintText="Start Time"
                         id="input_event_starttime"
-                        value={this.state.value12}
-                        onChange={this.handleChangeTimePicker12}
+                        onChange={(event, x) => {this.handleOnChangeTimePicker(x)}}
                       />
                     </div>
                   </div>
 
                   <div id="end">
                     <div>
-                       <DatePicker hintText="End Date" container="inline" mode="landscape" id="input_event_enddate"/>
+                       <DatePicker hintText="End Date" container="inline" mode="landscape" id="input_event_enddate" firstDayOfWeek={0} />
                     </div>
 
                     <div>
@@ -166,8 +226,6 @@ class Header extends Component {
                         format="ampm"
                         hintText="End Time"
                         id="input_event_endtime"
-                        value={this.state.value12}
-                        onChange={this.handleChangeTimePicker12}
                       />
                     </div>
                   </div>
