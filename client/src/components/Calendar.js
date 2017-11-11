@@ -50,6 +50,7 @@ class Calendar extends Component {
   };
 
   convert24HourTo12Hour = (hours, minutes) => {
+    //console.log(hours);
     if (hours > 12) {
       return (hours - 12) + ":" + minutes + " PM";
     } else {
@@ -63,18 +64,19 @@ class Calendar extends Component {
       var convertedStartDate = new Date(start_date);
       var convertedEndDate = new Date(end_date);
 
-      var startMonth = convertedStartDate.getMonth() + 1;
-      var startDay = convertedStartDate.getDate() + 1;
+      var startMonth = convertedStartDate.getMonth();
+      var startDay = convertedStartDate.getDate();
       var startYear = convertedStartDate.getFullYear();
-      var startHour = convertedStartDate.getHours() + 1;
-      var startMin = convertedStartDate.getMinutes() + 1;
+      var startHour = convertedStartDate.getUTCHours();
+      var startMin = convertedStartDate.getMinutes();
+      console.log(startHour);
       var convStartTime = this.convert24HourTo12Hour(startHour, startMin);
 
-      var endMonth = convertedEndDate.getMonth() + 1;
-      var endDay = convertedEndDate.getDate() + 1;
+      var endMonth = convertedEndDate.getMonth();
+      var endDay = convertedEndDate.getDate();
       var endYear = convertedEndDate.getFullYear();
-      var endHour = convertedEndDate.getHours() + 1;
-      var endMin = convertedEndDate.getMinutes() + 1;
+      var endHour = convertedEndDate.getUTCHours();
+      var endMin = convertedEndDate.getMinutes();
       var convEndTime = this.convert24HourTo12Hour(endHour, endMin);
 
       if (startDay !== endDay) {
