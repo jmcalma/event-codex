@@ -77,8 +77,7 @@ class Header extends Component {
 
   validateForm = () => {
     if(this.formIsValid()) {
-      //this.addEvent();
-      console.log('asdf');
+      this.addEvent();
     } else {
       alert("One or more of the fields is incomplete or has errors.");
     }
