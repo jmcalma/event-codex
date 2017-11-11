@@ -5,6 +5,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
+import MiniMap from './MiniMap';
 
 
 const titleStyles = {
@@ -69,7 +70,6 @@ class Calendar extends Component {
       var startYear = convertedStartDate.getFullYear();
       var startHour = convertedStartDate.getUTCHours();
       var startMin = convertedStartDate.getMinutes();
-      console.log(startHour);
       var convStartTime = this.convert24HourTo12Hour(startHour, startMin);
 
       var endMonth = convertedEndDate.getMonth();
@@ -133,18 +133,24 @@ class Calendar extends Component {
                   </div>
                   <div id="miniSpace"> </div>
                   <div>
-                    <h6> Location: {this.state.currentEvent.location} </h6>
+                    <h6> When: {this.convertDateTime(this.state.currentEvent.start_date, this.state.currentEvent.end_date)} </h6>
                   </div>
                   <div>
-                    <h6> Duration: {this.convertDateTime(this.state.currentEvent.start_date, this.state.currentEvent.end_date)} </h6>
+                    <h6> Where: {this.state.currentEvent.location} </h6>
                   </div>
                   
                   <div id="miniSpace"> </div>
                   <div>
-                    <h6> Category: {this.state.currentEvent.event_category} </h6>
+                    <h6> Description: {this.state.currentEvent.event_description} </h6>
                   </div>
                   <div>
-                    <h6> Description: {this.state.currentEvent.event_description} </h6>
+                    <h6> Category: {this.state.currentEvent.event_category} </h6>
+                  </div>
+
+                  <div>
+                    {this.state.currentEvent.event_name}
+                    <MiniMap isMarkerShown={false} event={this.state.currentEvent} />
+                    }
                   </div>
 
                 </div>
