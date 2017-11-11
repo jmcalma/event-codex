@@ -51,11 +51,18 @@ class Calendar extends Component {
   };
 
   convert24HourTo12Hour = (hours, minutes) => {
-    //console.log(hours);
     if (hours > 12) {
-      return (hours - 12) + ":" + minutes + " PM";
+      return (hours - 12) + ":" + this.addZeroToMinute(minutes) + " PM";
     } else {
-      return hours + ":" + minutes + " AM";
+      return hours + ":" + this.addZeroToMinute(minutes) + " AM";
+    }
+  }
+
+  addZeroToMinute = (minutes) => {
+    if (minutes < 10) {
+      return "0" + minutes;
+    } else {
+      return minutes;
     }
   }
 
