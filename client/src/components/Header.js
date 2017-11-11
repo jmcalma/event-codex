@@ -105,6 +105,12 @@ class Header extends Component {
        return false;
     }
 
+    if(website === "") {
+
+    } else if (!(/^[a-zA-Z0-9]+\.[A-Za-z]+$/.test(website))) {
+      return false;
+    }
+
     return true;
   }
 
