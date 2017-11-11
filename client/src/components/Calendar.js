@@ -148,9 +148,7 @@ class Calendar extends Component {
                   </div>
 
                   <div>
-                    {this.state.currentEvent.event_name}
                     <MiniMap isMarkerShown={false} event={this.state.currentEvent} />
-                    }
                   </div>
 
                 </div>
