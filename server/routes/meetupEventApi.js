@@ -103,12 +103,21 @@ function getTechGroups() {
 }
 
 function getEventsFromMeetup() {
-  var link = "https://api.meetup.com/HackerNestOC/events?photo-host=public&page=5&sig_id=240469031&only=name%2Cvenue%2Clocal_date%2Clocal_time%2Clink%2Cdescription&sig=d6fcf182f489d043b816b3ed4bfc76ad6ff0e962";
-  request(link, function (error, response, body) {
-      if (!error && response.statusCode == 200) {
-        var importedJSON = JSON.parse(body);
-        meetupEvents = meetupEvents.concat(importedJSON);
-        console.log(importedJSON);
-      }
-  })
+  var importedJSON;
+  var fullLink = "";
+  var linkHalf1 = "https://api.meetup.com/";
+  var linkHalf2 = "/events?&sign=true&photo-host=public&page=20&key=d182f5649646f23517334541793f72";
+  fullLink = linkHalf1 + groups[0].urlname + linkHalf2;
+  console.log(groups.length);
+  console.log(fullLink);
+  for(var i in groups) {
+    fullLink = linkHalf1 + groups[i].urlname + linkHalf2;
+    request(fullLink, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+          importedJSON = JSON.parse(body);
+          meetupEvents = meetupEvents.concat(importedJSON);
+          console.log(importedJSON);
+        }
+    })
+  }
 }
