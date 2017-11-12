@@ -7,13 +7,12 @@ body {
 }
 
 #btnAddEvent {
-	float: left;
+	float: right;
 	padding: 5px;
 }
 
 #btnExtra {
-	float: right;
-	padding: 5px;
+	float: left;
 }
 
 #footer {
@@ -38,3 +37,4 @@ body {
 	padding: 10px;
 	padding-bottom: 30px;
 }
+

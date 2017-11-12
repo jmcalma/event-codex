@@ -3,12 +3,16 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
+import IconButton from 'material-ui/IconButton'
 import TextField from 'material-ui/TextField';
 import DatePicker from 'material-ui/DatePicker';
 import TimePicker from 'material-ui/TimePicker';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import 'whatwg-fetch';
+
+import SearchIcon from './searchIcon.png';
+import SearchIco from 'material-ui/svg-icons/action/search';
 
 class Header extends Component {
   constructor() {
@@ -17,6 +21,7 @@ class Header extends Component {
       open: false,
       openEvents: false,
       value: 1,
+      openTest: false,
     };
   }
 
@@ -146,6 +151,18 @@ class Header extends Component {
     }
   }
 
+  openTest = () => {
+     if (this.state.openTest === false) {
+        this.setState({ openTest: true});
+     } else {
+      this.setState({ openTest: false});
+     }
+  }
+
+  closeTest = () => {
+    this.setState({ openTest: false});
+  }
+
   render() {
     const actions = [
       <FlatButton
@@ -160,6 +177,16 @@ class Header extends Component {
       />,
     ];
 
+    const actionsSearch = [
+      <FlatButton
+        label="Close"
+        primary={true}
+        onClick={this.closeTest}
+      />,
+    ];
+
+
+
     return (
       <nav className="blue darken-2">
         <div className="nav-wrapper">
@@ -168,16 +195,41 @@ class Header extends Component {
             <MuiThemeProvider>
                <div>
                 <div id="nav_buttons">
+                   <div id="btnExtra">
+                    <IconButton id="btnSearch" iconClassName="material-icons" onClick={this.openTest} >search</IconButton>
+                  </div>
+
                   <div id="btnAddEvent">
                     <RaisedButton label="Add Event" onClick={this.handleOpen} />
                   </div> 
+                </div>
+
+                <div>
+                  <Dialog
+                      title={""}
+                      actions={actionsSearch}
+                      modal={false}
+                      open={this.state.openTest}
+                      onRequestClose={this.closeTest}
+                      autoScrollBodyContent={true}
+                    >
+                     <div style={{position: 'relative', display: 'inline-block'}}>
+                       <img src={SearchIcon} style={{position: 'absolute', left: 0, top: 15, width: 20, height: 20}} onClick={this.somethingYa}/>
+                       
+                       <TextField
+                          style={{textIndent: 30}}
+                          hintText="Search by Name"
+                          multiLine={true}  
+                        />
+                       <FlatButton label="Search" onClick={this.handleSearch} />
+                    </div>
+                  </Dialog>
                 </div>
 
                 <Dialog
                   title="Event Form"
                   actions={actions}
                   modal={false}
-                  
                   open={this.state.open}
                   onRequestClose={this.handleClose}
                 >
