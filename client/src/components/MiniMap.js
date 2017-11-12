@@ -7,7 +7,7 @@ import Geocoder from 'react-native-geocoding';
 class MiniMap extends React.Component {
 	constructor(props) {
 		super(props);
-		Geocoder.setApiKey('AIzaSyDdM27qBjlwOnDpVgCeirjuufa1OIgXmaw');
+		Geocoder.setApiKey('AIzaSyCq6nFHd98u1FgWCwivJDeBUAUNEhvB7Gw');
 		this.state = {
 			markers: [],
 			currentEvent: [],
@@ -36,7 +36,7 @@ class MiniMap extends React.Component {
 	render () {
 		return (
 			<GoogleMapsWrapper
-				googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
+				googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCq6nFHd98u1FgWCwivJDeBUAUNEhvB7Gw&v=3.exp&libraries=geometry,drawing,places"
 				loadingElement={<div style={{ height: `100%` }} />}
 				containerElement={<div style={{ height: `400px` }} />}
 				mapElement={<div style={{ height: `100%` }} />}

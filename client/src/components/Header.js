@@ -77,7 +77,8 @@ class Header extends Component {
 
   validateForm = () => {
     if(this.formIsValid()) {
-      this.addEvent();
+     //this.addEvent();
+     console.log("event sent");
     } else {
       alert("One or more of the fields is incomplete or has errors.");
     }
@@ -89,9 +90,6 @@ class Header extends Component {
     var eventLocation = document.getElementById('input_event_location').value;
     var eventStartDate = document.getElementById('input_event_startdate').value;
     var eventStartTime = document.getElementById('input_event_starttime').value;
-    var eventEndDate = document.getElementById('input_event_enddate').value;
-    var eventEndTime = document.getElementById('input_event_endtime').value;
-    var eventCategory = document.getElementById('select_event_category').value;
     var website = document.getElementById('input_website').value;
     var eventDescription = document.getElementById('input_event_description').value;
     var eventTags = document.getElementById('input_event_tags').value;
@@ -101,7 +99,7 @@ class Header extends Component {
         return false;
     }
 
-    var emailRegExValidate = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    var emailRegExValidate = /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@(([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (!(emailRegExValidate).test(contactEmail)) { 
        return false;
     }
