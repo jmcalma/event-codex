@@ -37,7 +37,9 @@ class Header extends Component {
     this.setState({openEvents: false});
   };
 
-  handleChange = (event, index, value) => this.setState({value});
+  handleChangeSelector = (event, index, value) => {
+    this.setState({value});
+  };
 
   addEvent = () => {
     this.setState({open: false});
@@ -77,8 +79,7 @@ class Header extends Component {
 
   validateForm = () => {
     if(this.formIsValid()) {
-     //this.addEvent();
-     console.log("event sent");
+     this.addEvent();
     } else {
       alert("One or more of the fields is incomplete or has errors.");
     }
@@ -242,7 +243,7 @@ class Header extends Component {
                       floatingLabelText="Category"
                       value={this.state.value}
                       id="select_event_category"
-                      onChange={this.handleChange}
+                      onChange={this.handleChangeSelector}
                       selectedMenuItemStyle={{ color: '#00B8D4' }}
                     >
                       <MenuItem value={1} primaryText="option1" />
