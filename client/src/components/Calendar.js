@@ -133,6 +133,7 @@ class Calendar extends Component {
                 open={this.state.eventDetailsOpen}
                 onRequestClose={this.handleClose}
                 titleStyle={titleStyles}
+                autoScrollBodyContent={true}
               >
                 <div id="eventDetails">
                   <div>
@@ -158,9 +159,11 @@ class Calendar extends Component {
                     <MiniMap isMarkerShown={false} event={this.state.currentEvent} />
                   </div>
 
+                  <div>
+                    <RaisedButton id="btnDownloadIcs" label="Download Event ICS" onClick={this.downloadIcs} />
+                  </div>
                 </div>
-
-                <RaisedButton id="btnDownloadIcs" label="Download Event ICS" onClick={this.downloadIcs} />
+                
               </Dialog>
             </div>
 

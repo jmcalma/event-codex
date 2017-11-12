@@ -177,7 +177,7 @@ class Header extends Component {
                   title="Event Form"
                   actions={actions}
                   modal={false}
-                  autoScrollBodyContent={true}
+                  
                   open={this.state.open}
                   onRequestClose={this.handleClose}
                 >

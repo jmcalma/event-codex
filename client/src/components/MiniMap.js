@@ -38,7 +38,7 @@ class MiniMap extends React.Component {
 			<GoogleMapsWrapper
 				googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCq6nFHd98u1FgWCwivJDeBUAUNEhvB7Gw&v=3.exp&libraries=geometry,drawing,places"
 				loadingElement={<div style={{ height: `100%` }} />}
-				containerElement={<div style={{ height: `400px` }} />}
+				containerElement={<div style={{ height: `300px` }} />}
 				mapElement={<div style={{ height: `100%` }} />}
 				defaultZoom={13}
 				defaultCenter={{ lat: this.state.locationLatitude, lng: this.state.locationLongitude }}>
