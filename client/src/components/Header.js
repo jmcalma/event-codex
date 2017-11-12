@@ -100,7 +100,7 @@ class Header extends Component {
         return false;
     }
 
-    var emailRegExValidate = /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@(([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    var emailRegExValidate = /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@(([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (!(emailRegExValidate).test(contactEmail)) { 
        return false;
     }
@@ -200,6 +200,22 @@ class Header extends Component {
                     /><br />
                   </div>
 
+                   <div>
+                    <SelectField
+                      floatingLabelText="Category"
+                      value={this.state.value}
+                      id="select_event_category"
+                      onChange={this.handleChangeSelector}
+                      selectedMenuItemStyle={{ color: '#00B8D4' }}
+                    >
+                      <MenuItem value={1} primaryText="option1" />
+                      <MenuItem value={2} primaryText="option2" />
+                      <MenuItem value={3} primaryText="option3" />
+                      <MenuItem value={4} primaryText="option4" />
+                      <MenuItem value={5} primaryText="Technology" />
+                    </SelectField>
+                  </div>
+
                   <div>
                     <TextField
                       floatingLabelText="Location"
@@ -231,27 +247,12 @@ class Header extends Component {
 
                     <div>
                       <TimePicker
+                        value={this.state.endTime}
                         format="ampm"
                         hintText="End Time"
                         id="input_event_endtime"
                       />
                     </div>
-                  </div>
-
-                   <div>
-                    <SelectField
-                      floatingLabelText="Category"
-                      value={this.state.value}
-                      id="select_event_category"
-                      onChange={this.handleChangeSelector}
-                      selectedMenuItemStyle={{ color: '#00B8D4' }}
-                    >
-                      <MenuItem value={1} primaryText="option1" />
-                      <MenuItem value={2} primaryText="option2" />
-                      <MenuItem value={3} primaryText="option3" />
-                      <MenuItem value={4} primaryText="option4" />
-                      <MenuItem value={5} primaryText="Technology" />
-                    </SelectField>
                   </div>
 
                   <div>
