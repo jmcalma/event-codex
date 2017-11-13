@@ -13,6 +13,23 @@ const titleStyles = {
     padding: '15px 0px 20px 21px',
 };
 
+const styles = {
+  dialogRoot: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingTop: 0
+  },
+  dialogContent: {
+    position: "relative",
+    width: "80vw",
+
+  },
+  dialogBody: {
+    paddingBottom: 0
+  }
+};
+
 class Calendar extends Component {
   constructor() {
     super(); 
@@ -129,15 +146,20 @@ class Calendar extends Component {
 
         <div id="dialog">
           <MuiThemeProvider>
-            <div>
+            <div id="calendarEvent">
               <Dialog
                 title={this.state.currentEvent.event_name}
                 actions={actions}
+                autoDetectWindowHeight={true}
+                repositionOnUpdate={false}
                 modal={false}
                 open={this.state.eventDetailsOpen}
                 onRequestClose={this.handleClose}
                 titleStyle={titleStyles}
                 autoScrollBodyContent={true}
+                contentStyle={ styles.dialogContent }
+                bodyStyle={ styles.dialogBody }
+                style={ styles.dialogRoot }
               >
                 <div id="eventDetails">
                   <div>
@@ -166,6 +188,7 @@ class Calendar extends Component {
                   <div id="downloadIcs">
                     <RaisedButton id="btnDownloadIcs" label="Download Event ICS" onClick={this.downloadIcs} />
                   </div>
+                  <div id="space"></div> <div id="space"></div>
                 </div>
                 
               </Dialog>

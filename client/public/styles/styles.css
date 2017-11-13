@@ -39,3 +39,7 @@ body {
 	padding-bottom: 30px;
 }
 
+#calendar {
+	margin: auto;
+	width: 80%;
+}
