@@ -47,6 +47,14 @@ class Header extends Component {
   };
 
   addEvent = () => {
+    var categories = [
+      "option1",
+      "option2",
+      "option3",
+      "option4",
+      "Technology",
+    ];
+
     this.setState({open: false});
     var contactEmail = document.getElementById('input_email').value;
     var eventTitle = document.getElementById('input_event_title').value;
@@ -55,10 +63,11 @@ class Header extends Component {
     var eventStartTime = document.getElementById('input_event_starttime').value;
     var eventEndDate = document.getElementById('input_event_enddate').value;
     var eventEndTime = document.getElementById('input_event_endtime').value;
-    var eventCategory = document.getElementById('select_event_category').value;
     var website = document.getElementById('input_website').value;
     var eventDescription = document.getElementById('input_event_description').value;
     var eventTags = document.getElementById('input_event_tags').value;
+    var eventCategoryIndex = this.state.value;
+    var eventCategory = categories[eventCategoryIndex - 1];
 
     fetch('/api/event', {
         method: 'POST',
@@ -215,7 +224,7 @@ class Header extends Component {
                     >
                      <div style={{position: 'relative', display: 'inline-block'}}>
                        <img src={SearchIcon} style={{position: 'absolute', left: 0, top: 15, width: 20, height: 20}} onClick={this.somethingYa}/>
-                       
+
                        <TextField
                           style={{textIndent: 30}}
                           hintText="Search by Name"
@@ -232,6 +241,7 @@ class Header extends Component {
                   modal={false}
                   open={this.state.open}
                   onRequestClose={this.handleClose}
+                  autoScrollBodyContent={true}
                 >
                  <form id="form" method="post">
                   <div>
