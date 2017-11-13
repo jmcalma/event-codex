@@ -12,7 +12,6 @@ import MenuItem from 'material-ui/MenuItem';
 import 'whatwg-fetch';
 
 import SearchIcon from './searchIcon.png';
-import SearchIco from 'material-ui/svg-icons/action/search';
 
 class Header extends Component {
   constructor() {
@@ -223,7 +222,7 @@ class Header extends Component {
                       autoScrollBodyContent={true}
                     >
                      <div style={{position: 'relative', display: 'inline-block'}}>
-                       <img src={SearchIcon} style={{position: 'absolute', left: 0, top: 15, width: 20, height: 20}} />
+                       <img src={SearchIcon} style={{position: 'absolute', left: 0, top: 15, width: 20, height: 20}} alt="search icon" />
 
                        <TextField
                           style={{textIndent: 30}}
