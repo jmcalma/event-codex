@@ -20,7 +20,7 @@ class Header extends Component {
     this.state = {
       open: false,
       openEvents: false,
-      value: 1,
+      selectorValue: 1,
       openTest: false,
     };
   }
@@ -42,8 +42,8 @@ class Header extends Component {
     this.setState({openEvents: false});
   };
 
-  handleChangeSelector = (event, index, value) => {
-    this.setState({value});
+  handleChangeSelector = (event, index, selectorValue) => {
+    this.setState({selectorValue});
   };
 
   addEvent = () => {
@@ -66,7 +66,7 @@ class Header extends Component {
     var website = document.getElementById('input_website').value;
     var eventDescription = document.getElementById('input_event_description').value;
     var eventTags = document.getElementById('input_event_tags').value;
-    var eventCategoryIndex = this.state.value;
+    var eventCategoryIndex = this.state.selectorValue;
     var eventCategory = categories[eventCategoryIndex - 1];
 
     fetch('/api/event', {
@@ -223,7 +223,7 @@ class Header extends Component {
                       autoScrollBodyContent={true}
                     >
                      <div style={{position: 'relative', display: 'inline-block'}}>
-                       <img src={SearchIcon} style={{position: 'absolute', left: 0, top: 15, width: 20, height: 20}} onClick={this.somethingYa}/>
+                       <img src={SearchIcon} style={{position: 'absolute', left: 0, top: 15, width: 20, height: 20}} />
 
                        <TextField
                           style={{textIndent: 30}}
@@ -265,7 +265,7 @@ class Header extends Component {
                    <div>
                     <SelectField
                       floatingLabelText="Category"
-                      value={this.state.value}
+                      value={this.state.selectorValue}
                       id="select_event_category"
                       onChange={this.handleChangeSelector}
                       selectedMenuItemStyle={{ color: '#00B8D4' }}
