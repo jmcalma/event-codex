@@ -21,7 +21,7 @@ function getGroupsFromMeetup() {
     getFoodGroups();
     getMusicGroups(); 
     getSocialGroups();
-    getSocialGroups();
+    getSportsGroups();
     getTechGroups();
 }
 
