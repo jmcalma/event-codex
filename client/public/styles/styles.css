@@ -28,8 +28,9 @@ body {
 	padding-top: 5px;
 }
 
-#btnDownloadIcs {
+#downloadIcs {
 	margin: auto;
+	float: right;
 	padding-top: 20px;
 }
 

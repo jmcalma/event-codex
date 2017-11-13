@@ -95,6 +95,10 @@ class Calendar extends Component {
        }
   };
 
+  downloadIcs = () => {
+    console.log("download ICS");
+  }
+
   render() {
     const actions = [
       <FlatButton
@@ -158,8 +162,8 @@ class Calendar extends Component {
                   <div>
                     <MiniMap isMarkerShown={false} event={this.state.currentEvent} />
                   </div>
-
-                  <div>
+                  
+                  <div id="downloadIcs">
                     <RaisedButton id="btnDownloadIcs" label="Download Event ICS" onClick={this.downloadIcs} />
                   </div>
                 </div>
