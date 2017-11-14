@@ -7,23 +7,24 @@ module.exports = app => {
   app.get("/api/download/icsfile/:id", (req, res) => {
     var url = req.originalUrl;
     var eventId = url.substring(url.lastIndexOf('/') + 1).trim();
-
     // find sepecific id from database and enable downloading
-    Event.find({_id: eventId}, function (err, event) {
+    Event.findOne({_id: eventId}, function (err, event) {
         enableDownload(res, event);
-    })
+    });
   });
 };
+
 // helper function for downloading
 function enableDownload(res, event) {
     console.log("cool: " + event);
+    var title = event.event_name;
+    var description = event.event_description;
 
     var fileName = __dirname + "/codex.ics";
-
     ics.createEvent(
       {
-        title: "Dinner",
-        description: "Turkey is the best",
+        title,
+        description,
         start: [2018, 1, 15, 6, 30],
         duration: { minutes: 50 }
       },
@@ -44,5 +45,4 @@ function enableDownload(res, event) {
         });
       }
     );
-
 }
