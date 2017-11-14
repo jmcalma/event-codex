@@ -31,8 +31,7 @@ function enableDownload(res, event) {
     var endHour = event.end_date.getUTCHours();
     var endMin = event.end_date.getUTCMinutes();
     console.log("end: " + endYear + "-" + endMonth + "-" + endDate + "-" + endHour + "-" + endMin);
-    console.log(endHour - startHour);
-    console.log(endMin - startMin);
+    var location = event.location;
 
     var fileName = __dirname + "/codex.ics";
     ics.createEvent(
@@ -40,7 +39,8 @@ function enableDownload(res, event) {
         title,
         description,
         start: [startYear, startMonth, startDate, startHour, startMin],
-        duration: { days: endDate - startDate, hours: endHour - startHour, minutes: endMin - startMin }
+        duration: { days: endDate - startDate, hours: endHour - startHour, minutes: endMin - startMin },
+        location
       },
       (error, value) => {
         if (error) {
