@@ -47,11 +47,13 @@ class Header extends Component {
 
   addEvent = () => {
     var categories = [
-      "option1",
-      "option2",
-      "option3",
-      "option4",
+      "Cars",
+      "Careers",
+      "Food",
+      "Social",
+      "Sports",
       "Technology",
+      "Other",
     ];
 
     this.setState({open: false});
@@ -193,8 +195,6 @@ class Header extends Component {
       />,
     ];
 
-
-
     return (
       <nav className="blue darken-2">
         <div className="nav-wrapper">
@@ -269,11 +269,13 @@ class Header extends Component {
                       onChange={this.handleChangeSelector}
                       selectedMenuItemStyle={{ color: '#00B8D4' }}
                     >
-                      <MenuItem value={1} primaryText="option1" />
-                      <MenuItem value={2} primaryText="option2" />
-                      <MenuItem value={3} primaryText="option3" />
-                      <MenuItem value={4} primaryText="option4" />
-                      <MenuItem value={5} primaryText="Technology" />
+                      <MenuItem value={1} primaryText="Cars" />
+                      <MenuItem value={2} primaryText="Career" />
+                      <MenuItem value={3} primaryText="Food" />
+                      <MenuItem value={4} primaryText="Social" />
+                      <MenuItem value={5} primaryText="Sports" />
+                      <MenuItem value={6} primaryText="Technology" />
+                      <MenuItem value={7} primaryText="Other" />
                     </SelectField>
                   </div>
 
