@@ -43,3 +43,19 @@ body {
 	margin: auto;
 	width: 80%;
 }
+
+#searchResultsRow {
+	padding-top: 10px;
+}
+
+#card1 {
+	float: left;
+	padding-left: 110px;
+	padding-bottom: 40px;
+}
+
+#card2 {
+	float: right;
+	padding-left: 40px;
+	padding-bottom: 40px;
+}

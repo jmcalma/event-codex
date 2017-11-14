@@ -10,6 +10,7 @@ import TimePicker from 'material-ui/TimePicker';
 import SelectField from 'material-ui/SelectField';
 import Snackbar from 'material-ui/Snackbar';
 import MenuItem from 'material-ui/MenuItem';
+import SearchResultsList from './SearchResultsList';
 import 'whatwg-fetch';
 
 import SearchIcon from './searchIcon.png';
@@ -23,6 +24,7 @@ class Header extends Component {
       selectorValue: 1,
       searchOpen: false,
       snackbarOpen: false,
+      eventsSearch: [],
     };
   }
 
@@ -176,6 +178,17 @@ class Header extends Component {
     this.setState({ snackbarOpen: false });
   }
 
+  handleSearch = () => {
+      fetch("/api/event")
+        .then((response) => {
+           return response.json() })   
+        .then((json) => {
+          this.setState({ eventsSearch: json });
+       });
+
+      //console.log(this.state.eventsSearch);
+  }
+
 
   render() {
     const actions = [
@@ -234,6 +247,10 @@ class Header extends Component {
                           multiLine={true}  
                         />
                        <FlatButton label="Search" onClick={this.handleSearch} />
+
+                       <div>
+                          <SearchResultsList events={this.state.eventsSearch} />
+                       </div>
                     </div>
                   </Dialog>
                 </div>
