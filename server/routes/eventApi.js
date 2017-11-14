@@ -21,31 +21,31 @@ module.exports = app => {
     });
 
 		//	api where filter all info user want
-    app.get("/api/event/:filter/:info", async (req, res) => {
-	    var url = req.originalUrl.split('/');
-			var filter = url[url.length - 2];
-			var info = url[url.length - 1];
-			console.log(filter + ' - ' + info);
-			filterInfo(res, filter, info);
+    // app.get("/api/event/:filter/:info", async (req, res) => {
+	  //   var url = req.originalUrl.split('/');
+		// 	var filter = url[url.length - 2];
+		// 	var info = url[url.length - 1];
+		// 	console.log(filter + ' - ' + info);
+		// 	filterInfo(res, filter, info);
+    // });
+
+    app.get("/api/event/title/:title", async (req, res) => {
+	    var url = req.originalUrl;
+	    var eventFilter = url.substring(url.lastIndexOf('/') + 1).trim();
+			filterByTitle(res, eventFilter);
     });
 
-    // app.get("/api/event/title/:title", async (req, res) => {
-	  //   var url = req.originalUrl;
-	  //   var eventFilter = url.substring(url.lastIndexOf('/') + 1).trim();
-		// 	filterByTitle(res, eventFilter);
-    // });
-    //
-    // app.get("/api/event/category/:title", async (req, res) => {
-	  //   var url = req.originalUrl;
-	  //   var eventFilter = url.substring(url.lastIndexOf('/') + 1).trim();
-		// 	filterByCategory(res, eventFilter);
-		// });
-    //
-    // app.get("/api/event/tag/:title", async (req, res) => {
-	  //   var url = req.originalUrl;
-	  //   var eventFilter = url.substring(url.lastIndexOf('/') + 1).trim();
-		// 	filterByTag(res, eventFilter);
-		// });
+    app.get("/api/event/category/:title", async (req, res) => {
+	    var url = req.originalUrl;
+	    var eventFilter = url.substring(url.lastIndexOf('/') + 1).trim();
+			filterByCategory(res, eventFilter);
+		});
+
+    app.get("/api/event/tag/:title", async (req, res) => {
+	    var url = req.originalUrl;
+	    var eventFilter = url.substring(url.lastIndexOf('/') + 1).trim();
+			filterByTag(res, eventFilter);
+		});
 
 		// get event information from client and update our database
 		app.post("/api/event", async (req, res) => {
