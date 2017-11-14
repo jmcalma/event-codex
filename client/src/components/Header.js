@@ -8,6 +8,7 @@ import TextField from 'material-ui/TextField';
 import DatePicker from 'material-ui/DatePicker';
 import TimePicker from 'material-ui/TimePicker';
 import SelectField from 'material-ui/SelectField';
+import Snackbar from 'material-ui/Snackbar';
 import MenuItem from 'material-ui/MenuItem';
 import 'whatwg-fetch';
 
@@ -20,7 +21,8 @@ class Header extends Component {
       open: false,
       openEvents: false,
       selectorValue: 1,
-      openTest: false,
+      searchOpen: false,
+      snackbarOpen: false,
     };
   }
 
@@ -56,7 +58,8 @@ class Header extends Component {
       "Other",
     ];
 
-    this.setState({open: false});
+    this.setState({ snackbarOpen: true });
+    this.setState({ open: false });
     var contactEmail = document.getElementById('input_email').value;
     var eventTitle = document.getElementById('input_event_title').value;
     var eventLocation = document.getElementById('input_event_location').value;
@@ -161,17 +164,18 @@ class Header extends Component {
     }
   }
 
-  openTest = () => {
-     if (this.state.openTest === false) {
-        this.setState({ openTest: true});
-     } else {
-      this.setState({ openTest: false});
-     }
+  openSearch = () => {
+     this.setState({ searchOpen: true});
   }
 
-  closeTest = () => {
-    this.setState({ openTest: false});
+  closeSearch = () => {
+    this.setState({ searchOpen: false});
   }
+
+  handleSnackbarClose = () => {
+    this.setState({ snackbarOpen: false });
+  }
+
 
   render() {
     const actions = [
@@ -191,7 +195,7 @@ class Header extends Component {
       <FlatButton
         label="Close"
         primary={true}
-        onClick={this.closeTest}
+        onClick={this.closeSearch}
       />,
     ];
 
@@ -204,7 +208,7 @@ class Header extends Component {
                <div>
                 <div id="nav_buttons">
                    <div id="btnExtra">
-                    <IconButton id="btnSearch" iconClassName="material-icons" onClick={this.openTest} >search</IconButton>
+                    <IconButton id="btnSearch" iconClassName="material-icons" onClick={this.openSearch} >search</IconButton>
                   </div>
 
                   <div id="btnAddEvent">
@@ -217,8 +221,8 @@ class Header extends Component {
                       title={""}
                       actions={actionsSearch}
                       modal={false}
-                      open={this.state.openTest}
-                      onRequestClose={this.closeTest}
+                      open={this.state.searchOpen}
+                      onRequestClose={this.closeSearch}
                       autoScrollBodyContent={true}
                     >
                      <div style={{position: 'relative', display: 'inline-block'}}>
@@ -347,6 +351,12 @@ class Header extends Component {
                 </form>
                 </Dialog>
               </div>
+              <Snackbar
+                open={this.state.snackbarOpen}
+                message="Event submitted"
+                autoHideDuration={3300}
+                onRequestClose={this.handleSnackbarClose}
+              />
             </MuiThemeProvider>
           </ul>
         </div>
