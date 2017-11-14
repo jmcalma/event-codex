@@ -206,7 +206,7 @@ class Calendar extends Component {
               <Snackbar
                 open={this.state.snackbarOpen}
                 message="Event ICS downloading"
-                autoHideDuration={4000}
+                autoHideDuration={3000}
                 onRequestClose={this.handleSnackbarClose}
               />
           </MuiThemeProvider>

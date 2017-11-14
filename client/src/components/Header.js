@@ -354,7 +354,7 @@ class Header extends Component {
               <Snackbar
                 open={this.state.snackbarOpen}
                 message="Event submitted"
-                autoHideDuration={3300}
+                autoHideDuration={3000}
                 onRequestClose={this.handleSnackbarClose}
               />
             </MuiThemeProvider>
