@@ -20,28 +20,22 @@ module.exports = app => {
 			})
     });
 
-		//	api where filter all info user want
-    // app.get("/api/event/:filter/:info", async (req, res) => {
-	  //   var url = req.originalUrl.split('/');
-		// 	var filter = url[url.length - 2];
-		// 	var info = url[url.length - 1];
-		// 	console.log(filter + ' - ' + info);
-		// 	filterInfo(res, filter, info);
-    // });
-
-    app.get("/api/event/title/:title", async (req, res) => {
+		// get events based on title name
+    app.get("/api/event/title/:info", async (req, res) => {
 	    var url = req.originalUrl;
 	    var eventFilter = url.substring(url.lastIndexOf('/') + 1).trim();
 			filterByTitle(res, eventFilter);
     });
 
-    app.get("/api/event/category/:title", async (req, res) => {
+		// get events based on category name
+    app.get("/api/event/category/:info", async (req, res) => {
 	    var url = req.originalUrl;
 	    var eventFilter = url.substring(url.lastIndexOf('/') + 1).trim();
 			filterByCategory(res, eventFilter);
 		});
 
-    app.get("/api/event/tag/:title", async (req, res) => {
+		// get events with specific tag
+    app.get("/api/event/tag/:info", async (req, res) => {
 	    var url = req.originalUrl;
 	    var eventFilter = url.substring(url.lastIndexOf('/') + 1).trim();
 			filterByTag(res, eventFilter);
@@ -100,14 +94,14 @@ function filterByCategory(res, eventFilter) {
 			res.send(events);
 		})
 	} else {
-		console.log(eventFilter + " is invalid category.");
+		res.send('cannot find data error');
 	}
 }
 
 function filterByTag(res, eventFilter) {
 	const events = Event.find({tags: eventFilter}, function (err, events) {
 		if (err) {
-			throw new Exception('getting event problem');
+			res.send('error');
 		}
 		res.send(events);
 	})
@@ -116,27 +110,7 @@ function filterByTag(res, eventFilter) {
 function filterByTitle(res, eventFilter) {
 	const events = Event.find({event_name: eventFilter}, function (err, events) {
 		if (err) {
-			throw new Exception('Getting data from title : fail');
-		}
-		res.send(events);
-	});
-}
-
-function filterInfo(res, filter, info) {
-	if (filter === "category") {
-		filter = "event_name";
-	} else if (filter === "tag") {
-		filter = "tags";
-	} else if (filter === "title") {
-		filter = "event_name";
-	} else {
-		console.log('fail');
-		return;
-	}
-	console.log(filter);
-	const events = Event.find({filter: info}, function (err, events) {
-		if (err) {
-			throw new Exception('Getting data from filtering : fail');
+			res.send('error');
 		}
 		res.send(events);
 	});
