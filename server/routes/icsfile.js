@@ -32,6 +32,7 @@ function enableDownload(res, event) {
     var endMin = event.end_date.getUTCMinutes();
     console.log("end: " + endYear + "-" + endMonth + "-" + endDate + "-" + endHour + "-" + endMin);
     var location = event.location;
+    var categories = [event.event_category];
 
     var fileName = __dirname + "/codex.ics";
     ics.createEvent(
@@ -40,11 +41,12 @@ function enableDownload(res, event) {
         description,
         start: [startYear, startMonth, startDate, startHour, startMin],
         duration: { days: endDate - startDate, hours: endHour - startHour, minutes: endMin - startMin },
-        location
+        location,
+        categories
       },
       (error, value) => {
         if (error) {
-          console.log(error);
+          throw new Exception('Create ics file fail');
         }
         // write file in server
         fs.writeFileSync(fileName, value);
