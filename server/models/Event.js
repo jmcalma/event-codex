@@ -10,8 +10,7 @@ const eventSchema = new Schema({
   event_category: String,
   event_description: String,
   tags: String,
-  website_link: String,
-  subject: String
+  website_link: String
 });
 
 mongoose.model('events', eventSchema);

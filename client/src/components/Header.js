@@ -3,6 +3,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
+import IconButton from 'material-ui/IconButton'
 import TextField from 'material-ui/TextField';
 import DatePicker from 'material-ui/DatePicker';
 import TimePicker from 'material-ui/TimePicker';
@@ -10,16 +11,18 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import 'whatwg-fetch';
 
-const customContentStyle = {
-  padding: '30px',
-};
+import SearchIcon from './searchIcon.png';
 
 class Header extends Component {
-  state = {
-    open: false,
-    openEvents: false,
-    value: 1,
-  };
+  constructor() {
+    super();
+    this.state = {
+      open: false,
+      openEvents: false,
+      selectorValue: 1,
+      openTest: false,
+    };
+  }
 
   handleOpen = () => {
     this.setState({open: true});
@@ -38,32 +41,20 @@ class Header extends Component {
     this.setState({openEvents: false});
   };
 
-  handleChange = (event, index, value) => this.setState({value});
-  
-
-  fetchTest = () => {
-      fetch('/api/event')
-      .then((resp) => resp.json())
-      .then(function(response) {
-        
-        var count = Object.keys(response).length
-        for (var i = 0; i < count; i++) {
-          document.getElementById('getEventsBox').value += response[i].host_email + "\n";
-          var date = new Date(response[i].start_date);
-          var d = date.getDate() + 1;
-          var m = date.getMonth() + 1;
-          var y = date.getYear() + 1900;
-          document.getElementById('getEventsBox').value += y + " " + m + " " + d + "\n";
-        }
-      })
-      .catch(function(error) {
-         console.log(error);
-      });
-
+  handleChangeSelector = (event, index, selectorValue) => {
+    this.setState({selectorValue});
   };
 
   addEvent = () => {
-    this.setState({open: false}); //disable if debugging
+    var categories = [
+      "option1",
+      "option2",
+      "option3",
+      "option4",
+      "Technology",
+    ];
+
+    this.setState({open: false});
     var contactEmail = document.getElementById('input_email').value;
     var eventTitle = document.getElementById('input_event_title').value;
     var eventLocation = document.getElementById('input_event_location').value;
@@ -71,34 +62,13 @@ class Header extends Component {
     var eventStartTime = document.getElementById('input_event_starttime').value;
     var eventEndDate = document.getElementById('input_event_enddate').value;
     var eventEndTime = document.getElementById('input_event_endtime').value;
-    var eventCategory = document.getElementById('select_event_category').value;
     var website = document.getElementById('input_website').value;
     var eventDescription = document.getElementById('input_event_description').value;
     var eventTags = document.getElementById('input_event_tags').value;
+    var eventCategoryIndex = this.state.selectorValue;
+    var eventCategory = categories[eventCategoryIndex - 1];
 
-    // $.ajax(
-    //         {
-    //             type : "POST",
-    //             url  : "/api/event"+ eventTitleUrl,
-    //             data : {
-    //                 "email" : contactEmail,
-    //                 "title" : eventTitle,
-    //                 "location" : eventLocation,
-    //                 "start date" : eventStartDate,
-    //                 "start time" : eventStartTime,
-    //                 "end date" : eventEndDate,
-    //                 "end time" : eventEndTime,
-    //                 "category" : eventCategory,
-    //                 "website" : website,
-    //                 "description" : eventDescription,
-    //                 "tags" : eventTags,
-    //                 "url" : eventTitleUrl
-    //             },
-    //         });
-
-      //var form = document.querySelector('form')
-
-      fetch('/api/event', {
+    fetch('/api/event', {
         method: 'POST',
         body: JSON.stringify({
                     host_email : contactEmail,
@@ -118,8 +88,88 @@ class Header extends Component {
       .then(function(response) {
         return response.json()
       })
-     }
+  }
 
+  validateForm = () => {
+    if(this.formIsValid()) {
+     this.addEvent();
+    } else {
+      alert("One or more of the fields is incomplete or has errors.");
+    }
+  }
+
+  formIsValid = () => {
+    var contactEmail = document.getElementById('input_email').value;
+    var eventTitle = document.getElementById('input_event_title').value;
+    var eventLocation = document.getElementById('input_event_location').value;
+    var eventStartDate = document.getElementById('input_event_startdate').value;
+    var eventStartTime = document.getElementById('input_event_starttime').value;
+    var website = document.getElementById('input_website').value;
+    var eventDescription = document.getElementById('input_event_description').value;
+    var eventTags = document.getElementById('input_event_tags').value;
+
+    if (contactEmail === "" || eventTitle === "" || eventLocation === "" || eventStartDate === ""
+        || eventStartTime === "" || eventDescription === "" || eventTags === "") {
+        return false;
+    }
+
+    var emailRegExValidate = /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@(([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (!(emailRegExValidate).test(contactEmail)) { 
+       return false;
+    }
+
+    //https://gist.github.com/dperini/729294
+    var urlRegExValidate = /^(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})).?)(?::\d{2,5})?(?:[/?#]\S*)?$/i;
+    if(website === "") {
+
+    } else if (!(urlRegExValidate).test(website)) {
+      return false;
+    }
+
+    return true;
+  }
+
+  handleOnChangeDatePicker = (event) => {
+    var eventEndDate = document.getElementById('input_event_enddate').value;
+    if(eventEndDate === "") {
+      document.getElementById('input_event_enddate').value = event.getFullYear() + "-" + (event.getMonth() + 1) + "-" + (event.getDate());
+    }
+  }
+
+  handleOnChangeTimePicker = (event) => {
+    var eventEndTime = document.getElementById('input_event_endtime').value;
+    if(eventEndTime === "") {
+      document.getElementById('input_event_endtime').value = this.convert24HourTo12Hour(event.getHours() + 1, event.getMinutes());
+    }
+  }
+
+  convert24HourTo12Hour = (hours, minutes) => {
+    if (hours > 12) {
+      return (hours - 12) + ":" + this.addZeroToMinute(minutes) + " pm";
+    } else {
+      return hours + ":" + this.addZeroToMinute(minutes) + " am";
+    }
+  }
+
+  addZeroToMinute = (minutes) => {
+    if (minutes < 10) {
+      return "0" + minutes;
+    } else {
+      return minutes;
+    }
+  }
+
+  openTest = () => {
+     if (this.state.openTest === false) {
+        this.setState({ openTest: true});
+     } else {
+      this.setState({ openTest: false});
+     }
+  }
+
+  closeTest = () => {
+    this.setState({ openTest: false});
+  }
 
   render() {
     const actions = [
@@ -131,17 +181,19 @@ class Header extends Component {
       <FlatButton
         label="Submit"
         primary={true}
-        onClick={this.addEvent}
+        onClick={this.validateForm}
       />,
     ];
 
-    const actions2 = [
+    const actionsSearch = [
       <FlatButton
-        label="Cancel"
+        label="Close"
         primary={true}
-        onClick={this.handleCloseGetEvents}
+        onClick={this.closeTest}
       />,
     ];
+
+
 
     return (
       <nav className="blue darken-2">
@@ -150,33 +202,45 @@ class Header extends Component {
           <ul className="right">
             <MuiThemeProvider>
                <div>
-                <RaisedButton label="Add Event" onClick={this.handleOpen} />
-                <RaisedButton label="Get Events" onClick={this.handleOpenGetEvents} />
+                <div id="nav_buttons">
+                   <div id="btnExtra">
+                    <IconButton id="btnSearch" iconClassName="material-icons" onClick={this.openTest} >search</IconButton>
+                  </div>
 
-                 <Dialog
-                  title="Test GET with fetch"
-                  actions={actions2}
-                  modal={false}
-                  open={this.state.openEvents}
-                  onRequestClose={this.handleCloseGetEvents}
-                >
-                    <TextField
-                      id="getEventsBox"
-                      multiLine={true}
-                      rows={4}
-                      disabled={true}
-                    /><br />
+                  <div id="btnAddEvent">
+                    <RaisedButton label="Add Event" onClick={this.handleOpen} />
+                  </div> 
+                </div>
 
-                </Dialog>
+                <div>
+                  <Dialog
+                      title={""}
+                      actions={actionsSearch}
+                      modal={false}
+                      open={this.state.openTest}
+                      onRequestClose={this.closeTest}
+                      autoScrollBodyContent={true}
+                    >
+                     <div style={{position: 'relative', display: 'inline-block'}}>
+                       <img src={SearchIcon} style={{position: 'absolute', left: 0, top: 15, width: 20, height: 20}} alt="search icon" />
+
+                       <TextField
+                          style={{textIndent: 30}}
+                          hintText="Search by Name"
+                          multiLine={true}  
+                        />
+                       <FlatButton label="Search" onClick={this.handleSearch} />
+                    </div>
+                  </Dialog>
+                </div>
 
                 <Dialog
                   title="Event Form"
                   actions={actions}
                   modal={false}
-                  //contentStyle={customContentStyle}
-                  autoScrollBodyContent={true}
                   open={this.state.open}
                   onRequestClose={this.handleClose}
+                  autoScrollBodyContent={true}
                 >
                  <form id="form" method="post">
                   <div>
@@ -197,6 +261,22 @@ class Header extends Component {
                     /><br />
                   </div>
 
+                   <div>
+                    <SelectField
+                      floatingLabelText="Category"
+                      value={this.state.selectorValue}
+                      id="select_event_category"
+                      onChange={this.handleChangeSelector}
+                      selectedMenuItemStyle={{ color: '#00B8D4' }}
+                    >
+                      <MenuItem value={1} primaryText="option1" />
+                      <MenuItem value={2} primaryText="option2" />
+                      <MenuItem value={3} primaryText="option3" />
+                      <MenuItem value={4} primaryText="option4" />
+                      <MenuItem value={5} primaryText="Technology" />
+                    </SelectField>
+                  </div>
+
                   <div>
                     <TextField
                       floatingLabelText="Location"
@@ -208,7 +288,7 @@ class Header extends Component {
 
                  <div id="start">
                    <div>
-                    <DatePicker hintText="Start Date" container="inline" mode="landscape" id="input_event_startdate"/>
+                    <DatePicker hintText="Start Date" container="inline" mode="landscape" id="input_event_startdate" firstDayOfWeek={0} onChange={(event, x) => {this.handleOnChangeDatePicker(x)}}/>
                    </div>
 
                     <div>
@@ -216,42 +296,24 @@ class Header extends Component {
                         format="ampm"
                         hintText="Start Time"
                         id="input_event_starttime"
-                        value={this.state.value12}
-                        onChange={this.handleChangeTimePicker12}
+                        onChange={(event, x) => {this.handleOnChangeTimePicker(x)}}
                       />
                     </div>
                   </div>
 
                   <div id="end">
                     <div>
-                       <DatePicker hintText="End Date" container="inline" mode="landscape" id="input_event_enddate"/>
+                       <DatePicker hintText="End Date" container="inline" mode="landscape" id="input_event_enddate" firstDayOfWeek={0} />
                     </div>
 
                     <div>
                       <TimePicker
+                        value={this.state.endTime}
                         format="ampm"
                         hintText="End Time"
                         id="input_event_endtime"
-                        value={this.state.value12}
-                        onChange={this.handleChangeTimePicker12}
                       />
                     </div>
-                  </div>
-
-                   <div>
-                    <SelectField
-                      floatingLabelText="Category"
-                      value={this.state.value}
-                      id="select_event_category"
-                      onChange={this.handleChange}
-                      selectedMenuItemStyle={{ color: '#00B8D4' }}
-                    >
-                      <MenuItem value={1} primaryText="option1" />
-                      <MenuItem value={2} primaryText="option2" />
-                      <MenuItem value={3} primaryText="option3" />
-                      <MenuItem value={4} primaryText="option4" />
-                      <MenuItem value={5} primaryText="Technology" />
-                    </SelectField>
                   </div>
 
                   <div>

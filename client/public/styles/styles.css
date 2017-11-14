@@ -1,65 +1,45 @@
 body {
-	background-color: #2196F3;
-	width: 80%;
 
 }
 
-#container {
-	width: 40%;
-	height: 90%;
-	background-color: #f7f7f7;
-	margin: auto;
-	box-shadow: 2px 2px;
-	//border-radius: 10px;
+#nav_buttons {
+	padding: 11px;
+}
+
+#btnAddEvent {
+	float: right;
+	padding: 5px;
+}
+
+#btnExtra {
+	float: left;
+}
+
+#footer {
+	padding-top: 100px;
+	text-align: center;
 }
 
 #space {
-	height: 70px;
+	padding-top: 20px;
 }
 
-#space2 {
-	height: 20px;
-	background-color: #0069c0;
-	width: 40%;
+#miniSpace {
+	padding-top: 5px;
+}
+
+#downloadIcs {
 	margin: auto;
-	box-shadow: 2px 2px;
+	float: right;
+	padding-top: 20px;
 }
 
-#event_form {
-	padding: 20px;
+#eventDetails {
+	padding: 10px;
+	padding-bottom: 30px;
 }
 
-#form_title {
-	background-color: #baeaff;
-	padding: 1px;
-
-}
-
-#form_title h1 {
-	padding-left: 20px;
-}
-
-#select_event_category {
-	
-}
-
-#category_label {
-	color: #a8a8a8;
-}
-
-#input_event_startdate, #input_event_enddate {
-	width: 20%;
-}
-
-#input_event_starttime, #input_event_endtime {
-	width: 10%;
-}
-
-#start {
-	float: left;
-	width: 100%;
-}
-
-#end {
-	
+#calendar {
+	margin: auto;
+	width: 80%;
 }
