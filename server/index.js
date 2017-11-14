@@ -13,7 +13,6 @@ const PORT = process.env.PORT || 5000;
 require("./models/Event");
 require("./routes/authRoutes")(app);
 require("./routes/eventApi")(app);
-require("./routes/icsfile")(app);
 require("./routes/meetupEventApi")(app);
 
 mongoose.connect('mongodb://eventcodex:eventcodex@ds123311.mlab.com:23311/event-codex');
