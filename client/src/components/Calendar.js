@@ -5,9 +5,9 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
+import Snackbar from 'material-ui/Snackbar'
 import FileSaver from 'file-saver';
 import MiniMap from './MiniMap';
-
 
 const titleStyles = {
     fontSize: '40px',
@@ -43,6 +43,7 @@ class Calendar extends Component {
       events: [],
       currentEvent: "ffff",
       eventDetailsOpen: false,
+      snackbarOpen: false,
     };
   };
 
@@ -65,12 +66,13 @@ class Calendar extends Component {
   };
 
   downloadIcs = () => {
-      fetch("/api/download/icsfile/" + this.state.currentEvent._id)
-        .then((response) => {
-            return response.blob() })   
-        .then((blob) => {
-             FileSaver.saveAs(blob, this.state.currentEvent.event_name + ".ics");
-       });
+    this.setState({ snackbarOpen: true });
+    fetch("/api/download/icsfile/" + this.state.currentEvent._id)
+      .then((response) => {
+          return response.blob() })   
+      .then((blob) => {
+           FileSaver.saveAs(blob, this.state.currentEvent.event_name + ".ics");
+     });
   };
 
   convert24HourTo12Hour = (hours, minutes) => {
@@ -116,6 +118,10 @@ class Calendar extends Component {
           return days[convertedStartDate.getDay()] + ", " + months[startMonth] + " " + startDay + ", " + startYear + " at " + convStartTime + " to "
             + convEndTime;
        }
+  };
+
+  handleSnackbarClose = () => {
+    this.setState({ snackbarOpen: false});
   };
 
   render() {
@@ -190,12 +196,19 @@ class Calendar extends Component {
                   <div id="downloadIcs">
                     <RaisedButton id="btnDownloadIcs" label="Download Event ICS" onClick={this.downloadIcs} />
                   </div>
+
+
                   <div id="space"></div> <div id="space"></div>
                 </div>
                 
               </Dialog>
             </div>
-
+              <Snackbar
+                open={this.state.snackbarOpen}
+                message="Event ICS downloading"
+                autoHideDuration={4000}
+                onRequestClose={this.handleSnackbarClose}
+              />
           </MuiThemeProvider>
         </div>
       </div>
