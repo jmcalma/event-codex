@@ -19,18 +19,20 @@ function enableDownload(res, event) {
     console.log("event: " + event);
     var title = event.event_name;
     var description = event.event_description;
-    var startYear = event.start_date.getFullYear();
-    var startMonth = event.start_date.getMonth() + 1;
-    var startDate = event.start_date.getDate();
+    var startYear = event.start_date.getUTCFullYear();
+    var startMonth = event.start_date.getUTCMonth() + 1;
+    var startDate = event.start_date.getUTCDate();
     var startHour = event.start_date.getUTCHours();
-    var startMin = event.start_date.getMinutes();
+    var startMin = event.start_date.getUTCMinutes();
     console.log("start: " + startYear + "-" + startMonth + "-" + startDate + "-" + startHour + "-" + startMin);
-    var endYear = event.end_date.getFullYear();
-    var endMonth = event.end_date.getMonth() + 1;
-    var endDate = event.end_date.getDate();
+    var endYear = event.end_date.getUTCFullYear();
+    var endMonth = event.end_date.getUTCMonth() + 1;
+    var endDate = event.end_date.getUTCDate();
     var endHour = event.end_date.getUTCHours();
-    var endMin = event.end_date.getMinutes();
+    var endMin = event.end_date.getUTCMinutes();
     console.log("end: " + endYear + "-" + endMonth + "-" + endDate + "-" + endHour + "-" + endMin);
+    console.log(endHour - startHour);
+    console.log(endMin - startMin);
 
     var fileName = __dirname + "/codex.ics";
     ics.createEvent(
@@ -38,7 +40,7 @@ function enableDownload(res, event) {
         title,
         description,
         start: [startYear, startMonth, startDate, startHour, startMin],
-        duration: { hours: 1, minutes: 35 }
+        duration: { days: endDate - startDate, hours: endHour - startHour, minutes: endMin - startMin }
       },
       (error, value) => {
         if (error) {
