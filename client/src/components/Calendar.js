@@ -5,6 +5,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
+import FileSaver from 'file-saver';
 import MiniMap from './MiniMap';
 
 
@@ -64,7 +65,12 @@ class Calendar extends Component {
   };
 
   downloadIcs = () => {
-      console.log("download event");
+      fetch("/api/download/icsfile/" + this.state.currentEvent._id)
+        .then((response) => {
+            return response.blob() })   
+        .then((blob) => {
+             FileSaver.saveAs(blob, this.state.currentEvent.event_name + ".ics");
+       });
   };
 
   convert24HourTo12Hour = (hours, minutes) => {
@@ -111,10 +117,6 @@ class Calendar extends Component {
             + convEndTime;
        }
   };
-
-  downloadIcs = () => {
-    console.log("download ICS");
-  }
 
   render() {
     const actions = [
