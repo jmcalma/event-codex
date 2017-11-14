@@ -4,7 +4,7 @@ const ics = require("ics");
 const Event = mongoose.model("events");
 
 module.exports = app => {
-  app.get("/api/download/icsfile/:id", (req, res) => {
+  app.get("/api/icsfile/download/:id", (req, res) => {
     var url = req.originalUrl;
     var eventId = url.substring(url.lastIndexOf('/') + 1).trim();
     // find sepecific id from database and enable downloading
