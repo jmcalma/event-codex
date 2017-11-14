@@ -20,11 +20,12 @@ module.exports = app => {
 			})
     });
 
-    app.get("/api/eventdata", function(req, res) {
-    	var ID = req.query["ID"];
-    	Event.findById(ID).exec(function(event) {
-    		res.send(event);
-    	})
+		// api where provide user specific events they want
+    app.get("/api/event/:info", async (req, res) => {
+	    var url = req.originalUrl;
+	    var eventFilter = url.substring(url.lastIndexOf('/') + 1).trim();
+			filterByCategories(res, eventFilter);
+			filterByTags(res, eventFilter);
     });
 
 		// get event information from client and update our database
@@ -67,4 +68,33 @@ function toDate(date, time) {
   console.log("test: " + year + "-" + month + "-" + day +"T" + hour + ":" + minute + ":00Z");
 	return new Date(year + "-" + month + "-" + day +"T" + hour + ":" + minute + ":00Z");
 	// return new Date(year, month, day, hour, minute);
+}
+
+function filterByCategories(res, eventFilter) {
+	var categoriesArray = ["careerandbusiness", "carsandmotorcyles", "foodanddrink", "music",
+		"socializing", "sportsandrecreation", "tech"];
+	if (categoriesArray.includes(eventFilter)) {
+		const events = Event.find({event_category: eventFilter}, function (err, events) {
+			if (err) {
+				throw new Exception('getting event problem');
+			}
+			res.send(events);
+		})
+	} else {
+		console.log(eventFilter + " is invalid category.");
+	}
+}
+
+function filterByTags(res, eventFilter) {
+	var tagsArray = ["tag2", "cool"];
+	if (tagsArray.includes(eventFilter)) {
+		const events = Event.find({tags: eventFilter}, function (err, events) {
+			if (err) {
+				throw new Exception('getting event problem');
+			}
+			res.send(events);
+		})
+	} else {
+		console.log(eventFilter + " is invalid tag.");
+	}
 }
