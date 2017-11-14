@@ -16,7 +16,7 @@ require("./routes/eventApi")(app);
 require("./routes/icsfile")(app);
 require("./routes/meetupEventApi")(app);
 
-mongoose.connect('mongodb://walkerzheng:Zh19950513@ds123311.mlab.com:23311/event-codex');
+mongoose.connect('mongodb://eventcodex:eventcodex@ds123311.mlab.com:23311/event-codex');
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
