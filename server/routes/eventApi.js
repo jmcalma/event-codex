@@ -9,7 +9,7 @@ module.exports = app => {
 		  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 		  next();
 		});
-		
+
 		// api where get all events from out own database
     app.get("/api/event", async (req, res) => {
 			const events = await Event.find(function (err, events) {
@@ -66,4 +66,5 @@ function toDate(date, time) {
 	}
   console.log("test: " + year + "-" + month + "-" + day +"T" + hour + ":" + minute + ":00Z");
 	return new Date(year + "-" + month + "-" + day +"T" + hour + ":" + minute + ":00Z");
+	// return new Date(year, month, day, hour, minute);
 }
