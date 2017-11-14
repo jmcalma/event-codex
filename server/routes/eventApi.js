@@ -20,13 +20,24 @@ module.exports = app => {
 			})
     });
 
-		// api where provide user specific events they want
-    app.get("/api/event/:info", async (req, res) => {
+		// api where provide user specific events by title
+    app.get("/api/event/title/:title", async (req, res) => {
 	    var url = req.originalUrl;
 	    var eventFilter = url.substring(url.lastIndexOf('/') + 1).trim();
-			filterByCategories(res, eventFilter);
-			filterByTags(res, eventFilter);
+			filterByTitle(res, eventFilter);
     });
+
+    app.get("/api/event/category/:title", async (req, res) => {
+	    var url = req.originalUrl;
+	    var eventFilter = url.substring(url.lastIndexOf('/') + 1).trim();
+			filterByCategory(res, eventFilter);
+		});
+
+    app.get("/api/event/tag/:title", async (req, res) => {
+	    var url = req.originalUrl;
+	    var eventFilter = url.substring(url.lastIndexOf('/') + 1).trim();
+			filterByTag(res, eventFilter);
+		});
 
 		// get event information from client and update our database
 		app.post("/api/event", async (req, res) => {
@@ -70,7 +81,7 @@ function toDate(date, time) {
 	// return new Date(year, month, day, hour, minute);
 }
 
-function filterByCategories(res, eventFilter) {
+function filterByCategory(res, eventFilter) {
 	var categoriesArray = ["careerandbusiness", "carsandmotorcyles", "foodanddrink", "music",
 		"socializing", "sportsandrecreation", "tech"];
 	if (categoriesArray.includes(eventFilter)) {
@@ -85,16 +96,20 @@ function filterByCategories(res, eventFilter) {
 	}
 }
 
-function filterByTags(res, eventFilter) {
-	var tagsArray = ["tag2", "cool"];
-	if (tagsArray.includes(eventFilter)) {
-		const events = Event.find({tags: eventFilter}, function (err, events) {
-			if (err) {
-				throw new Exception('getting event problem');
-			}
-			res.send(events);
-		})
-	} else {
-		console.log(eventFilter + " is invalid tag.");
-	}
+function filterByTag(res, eventFilter) {
+	const events = Event.find({tags: eventFilter}, function (err, events) {
+		if (err) {
+			throw new Exception('getting event problem');
+		}
+		res.send(events);
+	})
+}
+
+function filterByTitle(res, eventFilter) {
+	const events = Event.find({event_name: eventFilter}, function (err, events) {
+		if (err) {
+			throw new Exception('Getting data from title : fail');
+		}
+		res.send(events);
+	});
 }
