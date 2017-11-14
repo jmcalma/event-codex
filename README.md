@@ -9,7 +9,10 @@ Jenkins: http://ec2-54-215-238-243.us-west-1.compute.amazonaws.com:8080
 ## Event API
 | method        |route               | input                  |output |
 | ------------- |:-------------:     | -----:                 |----------: |
-| GET           | /api/event         |                        |  events json file  |
+| GET           | /api/event         |                        |  all events mongo database  |
+| GET           | /api/event/title/:info|                     | all events with specific title |
+| GET           | /api/event/category/:info|                  | all events with specific category |
+| GET           | /api/event/tag/:info|                       | all events with specific tag |
 | POST          | /api/event         |                        |           |
 
 ## Run
