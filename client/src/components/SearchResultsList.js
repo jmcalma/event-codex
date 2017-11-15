@@ -92,11 +92,14 @@ class SearchResultsList extends Component {
   		);
   	}
 	return(
-	  <MuiThemeProvider>
-		<Card>
-			{cardSearchHolder}
-		</Card>
-	   </MuiThemeProvider>
+	  <div>
+		  <MuiThemeProvider>
+			<Card>
+				{cardSearchHolder}
+			</Card>
+		   </MuiThemeProvider>
+		   <div id="miniSpace"></div>
+	   </div>
 	);
   }
 }
