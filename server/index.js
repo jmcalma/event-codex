@@ -16,6 +16,8 @@ require("./routes/eventApi")(app);
 require("./routes/meetupEventApi")(app);
 
 mongoose.connect('mongodb://eventcodex:eventcodex@ds123311.mlab.com:23311/event-codex');
+mongoose.Promise = global.Promise;
+
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
