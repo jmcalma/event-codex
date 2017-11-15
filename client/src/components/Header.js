@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ReactDOM from 'react-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
@@ -22,6 +23,7 @@ class Header extends Component {
       open: false,
       openEvents: false,
       selectorValue: 1,
+      searchSelectorValue: 1,
       searchOpen: false,
       snackbarOpen: false,
       eventsSearch: [],
@@ -179,15 +181,27 @@ class Header extends Component {
   }
 
   handleSearch = () => {
-      fetch("/api/event")
-        .then((response) => {
-           return response.json() })   
-        .then((json) => {
-          this.setState({ eventsSearch: json });
-       });
+    var searchFilter = ["title", "category", "tag"];
+    var chosenFilter = searchFilter[this.state.searchSelectorValue - 1];
+    var query = document.getElementById('input_search_field').value;
 
-      //console.log(this.state.eventsSearch);
+    fetch("/api/event/" + chosenFilter + "/" + query)
+      .then((response) => {
+         return response.json() })   
+      .then((json) => {
+        this.setState({ eventsSearch: json });
+        ReactDOM.render(
+          <SearchResultsList events={json} />,
+          document.getElementById('searchResults')
+        );
+    });
+
+
   }
+
+  handleChangeSelectorSearch = (event, index, searchSelectorValue) => {
+    this.setState({ searchSelectorValue });
+  };
 
 
   render() {
@@ -238,18 +252,37 @@ class Header extends Component {
                       onRequestClose={this.closeSearch}
                       autoScrollBodyContent={true}
                     >
-                     <div style={{position: 'relative', display: 'inline-block'}}>
-                       <img src={SearchIcon} style={{position: 'absolute', left: 0, top: 15, width: 20, height: 20}} alt="search icon" />
+                      <div>
+                        <div id="searchRow">
+                          <div id="fieldSearch" style={{position: 'relative', display: 'inline-block'}}>
+                            <img src={SearchIcon} style={{position: 'absolute', left: 0, top: 15, width: 20, height: 20}} alt="search icon" />
+                             <TextField
+                                id="input_search_field"
+                                style={{textIndent: 30}}
+                                hintText="Search"
+                                multiLine={true}  
+                              />
+                             <RaisedButton id="btnSearch" label="Search" onClick={this.handleSearch} />
+                          </div>
 
-                       <TextField
-                          style={{textIndent: 30}}
-                          hintText="Search by Name"
-                          multiLine={true}  
-                        />
-                       <FlatButton label="Search" onClick={this.handleSearch} />
+                            <div>
+                              <SelectField
+                                floatingLabelText="Search by"
+                                value={this.state.searchSelectorValue}
+                                id="select_search_filter"
+                                onChange={this.handleChangeSelectorSearch}
+                                selectedMenuItemStyle={{ color: '#00B8D4' }}
+                              >
+                                <MenuItem value={1} primaryText="Title" />
+                                <MenuItem value={2} primaryText="Category" />
+                                <MenuItem value={3} primaryText="Tags" />
+                              </SelectField>
+                            </div>
 
-                       <div>
-                          <SearchResultsList events={this.state.eventsSearch} />
+                          </div>
+
+                       <div id="searchResults">
+                          
                        </div>
                     </div>
                   </Dialog>
