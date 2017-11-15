@@ -16,6 +16,23 @@ import 'whatwg-fetch';
 
 import SearchIcon from './searchIcon.png';
 
+const dialogFixStyles = {
+  dialogRoot: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingTop: 0
+  },
+  dialogContent: {
+    position: "relative",
+    width: "80vw",
+
+  },
+  dialogBody: {
+    paddingBottom: 0
+  }
+};
+
 class Header extends Component {
   constructor() {
     super();
@@ -251,6 +268,10 @@ class Header extends Component {
                       open={this.state.searchOpen}
                       onRequestClose={this.closeSearch}
                       autoScrollBodyContent={true}
+                      repositionOnUpdate={false}
+                      contentStyle={ dialogFixStyles.dialogContent }
+                      bodyStyle={ dialogFixStyles.dialogBody }
+                      style={ dialogFixStyles.dialogRoot }
                     >
                       <div>
                         <div id="searchRow">
