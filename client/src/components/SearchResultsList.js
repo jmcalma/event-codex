@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 class SearchResultsList extends Component {
   constructor(props) {
@@ -16,7 +17,6 @@ class SearchResultsList extends Component {
   	 var count = Object.keys(this.props.events).length;
   	 this.setState({ events: this.props.events });
   	 this.setState({ eventsLength: count });
-  	 console.log(this.props.events);
   };
 
   renderListRow = () => {
@@ -58,13 +58,27 @@ class SearchResultsList extends Component {
   }
 
   render() {
+  	var cardSearchHolder = [];
+  	for(var i = 0; i < this.state.eventsLength; i++) {
+  		cardSearchHolder.push(
+  			(<Card>
+			    <CardHeader
+			      title={this.state.events[i].event_name}
+			      subtitle={this.state.events[i].event_description}
+			    />
+			    <CardActions>
+			      <FlatButton label="Action1" />
+			      <FlatButton label="Action2" />
+			    </CardActions>
+			  </Card>)
+  		);
+  	}
 	return(
-		<div>
-			{this.renderListRow()}
-			{this.renderListRow()}
-			{this.renderRows()}
-
-		</div>
+	  <MuiThemeProvider>
+		<Card>
+			{cardSearchHolder}
+		</Card>
+	   </MuiThemeProvider>
 	);
   }
 }
