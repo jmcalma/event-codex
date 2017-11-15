@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import Snackbar from 'material-ui/Snackbar';
+import FileSaver from 'file-saver';
 
 class SearchResultsList extends Component {
   constructor(props) {
@@ -64,41 +66,59 @@ class SearchResultsList extends Component {
        }
   };
 
-  renderRows = () => {
-	 for(var i = 0; i < 3; i++) {
-	 	return this.renderListRow();
-	 }
+  downloadIcs = (event) => {
+    fetch("/api/event/downloadics/" + event._id)
+      .then((response) => {
+          return response.blob() })   
+      .then((blob) => {
+           FileSaver.saveAs(blob, event.event_name + ".ics");
+     });
   }
 
   render() {
   	var cardSearchHolder = [];
   	for(var i = 0; i < this.state.eventsLength; i++) {
   		cardSearchHolder.push(
-  			(<Card>
-			    <CardHeader
-			      title={this.state.events[i].event_name}
-			      subtitle={this.convertDateTime(this.state.events[i].start_date, this.state.events[i].end_date)}
-			      actAsExpander={true}
-      			  showExpandableButton={true}
-			    />
-			    <CardActions>
-			      <FlatButton label="Action1" />
-			      <FlatButton label="Action2" />
-			    </CardActions>
-			    <CardText expandable={true}>
-			      {this.state.events[i].event_description}
-			    </CardText>
-			  </Card>)
+  			(
+  			<div key={i}>
+	  			<Card>
+	  			   key={this.state.events[i]._id}
+				    <CardHeader
+				      title={this.state.events[i].event_name}
+				      subtitle={this.convertDateTime(this.state.events[i].start_date, this.state.events[i].end_date)}
+				      actAsExpander={true}
+	      			  showExpandableButton={true}
+				    />
+				    <CardText expandable={true}>
+				      <div>
+				      	Category: {this.state.events[i].event_category}
+				      </div>
+				      <div>
+				      	Where: {this.state.events[i].location}
+				      </div>
+				      <div id="miniSpace"></div>
+				      <div>
+				      	Description: {this.state.events[i].event_description}
+				      </div>
+				      
+				    </CardText>
+				    <CardActions>
+				      <FlatButton label="Download ICS" onClick={console.log(i)} />
+				      <FlatButton label="Action2" />
+				    </CardActions>
+				  </Card>
+				  <div id="space"></div>
+			  </div>)
   		);
   	}
 	return(
 	  <div>
-		  <MuiThemeProvider>
+		 <MuiThemeProvider>
 			<Card>
 				{cardSearchHolder}
 			</Card>
-		   </MuiThemeProvider>
-		   <div id="miniSpace"></div>
+		  </MuiThemeProvider>
+		  <div id="miniSpace"></div>
 	   </div>
 	);
   }
