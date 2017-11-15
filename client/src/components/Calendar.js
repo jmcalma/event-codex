@@ -67,7 +67,7 @@ class Calendar extends Component {
 
   downloadIcs = () => {
     this.setState({ snackbarOpen: true });
-    fetch("/api/download/icsfile/" + this.state.currentEvent._id)
+    fetch("/api/event/downloadics/" + this.state.currentEvent._id)
       .then((response) => {
           return response.blob() })   
       .then((blob) => {
