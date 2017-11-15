@@ -66,13 +66,17 @@ class SearchResultsList extends Component {
        }
   };
 
-  downloadIcs = (event) => {
-    fetch("/api/event/downloadics/" + event._id)
+  downloadIcs = (eventIndex) => {
+    fetch("/api/event/downloadics/" + this.state.events[eventIndex]._id)
       .then((response) => {
           return response.blob() })   
       .then((blob) => {
-           FileSaver.saveAs(blob, event.event_name + ".ics");
+           FileSaver.saveAs(blob, this.state.events[eventIndex].event_name + ".ics");
      });
+  }
+
+  checker = () => {
+  	console.log("hi");
   }
 
   render() {
@@ -103,7 +107,7 @@ class SearchResultsList extends Component {
 				      
 				    </CardText>
 				    <CardActions>
-				      <FlatButton label="Download ICS" onClick={console.log(i)} />
+				      <FlatButton label="Download ICS" onClick={() => this.checker} />
 				      <FlatButton label="Action2" />
 				    </CardActions>
 				  </Card>
