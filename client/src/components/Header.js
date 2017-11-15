@@ -21,7 +21,8 @@ const dialogFixStyles = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: 0
+    paddingTop: 0,
+    paddingBottom: 100
   },
   dialogContent: {
     position: "relative",
