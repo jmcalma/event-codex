@@ -12,6 +12,7 @@ class SearchResultsList extends Component {
   	this.state = {
   		events: [],
   		eventsLength: 0,
+      count: 0,
   	};
   }
 
@@ -66,13 +67,25 @@ class SearchResultsList extends Component {
        }
   };
 
-  downloadIcs = (eventIndex) => {
-    fetch("/api/event/downloadics/" + this.state.events[eventIndex]._id)
-      .then((response) => {
-          return response.blob() })   
-      .then((blob) => {
-           FileSaver.saveAs(blob, this.state.events[eventIndex].event_name + ".ics");
-     });
+  componentWillMount = () => {
+  	this.downloadIcs();
+  }
+
+  downloadIcs = (eventId) => {
+    if (this.state.count === 0) {
+      var newCount = 1;
+      this.setState({ count: newCount });
+    } else {
+      console.log("/api/event/downloadics/" + eventId);
+      fetch("/api/event/downloadics/" + eventId)
+        .then((response) => {
+            return response.blob() })   
+        .then((blob) => {
+             FileSaver.saveAs(blob, eventId + ".ics");
+       });
+    }
+  	
+
   }
 
   checker = () => {
@@ -81,7 +94,7 @@ class SearchResultsList extends Component {
 
   render() {
   	var cardSearchHolder = [];
-  	for(var i = 0; i < this.state.eventsLength; i++) {
+  	for(let i = 0; i < this.state.eventsLength; i++) {
   		cardSearchHolder.push(
   			(
   			<div key={i}>
@@ -104,11 +117,9 @@ class SearchResultsList extends Component {
 				      <div>
 				      	Description: {this.state.events[i].event_description}
 				      </div>
-				      
 				    </CardText>
 				    <CardActions>
-				      <FlatButton label="Download ICS" onClick={() => this.checker} />
-				      <FlatButton label="Action2" />
+				      <FlatButton label="Download ICS" onClick={() => this.downloadIcs(this.state.events[i]._id)} />
 				    </CardActions>
 				  </Card>
 				  <div id="space"></div>
