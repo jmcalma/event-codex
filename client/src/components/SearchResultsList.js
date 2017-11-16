@@ -88,10 +88,6 @@ class SearchResultsList extends Component {
 
   }
 
-  checker = () => {
-  	console.log("hi");
-  }
-
   render() {
   	var cardSearchHolder = [];
   	for(let i = 0; i < this.state.eventsLength; i++) {
