@@ -208,6 +208,7 @@ class Header extends Component {
          return response.json() })   
       .then((json) => {
         this.setState({ eventsSearch: json });
+        ReactDOM.unmountComponentAtNode(document.getElementById('searchResults'));
         ReactDOM.render(
           <SearchResultsList events={json} />,
           document.getElementById('searchResults')
