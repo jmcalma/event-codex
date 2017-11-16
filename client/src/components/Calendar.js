@@ -9,6 +9,8 @@ import Snackbar from 'material-ui/Snackbar'
 import FileSaver from 'file-saver';
 import MiniMap from './MiniMap';
 
+import eventsTest from './events';
+
 const titleStyles = {
     fontSize: '40px',
     padding: '15px 0px 20px 21px',
@@ -41,6 +43,7 @@ class Calendar extends Component {
 
     this.state = {
       events: [],
+      eventsMeetup: [],
       currentEvent: "ffff",
       eventDetailsOpen: false,
       snackbarOpen: false,
@@ -49,11 +52,18 @@ class Calendar extends Component {
 
   componentDidMount() {
       fetch("/api/event")
-          .then((response) => {
-              return response.json() })   
-                  .then((json) => {
-                      this.setState({ events: json });
-                  });
+        .then((response) => {
+            return response.json() })   
+        .then((json) => {
+            this.setState({ events: json });
+      });
+
+      fetch("/api/meetupEvents")
+        .then((response) => {
+            return response.json() })   
+        .then((json) => {
+            this.setState({ events: json });
+      });
   };
 
   handleOpenEvent = (event) => {
@@ -132,6 +142,9 @@ class Calendar extends Component {
         onClick={this.handleClose}
       />,
     ];
+
+    console.log(eventsTest);
+
 
     return (
       <div>
