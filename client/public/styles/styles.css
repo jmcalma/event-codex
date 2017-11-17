@@ -71,3 +71,7 @@ body {
 #searchRow {
 	width: 60%;
 }
+
+#apiMarker {
+	text-align: right;
+}
