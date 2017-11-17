@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import Snackbar from 'material-ui/Snackbar';
 import FileSaver from 'file-saver';
 
 class SearchResultsList extends Component {
@@ -67,10 +66,6 @@ class SearchResultsList extends Component {
        }
   };
 
-  componentWillMount = () => {
-  	this.downloadIcs();
-  }
-
   downloadIcs = (eventId) => {
     if (this.state.count === 0) {
       var newCount = 1;
@@ -84,8 +79,6 @@ class SearchResultsList extends Component {
              FileSaver.saveAs(blob, eventId + ".ics");
        });
     }
-  	
-
   }
 
   render() {
