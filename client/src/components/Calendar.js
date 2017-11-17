@@ -134,6 +134,36 @@ class Calendar extends Component {
     this.setState({ snackbarOpen: false});
   };
 
+  checkMeetup = (event, type) => {
+    switch(type) {
+      case 0:
+        return "Meetup Link: " + event.link;
+        break;
+      case 1:
+        if(event.hasOwnProperty('group')) {
+          return event.group.location;
+        }
+        break;
+      case 2:
+        return event.description;
+        break;
+      case 3:
+        return;
+        break;
+      case 4:
+        if(event.hasOwnProperty('group')) {
+          return event.group.name;
+        } else {
+          return event.event_name;
+        }
+        break;
+      case 5:
+        if(event.hasOwnProperty('group')) {
+          return "from Meetup";
+        }
+    }
+  }
+
   render() {
     const actions = [
       <FlatButton
@@ -142,9 +172,6 @@ class Calendar extends Component {
         onClick={this.handleClose}
       />,
     ];
-
-    console.log(eventsTest);
-
 
     return (
       <div>
@@ -155,7 +182,7 @@ class Calendar extends Component {
             {...this.props}
             views={['month']}
             defaultView='month'
-            events={this.state.events}
+            events={eventsTest.concat(this.state.events)}
             titleAccessor='event_name'
             startAccessor='start_date'
             endAccessor='end_date'
@@ -169,7 +196,7 @@ class Calendar extends Component {
           <MuiThemeProvider>
             <div id="calendarEvent">
               <Dialog
-                title={this.state.currentEvent.event_name}
+                title={this.checkMeetup(this.state.currentEvent, 4)}
                 actions={actions}
                 autoDetectWindowHeight={true}
                 repositionOnUpdate={false}
@@ -185,27 +212,32 @@ class Calendar extends Component {
                 <div id="eventDetails">
                   <div>
                     <h6> Contact Email: {this.state.currentEvent.host_email} </h6>
+                    <h6> {this.checkMeetup(this.state.currentEvent, 0)} </h6>
                   </div>
                   <div id="miniSpace"> </div>
                   <div>
                     <h6> When: {this.convertDateTime(this.state.currentEvent.start_date, this.state.currentEvent.end_date)} </h6>
                   </div>
                   <div>
-                    <h6> Where: {this.state.currentEvent.location} </h6>
+                    <h6> Where: {this.state.currentEvent.location} {this.checkMeetup(this.state.currentEvent, 1)} </h6>
                   </div>
                   
                   <div id="miniSpace"> </div>
                   <div>
-                    <h6> Description: {this.state.currentEvent.event_description} </h6>
+                    <h6> Description: {this.state.currentEvent.event_description} {this.checkMeetup(this.state.currentEvent, 2)} </h6>
                   </div>
                   <div>
-                    <h6> Category: {this.state.currentEvent.event_category} </h6>
+                    <h6> Category: {this.state.currentEvent.event_category} {this.checkMeetup(this.state.currentEvent, 3)} </h6>
                   </div>
 
                   <div>
-                    <MiniMap isMarkerShown={false} event={this.state.currentEvent} />
+                    <MiniMap isMarkerShown={false} event={this.state.currentEvent} /> 
                   </div>
-                  
+
+                  <div id="apiMarker">
+                    <p> {this.checkMeetup(this.state.currentEvent, 5)} </p>
+                  </div>
+
                   <div id="downloadIcs">
                     <RaisedButton id="btnDownloadIcs" label="Download Event ICS" onClick={this.downloadIcs} />
                   </div>
