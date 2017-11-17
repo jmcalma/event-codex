@@ -1,4 +1,4 @@
-var request = require("request")
+var request = require("request");
 var groups = [];
 var meetupEvents = [];
 
@@ -10,7 +10,7 @@ module.exports = app => {
 
     app.get("/api/meetupEvents", async (req, res) => {
       getGroupsFromMeetup();
-			getEventsFromMeetup();
+	    getEventsFromMeetup();
 			res.send(meetupEvents);
     });
 }
@@ -26,78 +26,71 @@ function getGroupsFromMeetup() {
 }
 
 function getCareerGroups() {
-  var link = "https://api.meetup.com/find/groups?photo-host=public&page=10&sig_id=240469031&category=2&only=urlname&sig=e2afcb5cee4e60891a97f3b3bbe3aaab02ad414e";
+  var link = "https://api.meetup.com/find/groups?photo-host=public&page=10&sig_id=240469031&category=2&only=name%2Curlname%2Ccategory.name&sig=296c96de97a5f0a296afd0a919dcf29fc07dd2ed";
   request(link, function (error, response, body) {
       if (!error && response.statusCode == 200) {
         var importedJSON = JSON.parse(body);
         groups = groups.concat(importedJSON);
-        console.log(importedJSON);
       }
   })
 }
 
 function getCarGroups() {
-  var link = "https://api.meetup.com/find/groups?photo-host=public&page=10&sig_id=240469031&category=3&only=urlname&sig=b951fc9bf8c67175e7ade00a3c6ec4b720ab9f7c";
+  var link = "https://api.meetup.com/find/groups?photo-host=public&page=10&sig_id=240469031&category=3&only=name%2Curlname%2Ccategory.name&sig=73d58e500323ad945eb1394583941c9f1c77f12b";
   request(link, function (error, response, body) {
       if (!error && response.statusCode == 200) {
         var importedJSON = JSON.parse(body);
         groups = groups.concat(importedJSON);
-        console.log(importedJSON);
       }
   })
 }
 
 function getFoodGroups() {
-  var link = "https://api.meetup.com/find/groups?photo-host=public&page=10&sig_id=240469031&category=10&only=urlname&sig=a3b573eac262ccada616213d28977d5c64a46498";
+  var link = "https://api.meetup.com/find/groups?photo-host=public&page=10&sig_id=240469031&category=10&only=name%2Curlname%2Ccategory.name&sig=fc07e6f3f67c4dc878481427630f8ebb98181069";
   request(link, function (error, response, body) {
       if (!error && response.statusCode == 200) {
         var importedJSON = JSON.parse(body);
         groups = groups.concat(importedJSON);
-        console.log(importedJSON);
       }
   })
 }
 
 function getMusicGroups() {
-  var link = "https://api.meetup.com/find/groups?photo-host=public&page=10&sig_id=240469031&category=21&only=urlname&sig=cc3333adcc50b927fd5a07ff450745f540774b46";
+  var link = "https://api.meetup.com/find/groups?photo-host=public&page=10&sig_id=240469031&category=21&only=name%2Curlname%2Ccategory.name&sig=05b05627236a1cf2827e48ee5649bb0859d2ffaf";
   request(link, function (error, response, body) {
       if (!error && response.statusCode == 200) {
         var importedJSON = JSON.parse(body);
         groups = groups.concat(importedJSON);
-        console.log(importedJSON);
       }
   })
 }
 
 function getSocialGroups() {
-  var link = "https://api.meetup.com/find/groups?photo-host=public&page=10&sig_id=240469031&category=31&only=urlname&sig=ae85a6e15f2e80be1c333009a1c95978a2a4072a";
+  var link = "https://api.meetup.com/find/groups?photo-host=public&page=10&sig_id=240469031&category=31&only=name%2Curlname%2Ccategory.name&sig=2bb209ae2fb7b903bbef6f49e91abbc489be7e78";
   request(link, function (error, response, body) {
       if (!error && response.statusCode == 200) {
         var importedJSON = JSON.parse(body);
         groups = groups.concat(importedJSON);
-        console.log(importedJSON);
       }
   })
 }
 
 function getSportsGroups() {
-  var link = "https://api.meetup.com/find/groups?photo-host=public&page=10&sig_id=240469031&category=32&only=urlname&sig=07c3d78353a5cdf25df3d5c361a167382f6ad161";
+  var link = "https://api.meetup.com/find/groups?photo-host=public&page=10&sig_id=240469031&category=32&only=name%2Curlname%2Ccategory.name&sig=420271546d52b3aae9b85301f31ecb2f61501bb6";
   request(link, function (error, response, body) {
       if (!error && response.statusCode == 200) {
         var importedJSON = JSON.parse(body);
         groups = groups.concat(importedJSON);
-        console.log(importedJSON);
       }
   })
 }
 
 function getTechGroups() {
-  var link = "https://api.meetup.com/find/groups?photo-host=public&page=50&sig_id=240469031&category=34&only=urlname&sig=02bf65fd813cc9b9600a80d07aee3a43da37de51";
+  var link = "https://api.meetup.com/find/groups?photo-host=public&page=50&sig_id=240469031&category=34&only=name%2Curlname%2Ccategory.name&sig=304248f2ace2df0729baf054ed48cc52fdc50fa0";
   request(link, function (error, response, body) {
       if (!error && response.statusCode == 200) {
         var importedJSON = JSON.parse(body);
         groups = groups.concat(importedJSON);
-        console.log(importedJSON);
       }
   })
 }
@@ -106,17 +99,13 @@ function getEventsFromMeetup() {
   var importedJSON;
   var fullLink = "";
   var linkHalf1 = "https://api.meetup.com/";
-  var linkHalf2 = "/events?&sign=true&photo-host=public&page=20&key=d182f5649646f23517334541793f72";
-  fullLink = linkHalf1 + groups[0].urlname + linkHalf2;
-  console.log(groups.length);
-  console.log(fullLink);
+  var linkHalf2 = "/events?&sign=true&photo-host=public&page=20&only=name,local_date,local_time,venue,group.name,link,description&key=d182f5649646f23517334541793f72";
   for(var i in groups) {
     fullLink = linkHalf1 + groups[i].urlname + linkHalf2;
     request(fullLink, function (error, response, body) {
         if (!error && response.statusCode == 200) {
           importedJSON = JSON.parse(body);
           meetupEvents = meetupEvents.concat(importedJSON);
-          console.log(importedJSON);
         }
     })
   }

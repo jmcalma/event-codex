@@ -2,8 +2,6 @@ const mongoose = require('mongoose');
 const Event = mongoose.model("events");
 const fs = require("fs");
 const ics = require("ics");
-var request = require("request")
-var groups = [{urlname: 'scwa-oc'}];
 
 module.exports = app => {
 		app.use(function(req, res, next) {
