@@ -96,22 +96,16 @@ function toDate(date, time) {
 }
 
 function filterByCategory(res, eventFilter) {
-	var categoriesArray = ["careerandbusiness", "carsandmotorcyles", "foodanddrink", "music",
-		"socializing", "sportsandrecreation", "tech"];
-	if (categoriesArray.includes(eventFilter)) {
-		const events = Event.find({event_category: eventFilter}, function (err, events) {
-			if (err) {
-				throw new Exception('getting event problem');
-			}
-			res.send(events);
-		})
-	} else {
-		res.send('cannot find data error');
-	}
+	const events = Event.find({event_category: { $regex: eventFilter, $options: 'i'}}, function (err, events) {
+		if (err) {
+			throw new Exception('getting event problem');
+		}
+		res.send(events);
+	});
 }
 
 function filterByTag(res, eventFilter) {
-	const events = Event.find({tags: eventFilter}, function (err, events) {
+	const events = Event.find({tags: { $regex: eventFilter, $options: 'i'}}, function (err, events) {
 		if (err) {
 			res.send('error');
 		}
@@ -120,7 +114,7 @@ function filterByTag(res, eventFilter) {
 }
 
 function filterByTitle(res, eventFilter) {
-	const events = Event.find({event_name: eventFilter}, function (err, events) {
+	const events = Event.find({event_name: { $regex: eventFilter, $options: 'i'}}, function (err, events) {
 		if (err) {
 			res.send('error');
 		}
