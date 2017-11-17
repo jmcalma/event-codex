@@ -62,7 +62,7 @@ class Calendar extends Component {
         .then((response) => {
             return response.json() })   
         .then((json) => {
-            this.setState({ events: json });
+            this.setState({ eventsMeetup: json });
       });
   };
 
@@ -138,25 +138,20 @@ class Calendar extends Component {
     switch(type) {
       case 0:
         return "Meetup Link: " + event.link;
-        break;
       case 1:
         if(event.hasOwnProperty('group')) {
           return event.group.location;
         }
-        break;
       case 2:
         return event.description;
-        break;
       case 3:
         return;
-        break;
       case 4:
         if(event.hasOwnProperty('group')) {
           return event.group.name;
         } else {
           return event.event_name;
         }
-        break;
       case 5:
         if(event.hasOwnProperty('group')) {
           return "from Meetup";
