@@ -140,7 +140,6 @@ class Calendar extends Component {
         if (event.hasOwnProperty('group')) {
           return "Meetup Link: " + event.link;
         }
-
         return;
       case 1:
         if(event.hasOwnProperty('group')) {
@@ -240,7 +239,6 @@ class Calendar extends Component {
                   <div id="downloadIcs">
                     <RaisedButton id="btnDownloadIcs" label="Download Event ICS" onClick={this.downloadIcs} />
                   </div>
-
 
                   <div id="space"></div> <div id="space"></div>
                 </div>

@@ -214,14 +214,11 @@ class Header extends Component {
           document.getElementById('searchResults')
         );
     });
-
-
   }
 
   handleChangeSelectorSearch = (event, index, searchSelectorValue) => {
     this.setState({ searchSelectorValue });
   };
-
 
   render() {
     const actions = [
@@ -304,9 +301,7 @@ class Header extends Component {
 
                           </div>
 
-                       <div id="searchResults">
-                          
-                       </div>
+                       <div id="searchResults"> </div>
                     </div>
                   </Dialog>
                 </div>
