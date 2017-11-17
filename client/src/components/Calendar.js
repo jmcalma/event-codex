@@ -137,7 +137,11 @@ class Calendar extends Component {
   checkMeetup = (event, type) => {
     switch(type) {
       case 0:
-        return "Meetup Link: " + event.link;
+        if (event.hasOwnProperty('group')) {
+          return "Meetup Link: " + event.link;
+        }
+
+        return;
       case 1:
         if(event.hasOwnProperty('group')) {
           return event.group.location;
