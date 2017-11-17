@@ -18,7 +18,11 @@ class MiniMap extends React.Component {
 	
 	componentDidMount() {
 		this.setState({ currentEvent: this.props.event});
-		this.geocodeAddress(this.props.event.location);
+		if(this.props.event.hasOwnProperty('group')) {
+			this.geocodeAddress(this.props.event.group.location);
+		} else {
+			this.geocodeAddress(this.props.event.location);
+		}
 	}
 
 	geocodeAddress = (location) => {
