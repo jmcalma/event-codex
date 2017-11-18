@@ -1,17 +1,18 @@
 var request = require("request");
+var _ = require("underscore");
 var groups = [];
 var meetupEvents = [];
 
 module.exports = app => {
     app.get("/api/groups", async (req, res) => {
       getGroupsFromMeetup();
-			res.send(groups);
+            res.send(groups);
     });
 
     app.get("/api/meetupEvents", async (req, res) => {
       getGroupsFromMeetup();
-	    getEventsFromMeetup();
-			res.send(meetupEvents);
+        getEventsFromMeetup();
+            res.send(meetupEvents);
     });
 }
 
@@ -106,7 +107,26 @@ function getEventsFromMeetup() {
         if (!error && response.statusCode == 200) {
           importedJSON = JSON.parse(body);
           meetupEvents = meetupEvents.concat(importedJSON);
+          for(var j in meetupEvents) {
+            meetupEvents[j].event_category = groups[i].category;
+            meetupEvents[j].tags = "" + groups[i].category + "," + groups[i].name;
+          }
         }
     })
   }
 }
+
+// function filterByCategory(res, eventFilter, index) {
+//     var filtered = _.where(meetupEvents, {groups[index].category: eventFilter});
+//     res.send(filtered);
+// }
+
+// function filterByTag(res, eventFilter, index) {
+//     var filtered = _.where(meetupEvents, {groups[index].tags: eventFilter});
+//     res.send(filtered);
+// }
+
+// function filterByTitle(res, eventFilter, index) {
+//     var filtered = _.where(meetupEvents, {groups[index].name: eventFilter});
+//     res.send(filtered);
+// }

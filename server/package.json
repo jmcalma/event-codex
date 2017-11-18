@@ -29,6 +29,7 @@
     "mocha": "^4.0.1",
     "mongoose": "^4.12.5",
     "nodemon": "^1.12.1",
-    "request": "^2.83.0"
+    "request": "^2.83.0",
+    "underscore": "^1.8.3"
   }
 }
