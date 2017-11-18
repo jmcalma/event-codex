@@ -12,19 +12,19 @@ module.exports = app => {
     app.get("/api/meetupEvents", async (req, res) => {
       getGroupsFromMeetup();
       getEventsFromMeetup();
-      //optimizeMeetupEvents();
+      optimizeMeetupEvents();
       res.send(meetupEvents);
     });
 }
 
 function getGroupsFromMeetup() {
-    getCareerGroups();
-    getCarGroups();
-    getFoodGroups();
-    getMusicGroups(); 
-    getSocialGroups();
-    getSportsGroups();
-    getTechGroups();
+    setTimeout(getCareerGroups(), 2000);
+    setTimeout(getCarGroups(), 2000);
+    setTimeout(getFoodGroups(), 2000);
+    setTimeout(getMusicGroups(), 2000); 
+    setTimeout(getSocialGroups(), 2000);
+    setTimeout(getSportsGroups(), 2000);
+    setTimeout(getTechGroups(), 2000);
 }
 
 function getCareerGroups() {
@@ -105,39 +105,39 @@ function getEventsFromMeetup() {
   var linkHalf2 = "/events?&sign=true&photo-host=public&page=5&only=name,local_date,local_time,venue,group,link,description&key=d182f5649646f23517334541793f72";
   for(var i in groups) {
     fullLink = linkHalf1 + groups[i].urlname + linkHalf2;
-    request(fullLink, function (error, response, body) {
-        if (!error && response.statusCode == 200) {
-          importedJSON = JSON.parse(body);
-          meetupEvents = meetupEvents.concat(importedJSON);
-          for(j = counter; j < meetupEvents.length; j++) {
-          	meetupEvents[j].group = groups[i].name;
-            meetupEvents[j].event_category = groups[i].category.name;
-            meetupEvents[j].tags = "" + meetupEvents[j].event_category + "," + groups[i].name;
-            counter++;
-          }
-        }
-    })
+    setTimeout(request(fullLink, function (error, response, body) {
+                if (!error && response.statusCode == 200) {
+                  importedJSON = JSON.parse(body);
+                  meetupEvents = meetupEvents.concat(importedJSON);
+                  for(j = counter; j < meetupEvents.length; j++) {
+                    meetupEvents[j].group = groups[i].name;
+                    meetupEvents[j].event_category = groups[i].category.name;
+                    meetupEvents[j].tags = "" + meetupEvents[j].event_category + "," + groups[i].name;
+                    counter++;
+                  }
+                }
+               }), 5000);
   }
   console.log(meetupEvents);
 }
 
 function optimizeMeetupEvents() {
-	for(var i in meetupEvents) {
-		meetupEvents[i].event_name = meetupEvents[i].name;
-		delete meetupEvents[i].name;
-		meetupEvents[i].location = "" + meetupEvents[i].venue.address_1 + ", " + meetupEvents[i].venue.city + ", " + meetupEvents[i].venue.state + " " + meetupEvents[i].venue.zip;
-		delete meetupEvents[i].venue;
-		meetupEvents[i].start_date = "" + meetupEvents[i].local_date + "T" + meetupEvents[i].local_time + ":00.000Z";
-		meetupEvents[i].end_date = meetupEvents[i].start_date;
-		delete meetupEvents[i].local_date;
-		delete meetupEvents[i].local_time;
-		meetupEvents[i].event_description = meetupEvents[i].description;
-		delete meetupEvents[i].description;
-		meetupEvents[i].website_link = meetupEvents[i].link;
-		delete meetupEvents[i].link;
-		meetupEvents[i].group_name = meetupEvents[i].group.name;
-		delete meetupEvents[i].group;
-	}
+    for(var i in meetupEvents) {
+        meetupEvents[i].event_name = meetupEvents[i].name;
+        delete meetupEvents[i].name;
+        meetupEvents[i].location = "" + meetupEvents[i].venue.address_1 + ", " + meetupEvents[i].venue.city + ", " + meetupEvents[i].venue.state + " " + meetupEvents[i].venue.zip;
+        delete meetupEvents[i].venue;
+        meetupEvents[i].start_date = "" + meetupEvents[i].local_date + "T" + meetupEvents[i].local_time + ":00.000Z";
+        meetupEvents[i].end_date = meetupEvents[i].start_date;
+        delete meetupEvents[i].local_date;
+        delete meetupEvents[i].local_time;
+        meetupEvents[i].event_description = meetupEvents[i].description;
+        delete meetupEvents[i].description;
+        meetupEvents[i].website_link = meetupEvents[i].link;
+        delete meetupEvents[i].link;
+        meetupEvents[i].group_name = meetupEvents[i].group.name;
+        delete meetupEvents[i].group;
+    }
 }
 
 // function filterByCategory(res, eventFilter, index) {
