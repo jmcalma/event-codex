@@ -15,23 +15,27 @@ module.exports = app => {
       res.send(meetupEvents);
     });
 
-    // app.get("/api/event/title/:info", async (req, res) => {
-    //     var url = req.originalUrl;
-    //     var eventFilter = url.substring(url.lastIndexOf('/') + 1).trim();
-    //         filterByTitle(res, eventFilter);
-    // });
+    app.get("/api/meetupEvents/title/:info", async (req, res) => {
+        var url = req.originalUrl;
+        var eventFilter = url.substring(url.lastIndexOf('/') + 1).trim();
+        eventFilter = eventFilter.replace(/-/g, ' ');
+            filterByTitle(res, eventFilter);
+    });
 
-    // app.get("/api/event/category/:info", async (req, res) => {
-    //     var url = req.originalUrl;
-    //     var eventFilter = url.substring(url.lastIndexOf('/') + 1).trim();
-    //         filterByCategory(res, eventFilter);
-    //     });
+    app.get("/api/meetupEvents/category/:info", async (req, res) => {
+        var url = req.originalUrl;
+        var eventFilter = url.substring(url.lastIndexOf('/') + 1).trim();
+        eventFilter = eventFilter.replace(/-/g, ' ');
+            filterByCategory(res, eventFilter);
+        });
 
-    // app.get("/api/event/tag/:info", async (req, res) => {
-    //     var url = req.originalUrl;
-    //     var eventFilter = url.substring(url.lastIndexOf('/') + 1).trim();
-    //         filterByTag(res, eventFilter);
-    //     });
+    app.get("/api/meetupEvents/tag/:info", async (req, res) => {
+        var url = req.originalUrl;
+        var eventFilter = url.substring(url.lastIndexOf('/') + 1).trim();
+        eventFilter = eventFilter.replace(/-/g, ' ');
+            filterByTag(res, eventFilter);
+        });
+
     // app.get("/api/event/downloadics/:id", (req, res) => {
     //   var url = req.originalUrl;
     //   var eventId = url.substring(url.lastIndexOf('/') + 1).trim();
@@ -41,12 +45,12 @@ module.exports = app => {
 }
 
 function getGroupsFromMeetup() {
-    setTimeout(getCareerGroups, 1000);
-    setTimeout(getCarGroups, 1000);
-    setTimeout(getFoodGroups, 1000);
-    setTimeout(getMusicGroups, 1000); 
-    setTimeout(getSocialGroups, 1000);
-    setTimeout(getSportsGroups, 1000);
+    // setTimeout(getCareerGroups, 1000);
+    // setTimeout(getCarGroups, 1000);
+    // setTimeout(getFoodGroups, 1000);
+    // setTimeout(getMusicGroups, 1000); 
+    // setTimeout(getSocialGroups, 1000);
+    // setTimeout(getSportsGroups, 1000);
     setTimeout(getTechGroups, 1000);
 }
 
@@ -207,29 +211,30 @@ function optimizeMeetupEvents() {
       console.log("optimizing meetupEvents");//remove this later
 }
 
-// function filterByCategory(res, eventFilter) {
-//     var filtered = _.where(meetupEvents, {meetupEvents.event_category: eventFilter});
-       // if (err) {
-       //      res.send('error');
-       //  }
-//     res.send(filtered);
-// }
+function filterByCategory(res, eventFilter) {
+    var filtered = _.where(meetupEvents, {event_category: eventFilter});
+    console.log("here are the events############################");//remove later
+    console.log(filtered);
+    console.log("###############################################");//remove later
+    res.send(filtered);
+}
 
-// function filterByTag(res, eventFilter) {
-//     var filtered = _.where(meetupEvents, {meetupEvents.tags: eventFilter});
-        // if (err) {
-        //     res.send('error');
-        // }
-//     res.send(filtered);
-// }
+function filterByTag(res, eventFilter) {
+    var filtered = _.where(meetupEvents, {tags: eventFilter});
+    console.log("here are the events############################");//remove later
+    console.log(filtered);
+    console.log("###############################################");//remove later
+    res.send(filtered);
+}
 
-// function filterByTitle(res, eventFilter) {
-//     var filtered = _.where(meetupEvents, {meetupEvents.event_name: eventFilter});
-       // if (err) {
-       //      res.send('error');
-       //  }
-//     res.send(filtered);
-// }
+function filterByTitle(res, eventFilter) {
+    var filtered = _.where(meetupEvents, {event_name: eventFilter});
+    console.log("here are the events############################");//remove later
+    console.log(filtered);
+    console.log("###############################################");//remove later
+    res.send(filtered);
+}
+
 // function enableDownload(res, event) {
 //     var title = event.event_name;
 //     var description = event.event_description;
