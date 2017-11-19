@@ -12,7 +12,6 @@ module.exports = app => {
     app.get("/api/meetupEvents", async (req, res) => {
       getGroupsFromMeetup();
       getEventsFromMeetup();
-      //optimizeMeetupEvents();
       res.send(meetupEvents);
     });
 
@@ -42,13 +41,13 @@ module.exports = app => {
 }
 
 function getGroupsFromMeetup() {
-    setTimeout(getCareerGroups, 500);
-    setTimeout(getCarGroups, 500);
-    setTimeout(getFoodGroups, 500);
-    setTimeout(getMusicGroups, 500); 
-    setTimeout(getSocialGroups, 500);
-    setTimeout(getSportsGroups, 500);
-    setTimeout(getTechGroups, 500);
+    setTimeout(getCareerGroups, 1000);
+    setTimeout(getCarGroups, 1000);
+    setTimeout(getFoodGroups, 1000);
+    setTimeout(getMusicGroups, 1000); 
+    setTimeout(getSocialGroups, 1000);
+    setTimeout(getSportsGroups, 1000);
+    setTimeout(getTechGroups, 1000);
 }
 
 function getCareerGroups() {
@@ -122,59 +121,76 @@ function getTechGroups() {
 }
 
 function getEventsFromMeetup() {
+    var stop;
     var seconds = 0;
     var counter = 0;
     var importedJSON;
     var fullLink = "";
     var linkHalf1 = "https://api.meetup.com/";
-    var linkHalf2 = "/events?&sign=true&photo-host=public&page=1&only=name,local_date,local_time,venue,group,link,description&key=d182f5649646f23517334541793f72";
-    for(var i in groups) {
+    var linkHalf2 = "/events?&sign=true&photo-host=public&page=5&only=name,local_date,local_time,venue,group,link,description&key=d182f5649646f23517334541793f72";
+    for(let i = 0; i < 1; i++) {
         fullLink = linkHalf1 + groups[i].urlname + linkHalf2;
+        console.log(fullLink);
         request(fullLink, function (error, response, body) {
             if (!error && response.statusCode == 200) {
                 importedJSON = JSON.parse(body);
-                meetupEvents = meetupEvents.concat(importedJSON);
-                if(counter == 30) {
-                    var stop = 15;
+                if(i == 30) {
+                    stop = 15;
                 } else {
-                    var stop = 5;
+                    stop = 5;
                 }
-                for(j = counter; j < counter + stop; j++) {
-                    meetupEvents[j].event_category = groups[i].category.name;
-                    meetupEvents[j].tags = "" + meetupEvents[j].event_category + "," + groups[i].name;
+                for(var j = 0; j < (i*counter) + stop; j++) {
+                    importedJSON[j].event_category = groups[i].category.name;
+                    importedJSON[j].tags = "" + groups[i].category.name + ", " + groups[i].name;
                     counter++;
                 }
-                setTimeout(function() {
-                    if(counter % 10 == 0) {
-                        seconds = 5000;
-                    } else {
-                        seconds = 0;
-                    }
-                }, seconds);
-                console.log(counter + "  " + seconds);
+                if(counter % 10 == 0) {
+                    seconds = 5000;
+                } else {
+                    seconds = 0;
+                }
+                meetupEvents = meetupEvents.concat(importedJSON);
+                console.log(importedJSON);
+                optimizeMeetupEvents();
+                console.log(meetupEvents);
+                setTimeout(function() {console.log("waiting: " + seconds + " seconds");}, seconds);
+                console.log("counter: " + counter + "  seconds: " + seconds);
             }
         });
     }
-    console.log(meetupEvents);
 }
 
 function optimizeMeetupEvents() {
     for(var i in meetupEvents) {
-        meetupEvents[i].event_name = meetupEvents[i].name;
-        delete meetupEvents[i].name;
-        meetupEvents[i].location = "" + meetupEvents[i].venue.address_1 + ", " + meetupEvents[i].venue.city + ", " + meetupEvents[i].venue.state + " " + meetupEvents[i].venue.zip;
-        delete meetupEvents[i].venue;
-        meetupEvents[i].start_date = "" + meetupEvents[i].local_date + "T" + meetupEvents[i].local_time + ":00.000Z";
-        meetupEvents[i].end_date = meetupEvents[i].start_date;
-        delete meetupEvents[i].local_date;
-        delete meetupEvents[i].local_time;
-        meetupEvents[i].event_description = meetupEvents[i].description;
-        delete meetupEvents[i].description;
-        meetupEvents[i].website_link = meetupEvents[i].link;
-        delete meetupEvents[i].link;
-        meetupEvents[i].group_name = meetupEvents[i].group.name;
-        delete meetupEvents[i].group;
+        if(typeof meetupEvents[i].name !== 'undefined') {
+            meetupEvents[i].event_name = meetupEvents[i].name;
+            delete meetupEvents[i].name;
+        }
+        if(typeof meetupEvents[i].venue !== 'undefined') {
+            meetupEvents[i].location = "" + meetupEvents[i].venue.address_1 + ", " + meetupEvents[i].venue.city + ", " + meetupEvents[i].venue.state + " " + meetupEvents[i].venue.zip;
+            delete meetupEvents[i].venue;
+        }
+        if(typeof meetupEvents[i].local_date !== 'undefined' && typeof meetupEvents[i].local_time !== 'undefined') {
+            meetupEvents[i].start_date = "" + meetupEvents[i].local_date + "T" + meetupEvents[i].local_time + ":00.000Z";
+            meetupEvents[i].end_date = meetupEvents[i].start_date;
+            delete meetupEvents[i].local_date;
+            delete meetupEvents[i].local_time;
+        }
+        if(typeof meetupEvents[i].description !== 'undefined') {
+            meetupEvents[i].event_description = meetupEvents[i].description;
+            delete meetupEvents[i].description;
+        }
+        if(typeof meetupEvents[i].link !== 'undefined') {
+            meetupEvents[i].website_link = meetupEvents[i].link;
+            delete meetupEvents[i].link;
+        }
+        if(typeof meetupEvents[i].group !== 'undefined') {
+            meetupEvents[i].group_name = meetupEvents[i].group.name;
+            delete meetupEvents[i].group;
+        }
     }
+
+      console.log("optimizing meetupEvents");///////////
 }
 
 // function filterByCategory(res, eventFilter) {
@@ -201,7 +217,6 @@ function optimizeMeetupEvents() {
 //     res.send(filtered);
 // }
 // function enableDownload(res, event) {
-//     console.log("event: " + event);
 //     var title = event.event_name;
 //     var description = event.event_description;
 //     var startYear = event.start_date.getUTCFullYear();
@@ -209,17 +224,15 @@ function optimizeMeetupEvents() {
 //     var startDate = event.start_date.getUTCDate();
 //     var startHour = event.start_date.getUTCHours();
 //     var startMin = event.start_date.getUTCMinutes();
-//     console.log("start: " + startYear + "-" + startMonth + "-" + startDate + "-" + startHour + "-" + startMin);
 //     var endYear = event.end_date.getUTCFullYear();
 //     var endMonth = event.end_date.getUTCMonth() + 1;
 //     var endDate = event.end_date.getUTCDate();
 //     var endHour = event.end_date.getUTCHours();
 //     var endMin = event.end_date.getUTCMinutes();
-//     console.log("end: " + endYear + "-" + endMonth + "-" + endDate + "-" + endHour + "-" + endMin);
 //     var location = event.location;
 //     var categories = [event.event_category];
 
-//     var fileName = __dirname + "/codex.ics";
+//     var fileName = title + "/codex.ics";
 //     ics.createEvent(
 //       {
 //         title,
@@ -233,14 +246,11 @@ function optimizeMeetupEvents() {
 //         if (error) {
 //           throw new Exception('Create ics file fail');
 //         }
-//         // write file in server
 //         fs.writeFileSync(fileName, value);
-//         // user start to download the file from server
 //         res.download(fileName, function(err) {
 //           if (err) {
 //             console.log(err);
 //           } else {
-//             // if user download success, then delet file in server
 //             fs.unlink(fileName, function(err) { if (err) throw err; });
 //           }
 //         });
