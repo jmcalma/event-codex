@@ -58,12 +58,12 @@ class Calendar extends Component {
             this.setState({ events: json });
       });
 
-      fetch("/api/meetupEvents")
-        .then((response) => {
-            return response.json() })   
-        .then((json) => {
-            this.setState({ eventsMeetup: json });
-      });
+      // fetch("/api/meetupEvents")
+      //   .then((response) => {
+      //       return response.json() })   
+      //   .then((json) => {
+      //       this.setState({ eventsMeetup: json });
+      // });
   };
 
   handleOpenEvent = (event) => {
@@ -140,15 +140,16 @@ class Calendar extends Component {
         if (event.hasOwnProperty('group')) {
           return "Meetup Link: " + event.link;
         }
-        return;
+        break;
       case 1:
         if(event.hasOwnProperty('group')) {
           return event.group.location;
         }
+        break;
       case 2:
         return event.description;
       case 3:
-        return;
+        break;
       case 4:
         if(event.hasOwnProperty('group')) {
           return event.group.name;
@@ -159,6 +160,9 @@ class Calendar extends Component {
         if(event.hasOwnProperty('group')) {
           return "from Meetup";
         }
+        break;
+      default:
+        break;
     }
   }
 

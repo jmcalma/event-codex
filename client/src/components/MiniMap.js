@@ -32,9 +32,6 @@ class MiniMap extends React.Component {
 				this.setState({ locationLatitude: location.lat });
 				this.setState({ locationLongitude: location.lng });
 			})
-			error => {
-				console.log(error);
-		};
 	}
 	
 	render () {
