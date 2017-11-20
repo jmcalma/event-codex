@@ -66,18 +66,28 @@ class SearchResultsList extends Component {
        }
   };
 
-  downloadIcs = (eventId) => {
+  downloadIcs = (event) => {
+    console.log(event);
     if (this.state.count === 0) {
       var newCount = 1;
       this.setState({ count: newCount });
     } else {
-      console.log("/api/event/downloadics/" + eventId);
-      fetch("/api/event/downloadics/" + eventId)
-        .then((response) => {
-            return response.blob() })   
-        .then((blob) => {
-             FileSaver.saveAs(blob, eventId + ".ics");
-       });
+        if(event.hasOwnProperty('group')) {
+            fetch("/api/meetupEvents/downloadics/" + event._id)
+              .then((response) => {
+                  return response.blob() })   
+              .then((blob) => {
+                   FileSaver.saveAs(blob, event.event_name + ".ics");
+            });
+        } else {
+            fetch("/api/event/downloadics/" + event._id)
+              .then((response) => {
+                  return response.blob() })   
+              .then((blob) => {
+                   FileSaver.saveAs(blob, event.event_name + ".ics");
+            });
+        }
+
     }
   }
 
@@ -108,7 +118,7 @@ class SearchResultsList extends Component {
 				      </div>
 				    </CardText>
 				    <CardActions>
-				      <FlatButton label="Download ICS" onClick={() => this.downloadIcs(this.state.events[i]._id)} />
+				      <FlatButton label="Download ICS" onClick={() => this.downloadIcs(this.state.events[i])} />
 				    </CardActions>
 				  </Card>
 				  <div id="space"></div>
