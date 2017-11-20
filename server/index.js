@@ -8,21 +8,21 @@ const google = require('googleapis');
 const googleAuth = require('google-auth-library');
 const authorize = require('./google_calendar');
 
-// Configurations
-const PORT = process.env.PORT || 5000;
-require("./models/Event");
-require("./routes/authRoutes")(app);
-require("./routes/eventApi")(app);
-require("./routes/meetupEventApi")(app);
-
-mongoose.connect('mongodb://eventcodex:eventcodex@ds123311.mlab.com:23311/event-codex');
 mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://eventcodex:eventcodex@ds123311.mlab.com:23311/event-codex');
 
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
   res.send("server port 5000 : hello world");
 });
+
+// Configurations
+const PORT = process.env.PORT || 5000;
+require("./models/Event");
+require("./routes/authRoutes")(app);
+require("./routes/eventApi")(app);
+require("./routes/meetupEventApi")(app);
 
 app.get("/google-calendar-auth", function (req, res) {
 	fs.readFile('client_secret.json', function processClientSecrets(err, content) {
