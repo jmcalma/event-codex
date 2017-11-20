@@ -148,12 +148,17 @@ function getEventsFromMeetup() {
                     stop = 5;
                 }
                 for(var j = i*5; j < (i*5) + stop; j++) {
+                    if(importedJSON[j].hasOwnProperty('venue')) {
+                        importedJSON[j].location = "" + importedJSON[j].venue.address_1 + ", " + importedJSON[j].venue.city + ", " + importedJSON[j].venue.state + " " + importedJSON[j].venue.zip;   
+                    } else {
+                        importedJSON[j].location = "";
+                    }
                     if(groups[i].category.name === "Tech") {
                         importedJSON[j].event_category = "Technology";
-                        importedJSON[j].tags = "" + groups[i].category.name + ", " + groups[i].name;
+                        importedJSON[j].tags = "" + groups[i].category.name + ", " + groups[i].name + ", " + importedJSON[j].location;
                     } else {
                         importedJSON[j].event_category = groups[i].category.name;
-                        importedJSON[j].tags = "" + groups[i].category.name + ", " + groups[i].name;
+                        importedJSON[j].tags = "" + groups[i].category.name + ", " + groups[i].name + ", " + importedJSON[j].location;
                     }
                     importedJSON[j].old = "old";
                     counter++;
@@ -223,7 +228,6 @@ function optimizeMeetupEvents() {
         } else {
             meetupEvents[i].group_name = "";
         }
-        meetupEvents[i].tags = meetupEvents[i].tags + ", " + meetupEvents[i].location;
         delete meetupEvents[i].old;
     }
       console.log("optimizing meetupEvents");//remove this later
