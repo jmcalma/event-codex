@@ -7,14 +7,14 @@ var meetupEvents = [];
 
 module.exports = app => {
     app.get("/api/groups", async (req, res) => {
-      getGroupsFromMeetup();
-      res.send(groups);
+        getGroupsFromMeetup();
+        res.send(groups);
     });
 
     app.get("/api/meetupEvents", async (req, res) => {
-      getGroupsFromMeetup();
-      getEventsFromMeetup();
-      res.send(meetupEvents);
+        getGroupsFromMeetup();
+        getEventsFromMeetup();
+        res.send(meetupEvents);
     });
 
     app.get("/api/meetupEvents/title/:info", async (req, res) => {//fix these three to not return old data
@@ -39,11 +39,11 @@ module.exports = app => {
         });
 
     app.get("/api/meetupEvents/downloadics/:id", (req, res) => {
-      var url = req.originalUrl;
-      var eventId = url.substring(url.lastIndexOf('/') + 1).trim();
-      eventId = eventId.replace(/-/g, ' ');
-      var event = _.findWhere(meetupEvents, {event_name: eventId})
-      enableDownload(res, event);
+        var url = req.originalUrl;
+        var eventId = url.substring(url.lastIndexOf('/') + 1).trim();
+        eventId = eventId.replace(/-/g, ' ');
+        var event = _.findWhere(meetupEvents, {_id: eventId})
+        enableDownload(res, event);
     });
 }
 
@@ -134,8 +134,9 @@ function getEventsFromMeetup() {
     var importedJSON;
     var fullLink = "";
     var linkHalf1 = "https://api.meetup.com/";
-    var linkHalf2 = "/events?&sign=true&photo-host=public&page=5&only=name,local_date,local_time,venue,group,link,description&key=d182f5649646f23517334541793f72";
-    for(let i = 0; i < 1; i++) {//change this later
+    var linkHalf2 = "/events?&sign=true&photo-host=public&page=5&only=id,name,local_date,local_time,venue,group,link,description&key=d182f5649646f23517334541793f72";
+    // for(let i in groups) {
+    for(let i = 0; i < 1; i++) {
         fullLink = linkHalf1 + groups[i].urlname + linkHalf2;
         console.log(fullLink);
         request(fullLink, function (error, response, body) {
@@ -146,15 +147,20 @@ function getEventsFromMeetup() {
                 } else {
                     stop = 5;
                 }
-                for(var j = 0; j < (i*counter) + stop; j++) {
-                    console.log((i*counter) + stop);//remove this later
-                    importedJSON[j].event_category = groups[i].category.name;
-                    importedJSON[j].tags = "" + groups[i].category.name + ", " + groups[i].name;
+                for(var j = i*5; j < (i*5) + stop; j++) {
+                    if(groups[i].category.name === "Tech") {
+                        importedJSON[j].event_category = "Technology";
+                        importedJSON[j].tags = "" + groups[i].category.name + ", " + groups[i].name;
+                    } else {
+                        importedJSON[j].event_category = groups[i].category.name;
+                        importedJSON[j].tags = "" + groups[i].category.name + ", " + groups[i].name;
+                    }
                     importedJSON[j].old = "old";
                     counter++;
                 }
+                console.log((i*5) + stop);//remove this later
                 if(counter % 10 == 0) {
-                    seconds = 5000;
+                    seconds = 10000;
                 } else {
                     seconds = 0;
                 }
@@ -171,6 +177,12 @@ function getEventsFromMeetup() {
 
 function optimizeMeetupEvents() {
     for(var i in meetupEvents) {
+        if(typeof meetupEvents[i].id !== 'undefined') {
+            meetupEvents[i]._id = meetupEvents[i].id;
+            delete meetupEvents[i].id;
+        } else {
+            meetupEvents[i]._id = "";
+        }
         if(typeof meetupEvents[i].name !== 'undefined') {
             meetupEvents[i].event_name = meetupEvents[i].name;
             delete meetupEvents[i].name;
@@ -184,13 +196,13 @@ function optimizeMeetupEvents() {
             meetupEvents[i].location = "";
         }
         if(typeof meetupEvents[i].local_date !== 'undefined' && typeof meetupEvents[i].local_time !== 'undefined') {
-        	var dateString = new Date(meetupEvents[i].local_date + "T" + meetupEvents[i].local_time);
+            var dateString = new Date(meetupEvents[i].local_date + "T" + meetupEvents[i].local_time);
             meetupEvents[i].start_date = dateString;
             meetupEvents[i].end_date = meetupEvents[i].start_date;
             delete meetupEvents[i].local_date;
             delete meetupEvents[i].local_time;
         } else {
-        	var dateString = new Date("2018-01-01T00:00");
+            var dateString = new Date("2018-01-01T00:00");
             meetupEvents[i].start_date = dateString;
             meetupEvents[i].end_date = dateString;
         }
@@ -208,10 +220,10 @@ function optimizeMeetupEvents() {
         }
         if(typeof meetupEvents[i].group !== 'undefined') {
             meetupEvents[i].group_name = meetupEvents[i].group.name;
-            delete meetupEvents[i].group;
         } else {
             meetupEvents[i].group_name = "";
         }
+        meetupEvents[i].tags = meetupEvents[i].tags + ", " + meetupEvents[i].location;
         delete meetupEvents[i].old;
     }
       console.log("optimizing meetupEvents");//remove this later
