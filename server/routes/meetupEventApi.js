@@ -17,7 +17,7 @@ module.exports = app => {
         res.send(meetupEvents);
     });
 
-    app.get("/api/meetupEvents/title/:info", async (req, res) => {//fix these three to not return old data
+    app.get("/api/meetupEvents/title/:info", async (req, res) => {
         var url = req.originalUrl;
         var eventFilter = url.substring(url.lastIndexOf('/') + 1).trim();
         eventFilter = eventFilter.replace(/-/g, ' ');
@@ -31,7 +31,7 @@ module.exports = app => {
             filterByCategory(res, eventFilter);
         });
 
-    app.get("/api/meetupEvents/tag/:info", async (req, res) => {//fix to look for key word in tag string
+    app.get("/api/meetupEvents/tag/:info", async (req, res) => {
         var url = req.originalUrl;
         var eventFilter = url.substring(url.lastIndexOf('/') + 1).trim();
         eventFilter = eventFilter.replace(/-/g, ' ');
@@ -41,7 +41,6 @@ module.exports = app => {
     app.get("/api/meetupEvents/downloadics/:id", (req, res) => {
         var url = req.originalUrl;
         var eventId = url.substring(url.lastIndexOf('/') + 1).trim();
-        eventId = eventId.replace(/-/g, ' ');
         var event = _.findWhere(meetupEvents, {_id: eventId})
         enableDownload(res, event);
     });
@@ -136,9 +135,9 @@ function getEventsFromMeetup() {
     var linkHalf1 = "https://api.meetup.com/";
     var linkHalf2 = "/events?&sign=true&photo-host=public&page=5&only=id,name,local_date,local_time,venue,group,link,description&key=d182f5649646f23517334541793f72";
     // for(let i in groups) {
-    for(let i = 0; i < 1; i++) {
+    for(let i = 0; i < 2; i++) {
         fullLink = linkHalf1 + groups[i].urlname + linkHalf2;
-        console.log(fullLink);
+        console.log(groups[i].urlname);
         request(fullLink, function (error, response, body) {
             if (!error && response.statusCode == 200) {
                 importedJSON = JSON.parse(body);
@@ -147,7 +146,7 @@ function getEventsFromMeetup() {
                 } else {
                     stop = 5;
                 }
-                for(var j = i*5; j < (i*5) + stop; j++) {
+                for(var j = 0; j < stop; j++) {
                     if(importedJSON[j].hasOwnProperty('venue')) {
                         importedJSON[j].location = "" + importedJSON[j].venue.address_1 + ", " + importedJSON[j].venue.city + ", " + importedJSON[j].venue.state + " " + importedJSON[j].venue.zip;   
                     } else {
@@ -163,7 +162,7 @@ function getEventsFromMeetup() {
                     importedJSON[j].old = "old";
                     counter++;
                 }
-                console.log((i*5) + stop);//remove this later
+                console.log("index: " + stop);//remove this later
                 if(counter % 10 == 0) {
                     seconds = 10000;
                 } else {
@@ -234,11 +233,22 @@ function optimizeMeetupEvents() {
 }
 
 function filterByCategory(res, eventFilter) {
-    var filtered = _.where(meetupEvents, {event_category: eventFilter});
+    var filtered = _.where(meetupEvents, {category: eventFilter});
     console.log("here are the events############################");//remove later
     console.log(filtered);
     console.log("###############################################");//remove later
     res.send(filtered);
+}
+
+function filterValuePart(arr, part) {
+    part = part.toLowerCase();
+
+    return arr.filter(function(obj) {
+        return Object.keys(obj)
+                     .some(function(k) { 
+                               return obj[k].toLowerCase().indexOf(part) !== -1; 
+                           });
+    });
 }
 
 function filterByTag(res, eventFilter) {
