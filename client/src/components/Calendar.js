@@ -58,12 +58,12 @@ class Calendar extends Component {
             this.setState({ events: json });
       });
 
-      // fetch("/api/meetupEvents")
-      //   .then((response) => {
-      //       return response.json() })   
-      //   .then((json) => {
-      //       this.setState({ eventsMeetup: json });
-      // });
+      fetch("/api/meetupEvents")
+        .then((response) => {
+            return response.json() })   
+        .then((json) => {
+            this.setState({ eventsMeetup: json });
+      });
   };
 
   handleOpenEvent = (event) => {
@@ -184,7 +184,7 @@ class Calendar extends Component {
             {...this.props}
             views={['month']}
             defaultView='month'
-            events={eventsTest.concat(this.state.events)}
+            events={ this.state.eventsMeetup.concat(this.state.events) }
             titleAccessor='event_name'
             startAccessor='start_date'
             endAccessor='end_date'

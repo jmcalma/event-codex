@@ -204,13 +204,12 @@ class Header extends Component {
     var chosenFilter = searchFilter[this.state.searchSelectorValue - 1];
     var query = document.getElementById('input_search_field').value;
 
-    // disabled until api is complete
-    // fetch("/api/meetupEvents/" + chosenFilter + "/" + query)
-    //   .then((response) => {
-    //      return response.json() })   
-    //   .then((json) => {
-    //     this.setState({ meetupEventsSearch: json });
-    // });
+    fetch("/api/meetupEvents/" + chosenFilter + "/" + query)
+      .then((response) => {
+         return response.json() })   
+      .then((json) => {
+        this.setState({ meetupEventsSearch: json });
+    });
 
     fetch("/api/event/" + chosenFilter + "/" + query)
       .then((response) => {
