@@ -9,8 +9,6 @@ import Snackbar from 'material-ui/Snackbar'
 import FileSaver from 'file-saver';
 import MiniMap from './MiniMap';
 
-import eventsTest from './events';
-
 const titleStyles = {
     fontSize: '40px',
     padding: '15px 0px 20px 21px',
