@@ -45,6 +45,7 @@ class Header extends Component {
       searchOpen: false,
       snackbarOpen: false,
       eventsSearch: [],
+      meetupEventsSearch: [],
     };
   }
 
@@ -203,16 +204,24 @@ class Header extends Component {
     var chosenFilter = searchFilter[this.state.searchSelectorValue - 1];
     var query = document.getElementById('input_search_field').value;
 
+    // disabled until api is complete
+    // fetch("/api/meetupEvents/" + chosenFilter + "/" + query)
+    //   .then((response) => {
+    //      return response.json() })   
+    //   .then((json) => {
+    //     this.setState({ meetupEventsSearch: json });
+    // });
+
     fetch("/api/event/" + chosenFilter + "/" + query)
       .then((response) => {
          return response.json() })   
       .then((json) => {
         this.setState({ eventsSearch: json });
-        ReactDOM.unmountComponentAtNode(document.getElementById('searchResults'));
-        ReactDOM.render(
-          <SearchResultsList events={json} />,
-          document.getElementById('searchResults')
-        );
+            ReactDOM.unmountComponentAtNode(document.getElementById('searchResults'));
+            ReactDOM.render(
+              <SearchResultsList events={ json.concat(this.state.meetupEventsSearch) } />,
+               document.getElementById('searchResults')
+          );
     });
   }
 
