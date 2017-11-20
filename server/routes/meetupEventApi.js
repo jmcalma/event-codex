@@ -1,5 +1,7 @@
 var request = require("request");
 var _ = require("underscore");
+const fs = require("fs");
+const ics = require("ics");
 var groups = [];
 var meetupEvents = [];
 
@@ -15,7 +17,7 @@ module.exports = app => {
       res.send(meetupEvents);
     });
 
-    app.get("/api/meetupEvents/title/:info", async (req, res) => {
+    app.get("/api/meetupEvents/title/:info", async (req, res) => {//fix these three to not return old data
         var url = req.originalUrl;
         var eventFilter = url.substring(url.lastIndexOf('/') + 1).trim();
         eventFilter = eventFilter.replace(/-/g, ' ');
@@ -29,19 +31,20 @@ module.exports = app => {
             filterByCategory(res, eventFilter);
         });
 
-    app.get("/api/meetupEvents/tag/:info", async (req, res) => {
+    app.get("/api/meetupEvents/tag/:info", async (req, res) => {//fix to look for key word in tag string
         var url = req.originalUrl;
         var eventFilter = url.substring(url.lastIndexOf('/') + 1).trim();
         eventFilter = eventFilter.replace(/-/g, ' ');
             filterByTag(res, eventFilter);
         });
 
-    // app.get("/api/event/downloadics/:id", (req, res) => {
-    //   var url = req.originalUrl;
-    //   var eventId = url.substring(url.lastIndexOf('/') + 1).trim();
-    //   var event = _.where(meetupEvents, {meetupEvents.event_name: eventId})
-    //   enableDownload(res, event);
-    // });
+    app.get("/api/meetupEvents/downloadics/:id", (req, res) => {
+      var url = req.originalUrl;
+      var eventId = url.substring(url.lastIndexOf('/') + 1).trim();
+      eventId = eventId.replace(/-/g, ' ');
+      var event = _.findWhere(meetupEvents, {event_name: eventId})
+      enableDownload(res, event);
+    });
 }
 
 function getGroupsFromMeetup() {
@@ -147,6 +150,7 @@ function getEventsFromMeetup() {
                     console.log((i*counter) + stop);//remove this later
                     importedJSON[j].event_category = groups[i].category.name;
                     importedJSON[j].tags = "" + groups[i].category.name + ", " + groups[i].name;
+                    importedJSON[j].old = "old";
                     counter++;
                 }
                 if(counter % 10 == 0) {
@@ -180,13 +184,15 @@ function optimizeMeetupEvents() {
             meetupEvents[i].location = "";
         }
         if(typeof meetupEvents[i].local_date !== 'undefined' && typeof meetupEvents[i].local_time !== 'undefined') {
-            meetupEvents[i].start_date = "" + meetupEvents[i].local_date + "T" + meetupEvents[i].local_time + ":00.000Z";
+        	var dateString = new Date(meetupEvents[i].local_date + "T" + meetupEvents[i].local_time);
+            meetupEvents[i].start_date = dateString;
             meetupEvents[i].end_date = meetupEvents[i].start_date;
             delete meetupEvents[i].local_date;
             delete meetupEvents[i].local_time;
         } else {
-            meetupEvents[i].start_date = "2018-01-01T00:00:00.000Z";
-            meetupEvents[i].end_date = "2018-01-01T00:00:00.000Z";
+        	var dateString = new Date("2018-01-01T00:00");
+            meetupEvents[i].start_date = dateString;
+            meetupEvents[i].end_date = dateString;
         }
         if(typeof meetupEvents[i].description !== 'undefined') {
             meetupEvents[i].event_description = meetupEvents[i].description;
@@ -206,8 +212,8 @@ function optimizeMeetupEvents() {
         } else {
             meetupEvents[i].group_name = "";
         }
+        delete meetupEvents[i].old;
     }
-
       console.log("optimizing meetupEvents");//remove this later
 }
 
@@ -235,44 +241,44 @@ function filterByTitle(res, eventFilter) {
     res.send(filtered);
 }
 
-// function enableDownload(res, event) {
-//     var title = event.event_name;
-//     var description = event.event_description;
-//     var startYear = event.start_date.getUTCFullYear();
-//     var startMonth = event.start_date.getUTCMonth() + 1;
-//     var startDate = event.start_date.getUTCDate();
-//     var startHour = event.start_date.getUTCHours();
-//     var startMin = event.start_date.getUTCMinutes();
-//     var endYear = event.end_date.getUTCFullYear();
-//     var endMonth = event.end_date.getUTCMonth() + 1;
-//     var endDate = event.end_date.getUTCDate();
-//     var endHour = event.end_date.getUTCHours();
-//     var endMin = event.end_date.getUTCMinutes();
-//     var location = event.location;
-//     var categories = [event.event_category];
+function enableDownload(res, event) {
+    var title = event.event_name;
+    var description = event.event_description;
+    var startYear = event.start_date.getUTCFullYear();
+    var startMonth = event.start_date.getUTCMonth() + 1;
+    var startDate = event.start_date.getUTCDate();
+    var startHour = event.start_date.getUTCHours();
+    var startMin = event.start_date.getUTCMinutes();
+    var endYear = event.end_date.getUTCFullYear();
+    var endMonth = event.end_date.getUTCMonth() + 1;
+    var endDate = event.end_date.getUTCDate();
+    var endHour = event.end_date.getUTCHours();
+    var endMin = event.end_date.getUTCMinutes();
+    var location = event.location;
+    var categories = [event.event_category];
 
-//     var fileName = title + "/codex.ics";
-//     ics.createEvent(
-//       {
-//         title,
-//         description,
-//         start: [startYear, startMonth, startDate, startHour, startMin],
-//         duration: { days: endDate - startDate, hours: endHour - startHour, minutes: endMin - startMin },
-//         location,
-//         categories
-//       },
-//       (error, value) => {
-//         if (error) {
-//           throw new Exception('Create ics file fail');
-//         }
-//         fs.writeFileSync(fileName, value);
-//         res.download(fileName, function(err) {
-//           if (err) {
-//             console.log(err);
-//           } else {
-//             fs.unlink(fileName, function(err) { if (err) throw err; });
-//           }
-//         });
-//       }
-//     );
-// }
+    var fileName = __dirname + "/codex.ics";
+    ics.createEvent(
+      {
+        title,
+        description,
+        start: [startYear, startMonth, startDate, startHour, startMin],
+        duration: { days: endDate - startDate, hours: endHour - startHour, minutes: endMin - startMin },
+        location,
+        categories
+      },
+      (error, value) => {
+        if (error) {
+          throw new Exception('Create ics file fail');
+        }
+        fs.writeFileSync(fileName, value);
+        res.download(fileName, function(err) {
+          if (err) {
+            console.log(err);
+          } else {
+            fs.unlink(fileName, function(err) { if (err) throw err; });
+          }
+        });
+      }
+    );
+}
