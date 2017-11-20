@@ -77,12 +77,22 @@ class Calendar extends Component {
 
   downloadIcs = () => {
     this.setState({ snackbarOpen: true });
-    fetch("/api/event/downloadics/" + this.state.currentEvent._id)
-      .then((response) => {
-          return response.blob() })   
-      .then((blob) => {
-           FileSaver.saveAs(blob, this.state.currentEvent.event_name + ".ics");
-     });
+
+    if (this.state.currentEvent.hasOwnProperty('group')) {
+      fetch("/api/meetupEvents/downloadics/" + this.state.currentEvent._id)
+        .then((response) => {
+            return response.blob() })   
+        .then((blob) => {
+             FileSaver.saveAs(blob, this.state.currentEvent.event_name + ".ics");
+       });
+    } else {
+      fetch("/api/event/downloadics/" + this.state.currentEvent._id)
+        .then((response) => {
+            return response.blob() })   
+        .then((blob) => {
+             FileSaver.saveAs(blob, this.state.currentEvent.event_name + ".ics");
+       });
+    }
   };
 
   convert24HourTo12Hour = (hours, minutes) => {
