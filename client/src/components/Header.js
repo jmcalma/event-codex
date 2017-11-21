@@ -12,6 +12,7 @@ import SelectField from 'material-ui/SelectField';
 import Snackbar from 'material-ui/Snackbar';
 import MenuItem from 'material-ui/MenuItem';
 import SearchResultsList from './SearchResultsList';
+import { Redirect } from 'react-router';
 import 'whatwg-fetch';
 
 import SearchIcon from './searchIcon.png';
@@ -48,6 +49,10 @@ class Header extends Component {
       meetupEventsSearch: [],
     };
   }
+
+  redirectToHomePage = () => {
+    window.location.assign('/');
+  };
 
   handleOpen = () => {
     this.setState({open: true});
@@ -121,6 +126,7 @@ class Header extends Component {
   validateForm = () => {
     if(this.formIsValid()) {
      this.addEvent();
+     this.redirectToHomePage();
     } else {
       alert("One or more of the fields is incomplete or has errors.");
     }
@@ -142,7 +148,7 @@ class Header extends Component {
     }
 
     var emailRegExValidate = /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@(([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (!(emailRegExValidate).test(contactEmail)) { 
+    if (!(emailRegExValidate).test(contactEmail)) {
        return false;
     }
 
@@ -206,14 +212,14 @@ class Header extends Component {
 
     fetch("/api/meetupEvents/" + chosenFilter + "/" + query)
       .then((response) => {
-         return response.json() })   
+         return response.json() })
       .then((json) => {
         this.setState({ meetupEventsSearch: json });
     });
 
     fetch("/api/event/" + chosenFilter + "/" + query)
       .then((response) => {
-         return response.json() })   
+         return response.json() })
       .then((json) => {
         this.setState({ eventsSearch: json });
             ReactDOM.unmountComponentAtNode(document.getElementById('searchResults'));
@@ -265,7 +271,7 @@ class Header extends Component {
 
                   <div id="btnAddEvent">
                     <RaisedButton label="Add Event" onClick={this.handleOpen} />
-                  </div> 
+                  </div>
                 </div>
 
                 <div>
@@ -289,7 +295,7 @@ class Header extends Component {
                                 id="input_search_field"
                                 style={{textIndent: 30}}
                                 hintText="Search"
-                                multiLine={true}  
+                                multiLine={true}
                               />
                              <RaisedButton id="btnSearch" label="Search" onClick={this.handleSearch} />
                           </div>
