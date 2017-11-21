@@ -208,11 +208,8 @@ function optimizeMeetupEvents() {
         } else {
             meetupEvents[i].event_description = "none";
         }
-        if(typeof meetupEvents[i].link !== 'undefined') {
-            meetupEvents[i].website_link = meetupEvents[i].link;
-            delete meetupEvents[i].link;
-        } else {
-            meetupEvents[i].website_link = "none";
+        if(typeof meetupEvents[i].link == 'undefined') {
+            meetupEvents[i].link = "none";
         }
         if(typeof meetupEvents[i].group !== 'undefined') {
             meetupEvents[i].group_name = meetupEvents[i].group.name;
