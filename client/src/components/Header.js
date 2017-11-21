@@ -254,6 +254,7 @@ class Header extends Component {
       <nav className="blue darken-2">
         <div className="nav-wrapper">
           <a className="brand-logo center">Event Codex</a>
+          <img src="../../icon.png" alt="icon" width="40" height="40"></img>
           <ul className="right">
             <MuiThemeProvider>
                <div>
