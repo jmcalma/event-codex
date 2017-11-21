@@ -1,5 +1,6 @@
 # event-codex
 [![Waffle.io - Issues in progress](https://badge.waffle.io/480Random5/event-codex.png?label=in%20progress&title=In%20Progress)](http://waffle.io/480Random5/event-codex)
+Final Presentation : https://docs.google.com/presentation/d/1Imq04gQBgBwMjcEUFlLO9ZueMFC4Nxq5lF4a4HhHJF8/edit?usp=sharing
 ## Public URL
 cs480 github.io homepage : http://cs480-projects.github.io/teams-fall2017/random5/index.html<br>
 public domain: http://eventcodex.org </br>
