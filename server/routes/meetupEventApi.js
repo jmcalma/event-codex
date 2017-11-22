@@ -4,6 +4,7 @@ const fs = require("fs");
 const ics = require("ics");
 var groups = [];
 var meetupEvents = [];
+var optimizedMeetupEventData = [];
 
 module.exports = app => {
     app.get("/api/groups", async (req, res) => {
@@ -12,50 +13,47 @@ module.exports = app => {
     });
 
     app.get("/api/meetupEvents", async (req, res) => {
-        getGroupsFromMeetup();
-        getEventsFromMeetup();
-        res.send(meetupEvents);
+        if(optimizedMeetupEventData.length == 0) {
+            getGroupsFromMeetup();
+            getEventsFromMeetup();
+        }
+        res.send(optimizedMeetupEventData);
     });
 
     app.get("/api/meetupEvents/title/:info", async (req, res) => {
         var url = req.originalUrl;
         var eventFilter = url.substring(url.lastIndexOf('/') + 1).trim();
-        eventFilter = eventFilter.replace(/-/g, ' ');
         filterByTitle(res, eventFilter);
     });
 
     app.get("/api/meetupEvents/category/:info", async (req, res) => {
         var url = req.originalUrl;
         var eventFilter = url.substring(url.lastIndexOf('/') + 1).trim();
-        eventFilter = eventFilter.replace(/-/g, ' ');
         filterByCategory(res, eventFilter);
     });
 
     app.get("/api/meetupEvents/tag/:info", async (req, res) => {
         var url = req.originalUrl;
         var eventFilter = url.substring(url.lastIndexOf('/') + 1).trim();
-        eventFilter = eventFilter.replace(/-/g, ' ');
         filterByTag(res, eventFilter);
     });
-    
+
     app.get("/api/meetupEvents/downloadics/:id", (req, res) => {
         var url = req.originalUrl;
         var eventId = url.substring(url.lastIndexOf('/') + 1).trim();
-        var event = _.findWhere(meetupEvents, {
-            _id: eventId
-        })
+        var event = _.findWhere(meetupEvents, {_id: eventId});
         enableDownload(res, event);
     });
 }
 
 function getGroupsFromMeetup() {
-    setTimeout(getCareerGroups, 500);
-    setTimeout(getCarGroups, 1000);
-    setTimeout(getFoodGroups, 1500);
-    setTimeout(getMusicGroups, 2000); 
-    setTimeout(getSocialGroups, 2500);
-    setTimeout(getSportsGroups, 3000);
-    setTimeout(getTechGroups, 3500);
+    setTimeout(getCareerGroups, 100);
+    setTimeout(getCarGroups, 200);
+    setTimeout(getFoodGroups, 300);
+    setTimeout(getMusicGroups, 400); 
+    setTimeout(getSocialGroups, 500);
+    setTimeout(getSportsGroups, 600);
+    setTimeout(getTechGroups, 700);
 }
 
 function getCareerGroups() {
@@ -144,7 +142,7 @@ function getEventsFromMeetup() {
         console.log(groups[i].category.name + ": " + groups[i].urlname);
         requestEvents(fullLink, i);
     }
-    setTimeout(function() {console.log("done");}, 5000 + (1500*groups.length));//remove this later
+    setTimeout(function() {console.log("done");}, 2000 + (1000*groups.length));//remove this later
     optimizeMeetupEvents();
 }
 
@@ -169,11 +167,11 @@ function requestEvents(fullLink, i) {
                     }
                     importedJSON[j].old = "oldData";
                 }
-                console.log("iteration: " + i + " seconds: " + (5000 + (1500*i)));//remove this later
+                console.log("iteration: " + i + " seconds: " + (2000 + (1000*i)));//remove this later
                 meetupEvents = meetupEvents.concat(importedJSON);
             }
         });
-    }, (5000 + (1500*i)));
+    }, (2000 + (1000*i)));
 }
 
 function optimizeMeetupEvents() {
@@ -203,7 +201,7 @@ function optimizeMeetupEvents() {
             delete meetupEvents[i].local_date;
             delete meetupEvents[i].local_time;
         } else {
-            var dateString = new Date("2018-01-01T00:00");
+            var dateString = new Date("2017-01-01T00:00");
             meetupEvents[i].start_date = dateString;
             meetupEvents[i].end_date = dateString;
         }
@@ -223,25 +221,21 @@ function optimizeMeetupEvents() {
         }
         delete meetupEvents[i].old;
     }
+    optimizedMeetupEventData = meetupEvents;
 }
 
 function filterByCategory(res, eventFilter) {
-    var filtered = _.where(meetupEvents, {
-        category: eventFilter
-    });
+    var filtered = filterItems(eventFilter);
     console.log("here are the events############################"); //remove later
-    console.log(filtered);
+    console.log(match);
     console.log("###############################################"); //remove later
-    res.send(filtered);
+    res.send(match);
 }
 
-function filterValuePart(arr, part) {
-    part = part.toLowerCase();
-    return arr.filter(function(obj) {
-        return Object.keys(obj).some(function(k) {
-            return obj[k].toLowerCase().indexOf(part) !== -1;
-        });
-    });
+function filterItems(eventFilter) {
+    return meetupEvents.filter(function(el) {
+        return el.toLowerCase().indexOf(eventFilter.toLowerCase()) > -1;
+    })
 }
 
 function filterByTag(res, eventFilter) {
