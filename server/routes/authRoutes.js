@@ -25,3 +25,47 @@ let credentials = {
     ]
   }
 }
+
+module.exports = app => {
+  app.get("/auth/google", (req, res) => {
+    // SHARED
+    var clientSecret = credentials.web.client_secret;
+    var clientId = credentials.web.client_id;
+    var redirectUrl = credentials.web.redirect_uris[0];
+    var auth = new googleAuth();
+    var oauth2Client = new auth.OAuth2(clientId, clientSecret,
+      redirectUrl);
+    // When there is auth code
+    if (req.query.code) {
+      oauth2Client.getToken(req.query.code, function(err, token) {
+        if (err) {
+          console.log(
+            'Error while trying to retrieve access token',
+            err);
+          res.send("Error getting token");
+        }
+        oauth2Client.credentials = token;
+        callback(oauth2Client, res);
+      });
+    } else {
+      // Check if we have previously stored a token.
+      fs.readFile(TOKEN_PATH, function(err, token) {
+        if (err) {
+          var authUrl = oauth2Client.generateAuthUrl({
+            access_type: 'offline',
+            scope: SCOPES
+          });
+          res.redirect(authUrl);
+        } else {
+          oauth2Client.credentials = JSON.parse(token);
+          // FIX HERE
+          callback(oauth2Client, res);
+        }
+      });
+    }
+  });
+};
+
+function callback(auth, res) {
+  res.send("todo show events");
+}
