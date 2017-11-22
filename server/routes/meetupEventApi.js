@@ -4,34 +4,40 @@ const fs = require("fs");
 const ics = require("ics");
 var groups = [];
 var meetupEvents = [];
+
 module.exports = app => {
     app.get("/api/groups", async (req, res) => {
         getGroupsFromMeetup();
         res.send(groups);
     });
+
     app.get("/api/meetupEvents", async (req, res) => {
         getGroupsFromMeetup();
         getEventsFromMeetup();
         res.send(meetupEvents);
     });
+
     app.get("/api/meetupEvents/title/:info", async (req, res) => {
         var url = req.originalUrl;
         var eventFilter = url.substring(url.lastIndexOf('/') + 1).trim();
         eventFilter = eventFilter.replace(/-/g, ' ');
         filterByTitle(res, eventFilter);
     });
+
     app.get("/api/meetupEvents/category/:info", async (req, res) => {
         var url = req.originalUrl;
         var eventFilter = url.substring(url.lastIndexOf('/') + 1).trim();
         eventFilter = eventFilter.replace(/-/g, ' ');
         filterByCategory(res, eventFilter);
     });
+
     app.get("/api/meetupEvents/tag/:info", async (req, res) => {
         var url = req.originalUrl;
         var eventFilter = url.substring(url.lastIndexOf('/') + 1).trim();
         eventFilter = eventFilter.replace(/-/g, ' ');
         filterByTag(res, eventFilter);
     });
+    
     app.get("/api/meetupEvents/downloadics/:id", (req, res) => {
         var url = req.originalUrl;
         var eventId = url.substring(url.lastIndexOf('/') + 1).trim();
@@ -43,13 +49,13 @@ module.exports = app => {
 }
 
 function getGroupsFromMeetup() {
-    // setTimeout(getCareerGroups, 1000);
-    // setTimeout(getCarGroups, 1000);
-    // setTimeout(getFoodGroups, 1000);
-    // setTimeout(getMusicGroups, 1000); 
-    // setTimeout(getSocialGroups, 1000);
-    // setTimeout(getSportsGroups, 1000);
-    setTimeout(getTechGroups, 1000);
+    setTimeout(getCareerGroups, 500);
+    setTimeout(getCarGroups, 1000);
+    setTimeout(getFoodGroups, 1500);
+    setTimeout(getMusicGroups, 2000); 
+    setTimeout(getSocialGroups, 2500);
+    setTimeout(getSportsGroups, 3000);
+    setTimeout(getTechGroups, 3500);
 }
 
 function getCareerGroups() {
@@ -58,6 +64,7 @@ function getCareerGroups() {
         if (!error && response.statusCode == 200) {
             var importedJSON = JSON.parse(body);
             groups = groups.concat(importedJSON);
+            console.log("got career groups");//remove this later
         }
     })
 }
@@ -68,6 +75,7 @@ function getCarGroups() {
         if (!error && response.statusCode == 200) {
             var importedJSON = JSON.parse(body);
             groups = groups.concat(importedJSON);
+            console.log("got car groups");//remove this later
         }
     })
 }
@@ -78,6 +86,7 @@ function getFoodGroups() {
         if (!error && response.statusCode == 200) {
             var importedJSON = JSON.parse(body);
             groups = groups.concat(importedJSON);
+            console.log("got food groups");//remove this later
         }
     })
 }
@@ -88,6 +97,7 @@ function getMusicGroups() {
         if (!error && response.statusCode == 200) {
             var importedJSON = JSON.parse(body);
             groups = groups.concat(importedJSON);
+            console.log("got music groups");//remove this later
         }
     })
 }
@@ -98,6 +108,7 @@ function getSocialGroups() {
         if (!error && response.statusCode == 200) {
             var importedJSON = JSON.parse(body);
             groups = groups.concat(importedJSON);
+            console.log("got social groups");//remove this later
         }
     })
 }
@@ -108,6 +119,7 @@ function getSportsGroups() {
         if (!error && response.statusCode == 200) {
             var importedJSON = JSON.parse(body);
             groups = groups.concat(importedJSON);
+            console.log("got sports groups");//remove this later
         }
     })
 }
@@ -118,36 +130,33 @@ function getTechGroups() {
         if (!error && response.statusCode == 200) {
             var importedJSON = JSON.parse(body);
             groups = groups.concat(importedJSON);
+            console.log("got tech groups");//remove this later
         }
     })
 }
 
 function getEventsFromMeetup() {
-    var importedJSON;
     var fullLink = "";
     var linkHalf1 = "https://api.meetup.com/";
-    var linkHalf2 = "/events?&sign=true&photo-host=public&page=3&only=id,name,local_date,local_time,venue,group,link,description&key=d182f5649646f23517334541793f72";
-    for (let i = 0; i < 3; i++) {
+    var linkHalf2 = "/events?&sign=true&photo-host=public&page=5&only=id,name,local_date,local_time,venue,group,link,description&key=d182f5649646f23517334541793f72";
+    for(let i in groups) {
         fullLink = linkHalf1 + groups[i].urlname + linkHalf2;
-        console.log(groups[i].urlname);
-        requestEvents(fullLink, importedJSON, i);
+        console.log(groups[i].category.name + ": " + groups[i].urlname);
+        requestEvents(fullLink, i);
     }
-    for (let i = 4; i < 7; i++) {
-        fullLink = linkHalf1 + groups[i].urlname + linkHalf2;
-        console.log(groups[i].urlname);
-        requestEvents(fullLink, importedJSON, i);
-    }
+    setTimeout(function() {console.log("done");}, 5000 + (1500*groups.length));//remove this later
     optimizeMeetupEvents();
 }
 
-function requestEvents(fullLink, importedJSON, i) {
+function requestEvents(fullLink, i) {
+    var importedJSON;
     setTimeout(function() {
         request(fullLink, function(error, response, body) {
             if (!error && response.statusCode == 200) {
                 importedJSON = JSON.parse(body);
-                for (var j = 0; j < 3; j++) {
-                    if (importedJSON[j].hasOwnProperty('venue')) {
-                        importedJSON[j].location = "" + importedJSON[j].venue.address_1 + ", " + importedJSON[j].venue.city + ", " + importedJSON[j].venue.state + " " + importedJSON[j].venue.zip;
+                for(var j = 0; j < importedJSON.length; j++) {
+                    if(importedJSON[j].hasOwnProperty('venue')) {
+                        importedJSON[j].location = "" + importedJSON[j].venue.address_1 + ", " + importedJSON[j].venue.city + ", " + importedJSON[j].venue.state + " " + importedJSON[j].venue.zip;   
                     } else {
                         importedJSON[j].location = "none";
                     }
@@ -160,11 +169,11 @@ function requestEvents(fullLink, importedJSON, i) {
                     }
                     importedJSON[j].old = "oldData";
                 }
-                console.log("iteration: " + i + " seconds: " + (10000 + (1500 * i))); //remove this later
+                console.log("iteration: " + i + " seconds: " + (5000 + (1500*i)));//remove this later
                 meetupEvents = meetupEvents.concat(importedJSON);
             }
         });
-    }, (10000 + (1500 * i)));
+    }, (5000 + (1500*i)));
 }
 
 function optimizeMeetupEvents() {
