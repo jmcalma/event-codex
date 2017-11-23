@@ -223,23 +223,26 @@ class Calendar extends Component {
               >
                 <div id="eventDetails">
                   <div>
-                    <h6> Contact Email: {this.state.currentEvent.host_email} </h6>
+                    <h6 class="blue-text text-darken-2">Contact Email</h6>
+                    <p> {this.state.currentEvent.host_email}</p>
                     <h6> {this.checkMeetup(this.state.currentEvent, 0)} </h6>
                   </div>
                   <div id="miniSpace"> </div>
                   <div>
-                    <h6> When: {this.convertDateTime(this.state.currentEvent.start_date, this.state.currentEvent.end_date)} </h6>
+                    <h6 class="blue-text text-darken-2">When</h6>
+                    <p>{this.convertDateTime(this.state.currentEvent.start_date, this.state.currentEvent.end_date)} </p>
                   </div>
                   <div>
-                    <h6> Where: {this.state.currentEvent.location} {this.checkMeetup(this.state.currentEvent, 1)} </h6>
+                    <h6 class="blue-text text-darken-2">Where</h6>
+                    <p>{this.state.currentEvent.location} {this.checkMeetup(this.state.currentEvent, 1)} </p>
                   </div>
-
-                  <div id="miniSpace"> </div>
-                  <div dangerouslySetInnerHTML={{__html: '<h6>Description:</h6>' + this.state.currentEvent.event_description}}>
-                  {this.checkMeetup(this.state.currentEvent, 2)}
+                    <h6 class="blue-text text-darken-2">Description</h6>
+                    <div dangerouslySetInnerHTML={{__html:this.state.currentEvent.event_description}}>
+                    {this.checkMeetup(this.state.currentEvent, 2)}
                   </div>
                   <div>
-                    <h6> Category: {this.state.currentEvent.event_category} {this.checkMeetup(this.state.currentEvent, 3)} </h6>
+                    <h6 class="blue-text text-darken-2">Category</h6>
+                    <p>{this.state.currentEvent.event_category} {this.checkMeetup(this.state.currentEvent, 3)}</p>
                   </div>
                   <div>
                     <MiniMap isMarkerShown={false} event={this.state.currentEvent} />
