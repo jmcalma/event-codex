@@ -274,7 +274,7 @@ function filterByTitle(res, eventFilter) {
 function filterItemsForTitle(eventFilter) {
     var list = _.filter(optimizedMeetupEventData, function(event) {
         var title = event.event_name;
-        title = cat.toLowerCase();
+        title = title.toLowerCase();
         var filter = eventFilter.replace(/%20/g, " ").toLowerCase();
         return title.indexOf(filter) >= 0;
     });
