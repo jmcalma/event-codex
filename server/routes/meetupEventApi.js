@@ -64,7 +64,7 @@ function getCareerGroups() {
             groups = groups.concat(importedJSON);
             console.log("got career groups");//remove this later
         }
-    })
+    });
 }
 
 function getCarGroups() {
@@ -75,7 +75,7 @@ function getCarGroups() {
             groups = groups.concat(importedJSON);
             console.log("got car groups");//remove this later
         }
-    })
+    });
 }
 
 function getFoodGroups() {
@@ -86,7 +86,7 @@ function getFoodGroups() {
             groups = groups.concat(importedJSON);
             console.log("got food groups");//remove this later
         }
-    })
+    });
 }
 
 function getMusicGroups() {
@@ -97,7 +97,7 @@ function getMusicGroups() {
             groups = groups.concat(importedJSON);
             console.log("got music groups");//remove this later
         }
-    })
+    });
 }
 
 function getSocialGroups() {
@@ -108,7 +108,7 @@ function getSocialGroups() {
             groups = groups.concat(importedJSON);
             console.log("got social groups");//remove this later
         }
-    })
+    });
 }
 
 function getSportsGroups() {
@@ -119,7 +119,7 @@ function getSportsGroups() {
             groups = groups.concat(importedJSON);
             console.log("got sports groups");//remove this later
         }
-    })
+    });
 }
 
 function getTechGroups() {
@@ -130,7 +130,7 @@ function getTechGroups() {
             groups = groups.concat(importedJSON);
             console.log("got tech groups");//remove this later
         }
-    })
+    });
 }
 
 function getEventsFromMeetup() {
@@ -160,7 +160,7 @@ function requestEvents(fullLink, i) {
                     }
                     if (groups[i].category.name === "Tech") {
                         importedJSON[j].event_category = "Technology";
-                        importedJSON[j].tags = "" + groups[i].category.name + ", " + groups[i].name + ", " + importedJSON[j].location;
+                        importedJSON[j].tags = "" + importedJSON[j].event_category + ", " + groups[i].name + ", " + importedJSON[j].location;
                     } else {
                         importedJSON[j].event_category = groups[i].category.name;
                         importedJSON[j].tags = "" + groups[i].category.name + ", " + groups[i].name + ", " + importedJSON[j].location;
@@ -225,37 +225,45 @@ function optimizeMeetupEvents() {
 }
 
 function filterByCategory(res, eventFilter) {
-    var filtered = filterItems(eventFilter);
-    console.log("here are the events############################"); //remove later
-    console.log(match);
-    console.log("###############################################"); //remove later
-    res.send(match);
+    var filtered = filterItemsForCategory(eventFilter);
+    res.send(filtered);
 }
 
-function filterItems(eventFilter) {
-    return meetupEvents.filter(function(el) {
-        return el.toLowerCase().indexOf(eventFilter.toLowerCase()) > -1;
-    })
+function filterItemsForCategory(eventFilter) {
+    var list = _.filter(optimizedMeetupEventData, function(event) {
+        var cat = event.event_category;
+        cat = cat.toLowerCase();
+        return cat.indexOf(eventFilter.toLowerCase()) >= 0;
+    });
+    return list;
 }
 
 function filterByTag(res, eventFilter) {
-    var filtered = _.where(meetupEvents, {
-        tags: eventFilter
-    });
-    console.log("here are the events############################"); //remove later
-    console.log(filtered);
-    console.log("###############################################"); //remove later
+    var filtered = filterItemsForTag(eventFilter);
     res.send(filtered);
 }
 
-function filterByTitle(res, eventFilter) {
-    var filtered = _.where(meetupEvents, {
-        event_name: eventFilter
+function filterItemsForTag(eventFilter) {
+    var list = _.filter(optimizedMeetupEventData, function(event) {
+        var cat = event.tags;
+        cat = cat.toLowerCase();
+        return cat.indexOf(eventFilter.toLowerCase()) >= 0;
     });
-    console.log("here are the events############################"); //remove later
-    console.log(filtered);
-    console.log("###############################################"); //remove later
+    return list;
+}
+
+function filterByTitle(res, eventFilter) {
+    var filtered = filterItemsForTitle(eventFilter);
     res.send(filtered);
+}
+
+function filterItemsForTitle(eventFilter) {
+    var list = _.filter(optimizedMeetupEventData, function(event) {
+        var cat = event.event_name;
+        cat = cat.toLowerCase();
+        return cat.indexOf(eventFilter.toLowerCase()) >= 0;
+    });
+    return list;
 }
 
 function enableDownload(res, event) {
