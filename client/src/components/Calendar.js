@@ -9,6 +9,8 @@ import Snackbar from 'material-ui/Snackbar'
 import FileSaver from 'file-saver';
 import MiniMap from './MiniMap';
 
+var thisIsMyCopy = '<h1>cool</h1>';
+
 const titleStyles = {
     fontSize: '40px',
     padding: '15px 0px 20px 21px',
@@ -33,7 +35,7 @@ const styles = {
 
 class Calendar extends Component {
   constructor() {
-    super(); 
+    super();
 
     BigCalendar.setLocalizer(
       BigCalendar.momentLocalizer(moment)
@@ -51,14 +53,14 @@ class Calendar extends Component {
   componentDidMount() {
       fetch("/api/event")
         .then((response) => {
-            return response.json() })   
+            return response.json() })
         .then((json) => {
             this.setState({ events: json });
       });
 
       fetch("/api/meetupEvents")
         .then((response) => {
-            return response.json() })   
+            return response.json() })
         .then((json) => {
             this.setState({ eventsMeetup: json });
       });
@@ -79,14 +81,14 @@ class Calendar extends Component {
     if (this.state.currentEvent.hasOwnProperty('group')) {
       fetch("/api/meetupEvents/downloadics/" + this.state.currentEvent._id)
         .then((response) => {
-            return response.blob() })   
+            return response.blob() })
         .then((blob) => {
              FileSaver.saveAs(blob, this.state.currentEvent.event_name + ".ics");
        });
     } else {
       fetch("/api/event/downloadics/" + this.state.currentEvent._id)
         .then((response) => {
-            return response.blob() })   
+            return response.blob() })
         .then((blob) => {
              FileSaver.saveAs(blob, this.state.currentEvent.event_name + ".ics");
        });
@@ -231,17 +233,16 @@ class Calendar extends Component {
                   <div>
                     <h6> Where: {this.state.currentEvent.location} {this.checkMeetup(this.state.currentEvent, 1)} </h6>
                   </div>
-                  
+
                   <div id="miniSpace"> </div>
-                  <div>
-                    <h6> Description: {this.state.currentEvent.event_description} {this.checkMeetup(this.state.currentEvent, 2)} </h6>
+                  <div dangerouslySetInnerHTML={{__html: '<h6>Description:</h6>' + this.state.currentEvent.event_description}}>
+                  {this.checkMeetup(this.state.currentEvent, 2)}
                   </div>
                   <div>
                     <h6> Category: {this.state.currentEvent.event_category} {this.checkMeetup(this.state.currentEvent, 3)} </h6>
                   </div>
-
                   <div>
-                    <MiniMap isMarkerShown={false} event={this.state.currentEvent} /> 
+                    <MiniMap isMarkerShown={false} event={this.state.currentEvent} />
                   </div>
 
                   <div id="apiMarker">
@@ -254,7 +255,7 @@ class Calendar extends Component {
 
                   <div id="space"></div> <div id="space"></div>
                 </div>
-                
+
               </Dialog>
             </div>
               <Snackbar
