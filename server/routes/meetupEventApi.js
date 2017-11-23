@@ -233,7 +233,8 @@ function filterItemsForCategory(eventFilter) {
     var list = _.filter(optimizedMeetupEventData, function(event) {
         var cat = event.event_category;
         cat = cat.toLowerCase();
-        return cat.indexOf(eventFilter.toLowerCase()) >= 0;
+        var filter = eventFilter.replace(/%20/g, " ").toLowerCase();
+        return cat.indexOf(filter) >= 0;
     });
     return list;
 }
@@ -245,9 +246,10 @@ function filterByTag(res, eventFilter) {
 
 function filterItemsForTag(eventFilter) {
     var list = _.filter(optimizedMeetupEventData, function(event) {
-        var cat = event.tags;
-        cat = cat.toLowerCase();
-        return cat.indexOf(eventFilter.toLowerCase()) >= 0;
+        var tag = event.tags;
+        tag = tag.toLowerCase();
+        var filter = eventFilter.replace(/%20/g, " ").toLowerCase();
+        return tag.indexOf(filter) >= 0;
     });
     return list;
 }
@@ -259,9 +261,10 @@ function filterByTitle(res, eventFilter) {
 
 function filterItemsForTitle(eventFilter) {
     var list = _.filter(optimizedMeetupEventData, function(event) {
-        var cat = event.event_name;
-        cat = cat.toLowerCase();
-        return cat.indexOf(eventFilter.toLowerCase()) >= 0;
+        var title = event.event_name;
+        title = cat.toLowerCase();
+        var filter = eventFilter.replace(/%20/g, " ").toLowerCase();
+        return title.indexOf(filter) >= 0;
     });
     return list;
 }
