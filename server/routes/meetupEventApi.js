@@ -142,7 +142,7 @@ function getEventsFromMeetup() {
         console.log(groups[i].category.name + ": " + groups[i].urlname);
         requestEvents(fullLink, i);
     }
-    setTimeout(function() {console.log("done");}, 2000 + (1000*groups.length));//remove this later
+    setTimeout(function() {console.log("done");}, 2000 + (350*groups.length));//remove this later
     optimizeMeetupEvents();
 }
 
@@ -167,11 +167,11 @@ function requestEvents(fullLink, i) {
                     }
                     importedJSON[j].old = "oldData";
                 }
-                console.log("iteration: " + i + " seconds: " + (2000 + (1000*i)));//remove this later
+                console.log("iteration: " + i + " seconds: " + (2000 + (350*i)));//remove this later
                 meetupEvents = meetupEvents.concat(importedJSON);
             }
         });
-    }, (2000 + (1000*i)));
+    }, (2000 + (350*i)));
 }
 
 function optimizeMeetupEvents() {
@@ -189,6 +189,18 @@ function optimizeMeetupEvents() {
             meetupEvents[i].event_name = "none";
         }
         if (typeof meetupEvents[i].venue !== 'undefined') {
+            if(typeof meetupEvents[i].venue.address_1 == 'undefined' || meetupEvents[i].venue.address_1 == "") {
+                meetupEvents[i].venue.address_1 = "";
+            }
+            if(typeof meetupEvents[i].venue.city == 'undefined' || meetupEvents[i].venue.city == "") {
+                meetupEvents[i].venue.city = "";
+            }
+            if(typeof meetupEvents[i].venue.state == 'undefined' || meetupEvents[i].venue.state == "") {
+                meetupEvents[i].venue.state = "";
+            }
+            if(typeof meetupEvents[i].venue.zip == 'undefined' || meetupEvents[i].venue.zip == "") {
+                meetupEvents[i].venue.zip = "";
+            }
             meetupEvents[i].location = "" + meetupEvents[i].venue.address_1 + ", " + meetupEvents[i].venue.city + ", " + meetupEvents[i].venue.state + " " + meetupEvents[i].venue.zip;
             delete meetupEvents[i].venue;
         } else {
