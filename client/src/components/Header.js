@@ -297,7 +297,7 @@ class Header extends Component {
                                 hintText="Search"
                                 multiLine={true}
                               />
-                             <RaisedButton id="btnSearch" label="Search" onClick={this.handleSearch} />
+                             <RaisedButton primary={true} id="btnSearch" label="Search" onClick={this.handleSearch} />
                           </div>
 
                             <div>

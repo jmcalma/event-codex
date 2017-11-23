@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import FileSaver from 'file-saver';
 
@@ -75,14 +76,14 @@ class SearchResultsList extends Component {
         if(event.hasOwnProperty('group')) {
             fetch("/api/meetupEvents/downloadics/" + event._id)
               .then((response) => {
-                  return response.blob() })   
+                  return response.blob() })
               .then((blob) => {
                    FileSaver.saveAs(blob, event.event_name + ".ics");
             });
         } else {
             fetch("/api/event/downloadics/" + event._id)
               .then((response) => {
-                  return response.blob() })   
+                  return response.blob() })
               .then((blob) => {
                    FileSaver.saveAs(blob, event.event_name + ".ics");
             });
@@ -100,25 +101,21 @@ class SearchResultsList extends Component {
 	  			<Card>
 	  			   key={this.state.events[i]._id}
 				    <CardHeader
-				      title={this.state.events[i].event_name}
+				      title={<h6 class="blue-text"><b>{this.state.events[i].event_name}</b></h6>}
 				      subtitle={this.convertDateTime(this.state.events[i].start_date, this.state.events[i].end_date)}
 				      actAsExpander={true}
 	      			  showExpandableButton={true}
 				    />
 				    <CardText expandable={true}>
-				      <div>
-				      	Category: {this.state.events[i].event_category}
-				      </div>
-				      <div>
-				      	Where: {this.state.events[i].location}
-				      </div>
-				      <div id="miniSpace"></div>
-				      <div>
-				      	Description: {this.state.events[i].event_description}
-				      </div>
+              <h6 class="blue-text">Category</h6>
+				      <p>{this.state.events[i].event_category}</p>
+              <h6 class="blue-text">Where</h6>
+				      <p>{this.state.events[i].location}</p>
+              <h6 class="blue-text">Descripton</h6>
+              <div dangerouslySetInnerHTML={{__html:this.state.events[i].event_description}}></div>
 				    </CardText>
 				    <CardActions>
-				      <FlatButton label="Download ICS" onClick={() => this.downloadIcs(this.state.events[i])} />
+				      <RaisedButton secondary={true} label="Download ICS" onClick={() => this.downloadIcs(this.state.events[i])} />
 				    </CardActions>
 				  </Card>
 				  <div id="space"></div>
