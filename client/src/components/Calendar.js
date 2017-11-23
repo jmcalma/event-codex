@@ -148,7 +148,9 @@ class Calendar extends Component {
     switch(type) {
       case 0:
         if (event.hasOwnProperty('group')) {
-          return "Meetup Link: " + event.link;
+          return <div><h6 class="blue-text text-darken-2">Meetup Link</h6><a>{event.link}</a></div>;
+        } else {
+          return <div><h6 class="blue-text text-darken-2">Contact Email</h6>{this.state.currentEvent.host_email}</div>;
         }
         break;
       case 1:
@@ -162,9 +164,9 @@ class Calendar extends Component {
         break;
       case 4:
         if(event.hasOwnProperty('group')) {
-          return <h1 class="blue white-text center">{event.event_name}</h1>;
+          return <h1 class="red white-text center">{event.event_name}</h1>;
         } else {
-          return <h1 class="blue white-text center">{event.event_name}</h1>;
+          return <h1 class="red white-text center">{event.event_name}</h1>;
         }
       case 5:
         if(event.hasOwnProperty('group')) {
@@ -223,8 +225,6 @@ class Calendar extends Component {
               >
                 <div id="eventDetails">
                   <div>
-                    <h6 class="blue-text text-darken-2">Contact Email</h6>
-                    <p> {this.state.currentEvent.host_email}</p>
                     <h6> {this.checkMeetup(this.state.currentEvent, 0)} </h6>
                   </div>
                   <div id="miniSpace"> </div>
@@ -253,7 +253,7 @@ class Calendar extends Component {
                   </div>
 
                   <div id="downloadIcs">
-                    <RaisedButton id="btnDownloadIcs" label="Download Event ICS" onClick={this.downloadIcs} />
+                    <RaisedButton primary={true} id="btnDownloadIcs" label="Download Event ICS" onClick={this.downloadIcs} />
                   </div>
 
                   <div id="space"></div> <div id="space"></div>
