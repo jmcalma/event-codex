@@ -161,15 +161,7 @@ class Calendar extends Component {
       case 2:
         return event.description;
       case 4:
-<<<<<<< HEAD
-        if(event.hasOwnProperty('group')) {
-          return <h1 class="red white-text center">{event.event_name}</h1>;
-        } else {
-          return <h1 class="red white-text center">{event.event_name}</h1>;
-        }
-=======
-        return <h1 class="blue white-text center">{event.event_name}</h1>;
->>>>>>> dedbedd0901375fd97b17c4d9b8b6689207ef12e
+        return <h1 class="red white-text center">{event.event_name}</h1>;
       case 5:
         if(event.hasOwnProperty('group')) {
           return "from Meetup";
