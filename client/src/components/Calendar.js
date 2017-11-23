@@ -158,14 +158,8 @@ class Calendar extends Component {
         break;
       case 2:
         return event.description;
-      case 3:
-        break;
       case 4:
-        if(event.hasOwnProperty('group')) {
-          return <h1 class="blue white-text center">{event.event_name}</h1>;
-        } else {
-          return <h1 class="blue white-text center">{event.event_name}</h1>;
-        }
+        return <h1 class="blue white-text center">{event.event_name}</h1>;
       case 5:
         if(event.hasOwnProperty('group')) {
           return "from Meetup";
@@ -235,14 +229,14 @@ class Calendar extends Component {
                   <div>
                     <h6 class="blue-text text-darken-2">Where</h6>
                     <p>{this.state.currentEvent.location} {this.checkMeetup(this.state.currentEvent, 1)} </p>
+                  <div>
+                    <h6 class="blue-text text-darken-2">Category</h6>
+                    <p>{this.state.currentEvent.event_category} {this.checkMeetup(this.state.currentEvent, 3)}</p>
+                  </div>
                   </div>
                     <h6 class="blue-text text-darken-2">Description</h6>
                     <div dangerouslySetInnerHTML={{__html:this.state.currentEvent.event_description}}>
                     {this.checkMeetup(this.state.currentEvent, 2)}
-                  </div>
-                  <div>
-                    <h6 class="blue-text text-darken-2">Category</h6>
-                    <p>{this.state.currentEvent.event_category} {this.checkMeetup(this.state.currentEvent, 3)}</p>
                   </div>
                   <div>
                     <MiniMap isMarkerShown={false} event={this.state.currentEvent} />
