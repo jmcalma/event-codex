@@ -322,7 +322,7 @@ class Header extends Component {
                 </div>
 
                 <Dialog
-                  title="Event Form"
+                  title={<h1 class="blue white-text center">Event Form</h1>}
                   actions={actions}
                   modal={false}
                   open={this.state.open}
