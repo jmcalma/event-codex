@@ -162,9 +162,9 @@ class Calendar extends Component {
         break;
       case 4:
         if(event.hasOwnProperty('group')) {
-          return event.event_name;
+          return <h1 class="blue white-text center">{event.event_name}</h1>;
         } else {
-          return event.event_name;
+          return <h1 class="blue white-text center">{event.event_name}</h1>;
         }
       case 5:
         if(event.hasOwnProperty('group')) {
