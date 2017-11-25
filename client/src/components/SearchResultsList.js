@@ -12,7 +12,7 @@ class SearchResultsList extends Component {
   	this.state = {
   		events: [],
   		eventsLength: 0,
-      count: 0,
+      buttonState: false,
   	};
   }
 
@@ -68,10 +68,9 @@ class SearchResultsList extends Component {
   };
 
   downloadIcs = (event) => {
-    console.log(event);
-    if (this.state.count === 0) {
-      var newCount = 1;
-      this.setState({ count: newCount });
+    if (this.state.buttonState === false) {
+      var newState = true;
+      this.setState({ buttonState: newState });
     } else {
         if(event.hasOwnProperty('group')) {
             fetch("/api/meetupEvents/downloadics/" + event._id)
@@ -88,7 +87,6 @@ class SearchResultsList extends Component {
                    FileSaver.saveAs(blob, event.event_name + ".ics");
             });
         }
-
     }
   }
 
@@ -122,16 +120,16 @@ class SearchResultsList extends Component {
 			  </div>)
   		);
   	}
-	return(
-	  <div>
-		 <MuiThemeProvider>
-			<Card>
-				{cardSearchHolder}
-			</Card>
-		  </MuiThemeProvider>
-		  <div id="miniSpace"></div>
-	   </div>
-	);
+  	return(
+  	  <div>
+  		 <MuiThemeProvider>
+  			<Card>
+  				{cardSearchHolder}
+  			</Card>
+  		  </MuiThemeProvider>
+  		  <div id="miniSpace"></div>
+  	   </div>
+  	);
   }
 }
 
