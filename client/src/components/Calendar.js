@@ -63,6 +63,14 @@ class Calendar extends Component {
             return response.json() })
         .then((json) => {
             this.setState({ eventsMeetup: json });
+            //refresh page at the top of every hour
+            var current = new Date();
+            var future = new Date();
+            future.setTime(future.getTime() + 3600000);
+            future.setMinutes(0);
+            future.setSeconds(0);
+            var timeout = (future.getTime() - current.getTime());
+            setTimeout(function() { window.location.reload(true); }, timeout);
       });
   };
 
