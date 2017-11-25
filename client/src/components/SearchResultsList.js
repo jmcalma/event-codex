@@ -99,17 +99,17 @@ class SearchResultsList extends Component {
 	  			<Card>
 	  			   key={this.state.events[i]._id}
 				    <CardHeader
-				      title={<h6 class="blue-text"><b>{this.state.events[i].event_name}</b></h6>}
+				      title={<h6 className="blue-text"><b>{this.state.events[i].event_name}</b></h6>}
 				      subtitle={this.convertDateTime(this.state.events[i].start_date, this.state.events[i].end_date)}
 				      actAsExpander={true}
 	      			  showExpandableButton={true}
 				    />
 				    <CardText expandable={true}>
-              <h6 class="blue-text">Category</h6>
+              <h6 className="blue-text">Category</h6>
 				      <p>{this.state.events[i].event_category}</p>
-              <h6 class="blue-text">Where</h6>
+              <h6 className="blue-text">Where</h6>
 				      <p>{this.state.events[i].location}</p>
-              <h6 class="blue-text">Descripton</h6>
+              <h6 className="blue-text">Descripton</h6>
               <div dangerouslySetInnerHTML={{__html:this.state.events[i].event_description}}></div>
 				    </CardText>
 				    <CardActions>
