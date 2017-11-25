@@ -9,8 +9,6 @@ import Snackbar from 'material-ui/Snackbar'
 import FileSaver from 'file-saver';
 import MiniMap from './MiniMap';
 
-var thisIsMyCopy = '<h1>cool</h1>';
-
 const titleStyles = {
     fontSize: '40px',
     padding: '15px 0px 20px 21px',
@@ -160,12 +158,6 @@ class Calendar extends Component {
         } else {
           return <div><h6 className="blue-text text-darken-2">Contact Email</h6>{this.state.currentEvent.host_email}</div>;
         }
-        break;
-      case 1:
-        if(event.hasOwnProperty('group')) {
-          return event.group.location;
-        }
-        break;
       case 2:
         return event.description;
       case 4:
@@ -236,7 +228,7 @@ class Calendar extends Component {
                   </div>
                   <div>
                     <h6 className="blue-text text-darken-2">Where</h6>
-                    <p>{this.state.currentEvent.location} {this.checkMeetup(this.state.currentEvent, 1)} </p>
+                    <p>{this.state.currentEvent.location}</p>
                   <div>
                     <h6 className="blue-text text-darken-2">Category</h6>
                     <p>{this.state.currentEvent.event_category} {this.checkMeetup(this.state.currentEvent, 3)}</p>
