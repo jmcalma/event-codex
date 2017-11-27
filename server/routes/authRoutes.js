@@ -18,6 +18,8 @@ let credentials = {
     }
 }
 module.exports = app => {
+    res.send("Test");
+    return;
     app.get("/auth/google", (req, res) => {
         // SHARED
         var clientSecret = credentials.web.client_secret;
