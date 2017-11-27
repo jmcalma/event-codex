@@ -265,10 +265,6 @@ class Header extends Component {
             <MuiThemeProvider>
                <div>
                 <div id="nav_buttons">
-                   <div id="btnExtra">
-                    <IconButton id="btnSearch" iconClassName="material-icons" onClick={this.openSearch} >search</IconButton>
-                  </div>
-
                   <div id="btnAddEvent">
                     <RaisedButton label="Add Event" onClick={this.handleOpen} />
                   </div>
