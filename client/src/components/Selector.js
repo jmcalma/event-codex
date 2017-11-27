@@ -51,11 +51,15 @@ class Selector extends React.Component{
   handleChange = (event, index, value) => this.setState({value});
 
   handleSearch = () => {
-    this.setState({ searchOpen: true });
     var searchFilter = ["title", "category", "tag"];
     var chosenFilter = searchFilter[this.state.value - 1];
     var query = document.getElementById('input_search_field').value;
 
+    if(query === "") {
+      return;
+    }
+
+    this.setState({ searchOpen: true });
     fetch("/api/meetupEvents/" + chosenFilter + "/" + query)
       .then((response) => {
          return response.json() })
