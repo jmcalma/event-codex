@@ -1,24 +1,19 @@
 import React from  "react";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import FileSaver from 'file-saver';
 
-const clickable={
-    textAlign: 'center',
-    display : 'inline-block',
-    width: '25%',
-    position: 'relative',
-    border: '1px solid black',
-    margin: '4% 4% 4% 4%',
-};
-
+//styling in styles.css
 
 class Clickbox extends React.Component{
     constructor(props) {
         super(props);
   
         this.state = {
-            text: " ",
-            bgColor: "",
-            searchOpen: "false"
+            eventName: " ",
+            bgImage: "",
+            buttonState: "false",
+            eventDefault: "true",
+            eventId: "0",
         };
 
         this.handleClick = this.handleClick.bind(this);
@@ -27,19 +22,40 @@ class Clickbox extends React.Component{
 
     componentDidMount(){
         // console.log("hi");
-        this.setState({ text: this.props.text })
+        this.setState({ eventName: this.props.eventName })
+        this.setState({ eventId: this.props.eventId })
     }
+
+    handleClick=()=>{
+        this.setState({eventName: "changed"})
+    }
+
+    downloadEvent =() => {
+        if(this.state.eventDefault === true){
+            var newState = false;
+            this.setState({ eventDefault: newState})
+            fetch("/api/meetupEvents/downloadics/"+this.state.eventId)
+            .then((res)=> {
+              return res.blob()})
+            .then((blob => {
+              FileSaver.saveAs(blob, this.state.eventName + ".ics") 
+            }))
+        }else {
+            fetch("/api/event/downloadics/"+this.state.eventId)
+            .then((res)=> {
+              return res.blob()
+          }).then((blob => {
+              FileSaver.saveAs(blob, this.state.eventName + ".ics");
+          }))
+        }
+      }
 
     render(){
         return(
         <div className="home--clickable" onClick={this.handleClick}>
-            <h3>{this.state.text}</h3>
+            <h3>{this.state.eventName}</h3>
         </div>
         )  
-    }
-
-    handleClick=()=>{
-        this.setState({text: "changed"})
     }
 }
 

@@ -77,10 +77,10 @@ body{
 
 .home--banner{
 	text-align: center;
-	background: url(http://i.imgur.com/jgh1fin.jpg);
+	background: url(http://i.imgur.com/wVpIicX.jpg);
 	background-size: cover;
 	width: 100%;
-	height: 100%;
+	height: 91vh;
 }
 
 .home--clickable{
@@ -88,11 +88,16 @@ body{
     display : inline-block;
     width: 25%;
     position: relative;
-    border: 1px solid rgb(252, 246, 246);
+    /* border: 1px solid rgb(252, 246, 246); */
 	margin: 4% 4% 4% 4%
 	
 }
 
 .home--clickable h3{
-	color: white;
+	color: black;
+	font-size: 2rem;
+	font-family: 'Titillium Web', 'Gotham SSm 2r', 'Gotham SSm A', 'Gotham SSm B', Arial, sans-serif;
+	font-weight: 200;
+    font-style: normal;
+	letter-spacing: -1px;
 }

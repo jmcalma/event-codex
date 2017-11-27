@@ -10,11 +10,11 @@ const Landing = () => <h2>Landing</h2>;
 
 const App = () => {
   return (
-    <div className="container">
+    <div>
       <BrowserRouter>
         <div>
           <Header />
-          <Route exact path="/" component={Selector} />
+          <Route exact path="/" component={Home} />
           <div id="space"> </div>
           <Calendar />
           <Footer />

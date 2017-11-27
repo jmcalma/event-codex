@@ -2,16 +2,7 @@ import React from "react";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {blue500} from 'material-ui/styles/colors';
 import Clickbox from './Clickbox'
-
-const clickable={
-    textAlign: 'center',
-    display : 'inline-block',
-    width: '25%',
-    position: 'relative',
-    border: '1px solid black',
-    margin: '4% 4% 4% 4%',
-
-};
+import Selector from './Selector'
 
 
 class Home extends React.Component{
@@ -19,13 +10,13 @@ class Home extends React.Component{
         return(
             <section className="home--banner">
                 <MuiThemeProvider>
-                {/* search bar */}
-                    <Clickbox text="Search"/>
+                    <Selector/>
                     <div className= "row">
-                        <Clickbox text="tech"/>
-                        <Clickbox text="box2"/>
-                        <Clickbox text="box3"/>
+                        <Clickbox eventName="tech"/>
+                        <Clickbox eventName="box2"/>
+                        <Clickbox eventName="box3"/>
                     </div>
+
                 </MuiThemeProvider>
             </section> //banner section
         )
