@@ -19,8 +19,6 @@ let credentials = {
 }
 module.exports = app => {
     app.get("/auth/google", (req, res) => {
-        res.send("Test");
-        return;
         // SHARED
         var clientSecret = credentials.web.client_secret;
         var clientId = credentials.web.client_id;
