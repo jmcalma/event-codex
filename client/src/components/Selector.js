@@ -72,7 +72,6 @@ class Selector extends React.Component{
          return response.json() })
       .then((json) => {
         this.setState({ eventsSearch: json });
-            //ReactDOM.unmountComponentAtNode(document.getElementById('search'));
             ReactDOM.render(
               <SearchResultsList events={ json.concat(this.state.meetupEventsSearch) } />,
                document.getElementById('searchResults')
@@ -82,7 +81,7 @@ class Selector extends React.Component{
 
   closeSearch = () => {
     this.setState({ searchOpen: false })
-  };
+  }
 
   render() {
     const actionsSearch = [
@@ -121,20 +120,20 @@ class Selector extends React.Component{
         </div>
           <MuiThemeProvider>
            <div>
-              <Dialog
-                  title={"Search Results"}
-                  actions={actionsSearch}
-                  modal={false}
-                  open={this.state.searchOpen}
-                  onRequestClose={this.closeSearch}
-                  autoScrollBodyContent={true}
-                  repositionOnUpdate={false}
-                  contentStyle={ dialogFixStyles.dialogContent }
-                  bodyStyle={ dialogFixStyles.dialogBody }
-                  style={ dialogFixStyles.dialogRoot }
-                >        
-                   <div id="searchResults"> </div>
-              </Dialog>
+            <Dialog
+              title={"Search Results"}
+              actions={actionsSearch}
+              modal={false}
+              open={this.state.searchOpen}
+              onRequestClose={this.closeSearch}
+              autoScrollBodyContent={true}
+              repositionOnUpdate={false}
+              contentStyle={ dialogFixStyles.dialogContent }
+              bodyStyle={ dialogFixStyles.dialogBody }
+              style={ dialogFixStyles.dialogRoot }
+            >        
+              <div id="searchResults"> </div>
+            </Dialog>
             </div>
         </MuiThemeProvider>
       </div>

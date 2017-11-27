@@ -232,7 +232,7 @@ class Header extends Component {
 
   handleChangeSelectorSearch = (event, index, searchSelectorValue) => {
     this.setState({ searchSelectorValue });
-  };
+  }
 
   render() {
     const actions = [

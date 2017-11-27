@@ -64,7 +64,7 @@ class SearchResultsList extends Component {
           return days[convertedStartDate.getDay()] + ", " + months[startMonth] + " " + startDay + ", " + startYear + " at " + convStartTime + " to "
             + convEndTime;
        }
-  };
+  }
 
   downloadIcs = (event) => {
     if (this.state.buttonState === false) {
