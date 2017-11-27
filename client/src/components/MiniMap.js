@@ -11,8 +11,8 @@ class MiniMap extends React.Component {
 		this.state = {
 			markers: [],
 			currentEvent: [],
-			locationLatitude: "",
-			locationLongitude: "",
+			locationLatitude: 0,
+			locationLongitude: 0,
 		};
 	}
 	
@@ -31,7 +31,10 @@ class MiniMap extends React.Component {
 				var location = json.results[0].geometry.location;
 				this.setState({ locationLatitude: location.lat });
 				this.setState({ locationLongitude: location.lng });
-			})
+			}),
+			error => {
+				alert(error);
+			};
 	}
 	
 	render () {

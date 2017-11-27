@@ -232,7 +232,7 @@ class Header extends Component {
 
   handleChangeSelectorSearch = (event, index, searchSelectorValue) => {
     this.setState({ searchSelectorValue });
-  };
+  }
 
   render() {
     const actions = [
@@ -322,7 +322,7 @@ class Header extends Component {
                 </div>
 
                 <Dialog
-                  title={<h1 class="blue white-text center">Event Form</h1>}
+                  title={<h1 className="blue white-text center">Event Form</h1>}
                   actions={actions}
                   modal={false}
                   open={this.state.open}

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import FileSaver from 'file-saver';
@@ -12,7 +11,7 @@ class SearchResultsList extends Component {
   	this.state = {
   		events: [],
   		eventsLength: 0,
-      count: 0,
+      buttonState: false,
   	};
   }
 
@@ -65,13 +64,12 @@ class SearchResultsList extends Component {
           return days[convertedStartDate.getDay()] + ", " + months[startMonth] + " " + startDay + ", " + startYear + " at " + convStartTime + " to "
             + convEndTime;
        }
-  };
+  }
 
   downloadIcs = (event) => {
-    console.log(event);
-    if (this.state.count === 0) {
-      var newCount = 1;
-      this.setState({ count: newCount });
+    if (this.state.buttonState === false) {
+      var newState = true;
+      this.setState({ buttonState: newState });
     } else {
         if(event.hasOwnProperty('group')) {
             fetch("/api/meetupEvents/downloadics/" + event._id)
@@ -88,7 +86,6 @@ class SearchResultsList extends Component {
                    FileSaver.saveAs(blob, event.event_name + ".ics");
             });
         }
-
     }
   }
 
@@ -101,17 +98,17 @@ class SearchResultsList extends Component {
 	  			<Card>
 	  			   key={this.state.events[i]._id}
 				    <CardHeader
-				      title={<h6 class="blue-text"><b>{this.state.events[i].event_name}</b></h6>}
+				      title={<h6 className="blue-text"><b>{this.state.events[i].event_name}</b></h6>}
 				      subtitle={this.convertDateTime(this.state.events[i].start_date, this.state.events[i].end_date)}
 				      actAsExpander={true}
 	      			  showExpandableButton={true}
 				    />
 				    <CardText expandable={true}>
-              <h6 class="blue-text">Category</h6>
+              <h6 className="blue-text">Category</h6>
 				      <p>{this.state.events[i].event_category}</p>
-              <h6 class="blue-text">Where</h6>
+              <h6 className="blue-text">Where</h6>
 				      <p>{this.state.events[i].location}</p>
-              <h6 class="blue-text">Descripton</h6>
+              <h6 className="blue-text">Descripton</h6>
               <div dangerouslySetInnerHTML={{__html:this.state.events[i].event_description}}></div>
 				    </CardText>
 				    <CardActions>
@@ -122,16 +119,16 @@ class SearchResultsList extends Component {
 			  </div>)
   		);
   	}
-	return(
-	  <div>
-		 <MuiThemeProvider>
-			<Card>
-				{cardSearchHolder}
-			</Card>
-		  </MuiThemeProvider>
-		  <div id="miniSpace"></div>
-	   </div>
-	);
+  	return(
+  	  <div>
+  		 <MuiThemeProvider>
+  			<Card>
+  				{cardSearchHolder}
+  			</Card>
+  		  </MuiThemeProvider>
+  		  <div id="miniSpace"></div>
+  	   </div>
+  	);
   }
 }
 
