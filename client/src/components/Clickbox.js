@@ -17,27 +17,22 @@ class Clickbox extends React.Component{
   
         this.state = {
             text: " ",
-            bgColor: ""
+            bgColor: "",
+            searchOpen: "false"
         };
 
         this.handleClick = this.handleClick.bind(this);
 
     }
 
-    ComponentDidMount(){
-        this.setState({
-            text:"mounted"
-        })
-    }
-
-    ComponentDidUpdate(){
-        
+    componentDidMount(){
+        // console.log("hi");
+        this.setState({ text: this.props.text })
     }
 
     render(){
-        
         return(
-        <div style= {clickable} onClick={this.handleClick}>
+        <div className="home--clickable" onClick={this.handleClick}>
             <h3>{this.state.text}</h3>
         </div>
         )  

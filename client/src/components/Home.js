@@ -13,28 +13,21 @@ const clickable={
 
 };
 
+
 class Home extends React.Component{
     render(){
         return(
             <section className="home--banner">
                 <MuiThemeProvider>
                 {/* search bar */}
-                    <Clickbox/>
-
-                    <div className= "row" text="changed">
-                        <Clickbox>
-                            
-                        </Clickbox>
-                        <div style={clickable} className = "clickable">
-                            <h3>box2</h3>
-                        </div>
-                        <div style={clickable} className = "clickable">
-                            <h3>box3</h3>
-                        </div>
+                    <Clickbox text="Search"/>
+                    <div className= "row">
+                        <Clickbox text="tech"/>
+                        <Clickbox text="box2"/>
+                        <Clickbox text="box3"/>
                     </div>
                 </MuiThemeProvider>
-            </section> // ./quick-export
-
+            </section> //banner section
         )
     }
 }
