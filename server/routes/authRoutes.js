@@ -13,8 +13,8 @@ let credentials = {
         "token_uri": "https://accounts.google.com/o/oauth2/token",
         "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
         "client_secret": "NsS6KMkzLj4FJqpRGYuu2Rd9",
-        "redirect_uris": ["http://localhost:5000/auth/google", "http://ec2-54-215-238-243.us-west-1.compute.amazonaws.com/"],
-        "javascript_origins": ["http://localhost:5000", "http://ec2-54-215-238-243.us-west-1.compute.amazonaws.com"]
+        "redirect_uris": ["http://eventcodex.org/auth/google", "http://localhost:5000/auth/google", "http://ec2-54-215-238-243.us-west-1.compute.amazonaws.com/"],
+        "javascript_origins": ["http://eventcodex.org", "http://localhost:5000", "http://ec2-54-215-238-243.us-west-1.compute.amazonaws.com"]
     }
 }
 module.exports = app => {
