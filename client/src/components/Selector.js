@@ -118,7 +118,7 @@ class Selector extends React.Component{
           <MuiThemeProvider>
            <div>
               <Dialog
-                  title={""}
+                  title={"Search Results"}
                   actions={actionsSearch}
                   modal={false}
                   open={this.state.searchOpen}
