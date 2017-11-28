@@ -21,8 +21,10 @@ class Clickbox extends React.Component{
     }
 
     componentDidMount(){
-        this.setState({ eventName: this.props.eventName })
-        this.setState({ eventId: this.props.eventId })
+        this.setState({ eventName: this.props.eventName });
+        this.setState({ eventId: this.props.eventId });
+        var imageLink = "url(".concat(this.props.bgImage).concat(")");
+        this.setState({ bgImage: imageLink });
     }
 
     handleClick=()=>{
@@ -52,7 +54,7 @@ class Clickbox extends React.Component{
 
     render(){
         return(
-        <div className="home--clickable" onClick={this.downloadEvent}>
+        <div style={{backgroundImage: this.state.bgImage}} className="home--clickable" onClick={this.downloadEvent}>
             <h3>{this.state.eventName}</h3>
         </div>
         )  

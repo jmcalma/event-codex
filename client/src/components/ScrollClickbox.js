@@ -1,5 +1,19 @@
 import React from  "react";
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'; 
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import DateRange from 'material-ui/svg-icons/action/date-range';
+import RaisedButton from 'material-ui/RaisedButton';
+import {red500} from 'material-ui/styles/colors';
+
+const styles = {
+    icon:{
+        marginRight: 24,
+    },
+    button: {
+        margin: 12,
+    }
+  };
+
+
 
 class ScrollClickbox extends React.Component{
     constructor(props){
@@ -33,7 +47,13 @@ class ScrollClickbox extends React.Component{
     render(){
         return(
             <div className="home--clickable" onClick={this.handleReposition}>
-                <h3>{this.state.text}</h3>
+                <RaisedButton
+                    label={this.state.text}
+                    labelPosition="after"
+                    primary={true}
+                    icon={<DateRange style={styles.icon} color={red500}/>}
+                    style={styles.button}
+                    />
             </div>
         )
     }
