@@ -12,9 +12,14 @@ import 'whatwg-fetch';
 const styles = {
   customWidth: {
     width: 300,
-    height: 60
+    height: 60,
   },
+  underline: {
+    color: "black",
+    textDecorationColor: "black"
+  }
 };
+
 
 const dialogFixStyles = {
   dialogRoot: {
@@ -27,7 +32,6 @@ const dialogFixStyles = {
   dialogContent: {
     position: "relative",
     width: "80vw",
-
   },
   dialogBody: {
     paddingBottom: 0
@@ -101,7 +105,7 @@ class Selector extends React.Component{
 
         <div className="col s4">
         <MuiThemeProvider>
-          <DropDownMenu style={styles.customWidth} value={this.state.value} onChange={this.handleChange}>
+          <DropDownMenu style={styles.customWidth} underlineStyle={styles.underline} value={this.state.value} onChange={this.handleChange}>
             <MenuItem value={1} primaryText="Title" />
             <MenuItem value={2} primaryText="Category" />
             <MenuItem value={3} primaryText="Tag" />

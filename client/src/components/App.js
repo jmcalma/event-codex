@@ -15,8 +15,6 @@ const App = () => {
         <div>
           <Header />
           <Route exact path="/" component={Home} />
-          <div id="space"> </div>
-          <Calendar />
           <Footer />
         </div>
       </BrowserRouter>

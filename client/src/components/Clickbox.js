@@ -14,14 +14,13 @@ class Clickbox extends React.Component{
             buttonState: "false",
             eventDefault: "true",
             eventId: "0",
+            meetup: "false"
         };
 
-        this.handleClick = this.handleClick.bind(this);
-
+        this.downloadEvent = this.downloadEvent.bind(this);
     }
 
     componentDidMount(){
-        // console.log("hi");
         this.setState({ eventName: this.props.eventName })
         this.setState({ eventId: this.props.eventId })
     }
@@ -30,15 +29,16 @@ class Clickbox extends React.Component{
         this.setState({eventName: "changed"})
     }
 
+    //possible fatal bug if invalid eventId is passed in props
     downloadEvent =() => {
-        if(this.state.eventDefault === true){
+        if(this.state.meetup === true){
             var newState = false;
             this.setState({ eventDefault: newState})
             fetch("/api/meetupEvents/downloadics/"+this.state.eventId)
             .then((res)=> {
               return res.blob()})
             .then((blob => {
-              FileSaver.saveAs(blob, this.state.eventName + ".ics") 
+              FileSaver.saveAs(blob, this.state.eventName + ".ics");
             }))
         }else {
             fetch("/api/event/downloadics/"+this.state.eventId)
@@ -52,7 +52,7 @@ class Clickbox extends React.Component{
 
     render(){
         return(
-        <div className="home--clickable" onClick={this.handleClick}>
+        <div className="home--clickable" onClick={this.downloadEvent}>
             <h3>{this.state.eventName}</h3>
         </div>
         )  
