@@ -22,6 +22,7 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "concurrently": "^3.5.0",
+    "cookie-session": "^2.0.0-beta.3",
     "express": "^4.16.1",
     "google-auth-library": "^0.11.0",
     "googleapis": "^22.2.0",
@@ -29,6 +30,9 @@
     "mocha": "^4.0.1",
     "mongoose": "^4.13.4",
     "nodemon": "^1.12.1",
+    "passport": "^0.4.0",
+    "passport-google-oauth20": "^1.0.0",
+    "password": "^0.1.1",
     "request": "^2.83.0",
     "underscore": "^1.8.3"
   }
